@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install apache, php5, and mysql on FreeBSD 7.2 using ports &laquo; dhatNyeng</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+<img src="/images/ashr.gif"><br/>
+	<a class="site" href="/index.html">dhatNyeng</a>
+</div>
+<div id="navbar">
+        <a href="/atom.xml"><img src="/images/bt-rss.gif" alt="Subscribe to RSS Feed" border="0" /></a>
+                <a href="http://github.com/alinuxwebid/"><img src="/images/smartgit.png" alt="github.com/alinux" border="0" /></a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install apache, php5, and mysql on FreeBSD 7.2 using ports</span><br />
+	<span class="date">Jun 17 2009</span><br />
+	<span class="content"><h2 id='update_12092009'>Update: 12/09/2009</h2>
+
+<p>Apache web server one of the most widely used. Apache can also be installed on freebsd. following way to install apache, PHP5, mysql the most easy to use ports.</p>
+
+<h2 id='1_install_apache'>1. Install Apache:</h2>
+
+<pre><code># cd /usr/ports/www/apache22
+# make install clean</code></pre>
+
+<p>to start just type</p>
+
+<pre><code># /usr/local/sbin/apachectl start</code></pre>
+
+<p>to enable apache on boot add <code>apache22_enable=&quot;YES&quot;</code> following file <code>/etc/rc.conf</code></p>
+
+<p>check apache on your browser type <code>localhost</code></p>
+
+<h2 id='2_install_php_5'>2. Install PHP 5</h2>
+
+<pre><code># /usr/ports/lang/php5
+# make install clean</code></pre>
+
+<p>make sure to build Apache module is <code>checked</code></p>
+
+<p>add these option on file <code>/usr/local/etc/apache22/httpd.conf</code></p>
+
+<pre><code>AddType application/x-httpd-php .php
+AddType application/x-httpd-php-source .phps</code></pre>
+
+<p>Add <code>Index.php</code> to load auto index</p>
+
+<pre><code>&lt;IfModule dir_module&gt;
+    DirectoryIndex index.html index.php
+&lt;/IfModule&gt;</code></pre>
+
+<p>create file <code>php.ini</code> by copy <code>php.ini-dist</code></p>
+
+<pre><code># cd /usr/local/etc/
+# cp php.ini-dist php.ini</code></pre>
+
+<p>and then <code>restart apache</code></p>
+
+<pre><code># /usr/local/sbin/apachectl restart</code></pre>
+
+<p>create file php on <code>/usr/local/www/apache22/data/</code></p>
+
+<pre><code>&lt;?php phpinfo();?&gt;</code></pre>
+
+<p>save as <code>test.php</code></p>
+
+<p>now test on your browser <code>http://127.0.0.1/test.php</code></p>
+
+<h2 id='install_mysql_5'>Install Mysql 5</h2>
+
+<pre><code># cd /usr/ports/databases/mysql51-server
+# make install clean</code></pre>
+
+<h4 id='create_database'>create database</h4>
+
+<pre><code># /usr/local/bin/mysql_install_db</code></pre>
+
+<p>change <code>owner</code> and <code>group</code> as <code>mysql</code></p>
+
+<pre><code># chown -R mysql /var/db/mysql/
+# chgrp -R mysql /var/db/mysql/</code></pre>
+
+<h4 id='run_mysql_daemon'>run mysql daemon</h4>
+
+<pre><code>/usr/local/bin/mysqld_safe user=mysql &amp;;</code></pre>
+
+<h4 id='change_mysql_password'>change mysql password</h4>
+
+<pre><code>/usr/local/bin/mysqladmin -u root password newpass</code></pre>
+
+<p>to automatic msyql enable when boot add <code>/etc/rc.conf</code>:</p>
+
+<pre><code>mysql_enable=&quot;YES&quot;;</code></pre>
+
+<h4 id='install_php5mysql_module'>Install php5-mysql module</h4>
+
+<pre><code>cd /usr/ports/databases/php5-mysql
+make install clean</code></pre>
+
+<p>create file php to check mysql</p>
+<div class='highlight'><pre><span class='x'>    </span><span class='cp'>&lt;?php</span>
+    <span class='nv'>$test</span><span class='o'>=</span><span class='nb'>mysql_connect</span><span class='p'>(</span><span class='s2'>&quot;localhost&quot;</span><span class='p'>,</span><span class='s2'>&quot;mysql&quot;</span><span class='p'>,</span><span class='s2'>&quot;&quot;</span><span class='p'>;);</span>
+    <span class='k'>if</span><span class='p'>(</span><span class='o'>!</span><span class='nv'>$test</span><span class='p'>)</span>                                                                 
+    <span class='p'>{</span>                                                                          
+    <span class='k'>print</span> <span class='s2'>&quot;cant connect&quot;</span><span class='p'>;</span>                                            
+    <span class='p'>}</span>                                                                          
+    <span class='k'>else</span>                                                                       
+    <span class='p'>{</span>                                                                          
+    <span class='k'>print</span> <span class='s2'>&quot;connected&quot;</span><span class='p'>;</span>                                               
+    <span class='p'>}</span>                                                                          
+    <span class='cp'>?&gt;</span><span class='x' />
+</pre>
+</div>
+<p>save as <code>test-db.php</code> on <code>/usr/local/www/apache22/data/</code> and go to your browser <code>http://localhost/test-db.php</code></p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://www.marksanborn.net/freebsd/installing-mysql-51-on-freebsd-70'>mysql marksanborn.net</a></li>
+
+<li><a href='http://www.marksanborn.net/uncategorized/installing-apache-on-freebsd-70/comment-page-1/#comment-26351'>apache marksanborn.net</a></li>
+
+<li><a href='http://faruqafif.student.fkip.uns.ac.id/2009/02/13/install-apache2mysql-dan-php5-di-freebsd/'>faruqafif.student.fkip.uns.ac.id</a></li>
+
+<li><a href='http://daemonforums.org/showthread.php?t=1430'>daemonforums.org</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+      <li><span>Jun 15 2010</span> &raquo; <a href="/2010/06/15/compile-kernel-vs-patch-kernel-on-gnu-linux.html">Compile Kernel VS Patch Kernel on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+Powered by <a href="http://jekyllrb.com" target="_new">Jekyll</a> and <a href="/credits.html">credits</a>, running on <a href="http://tor.hu" target="_new">Tor Gigabit Connection</a>
+</div>
+<div id="rightcol">
+<a href="/about.html">about</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

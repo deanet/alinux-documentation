@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Update package failed on ports FreeBSD &laquo; dhatNyeng</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+<img src="/images/ashr.gif"><br/>
+	<a class="site" href="/index.html">dhatNyeng</a>
+</div>
+<div id="navbar">
+        <a href="/atom.xml"><img src="/images/bt-rss.gif" alt="Subscribe to RSS Feed" border="0" /></a>
+                <a href="http://github.com/alinuxwebid/"><img src="/images/smartgit.png" alt="github.com/alinux" border="0" /></a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Update package failed on ports FreeBSD</span><br />
+	<span class="date">Feb 27 2010</span><br />
+	<span class="content"><p>This is simple log error when we&#8217;ve failed to install package on freebsd via ports:</p>
+<div class='highlight'><pre>===&gt;;;  Checking if databases/mysql50-client already installed
+===&gt;;;   An older version of databases/mysql50-client is already installed (mysql-client-5.0.77_1)
+You may wish to ``make deinstall&#39;&#39; and install this port again
+by ``make reinstall&#39;&#39; to upgrade it properly.
+If you really wish to overwrite the old port of databases/mysql50-client
+without deleting it first, set the variable <span class='ni'>&amp;quot;</span>FORCE_PKG_REGISTER<span class='ni'>&amp;quot;</span>
+in your environment or the <span class='ni'>&amp;quot;</span>make install<span class='ni'>&amp;quot;</span> command line.
+*** Error code 1
+
+Stop in /usr/ports/databases/mysql50-client.
+*** Error code 1
+
+Stop in /usr/ports/databases/py-MySQLdb.
+*** Error code 1
+
+Stop in /usr/ports/databases/py-MySQLdb.
+cacti#
+</pre>
+</div>
+<p>where those package was installed.</p>
+
+<pre><code>cacti# pkg_info | grep mysql
+mysql-client-5.0.77_1 Multithreaded SQL database (client)
+mysql-client-5.0.88 Multithreaded SQL database (client)
+mysql-server-5.0.77_1 Multithreaded SQL database (server)
+php5-mysql-5.2.11_1 The mysql shared extension for php
+cacti#</code></pre>
+
+<p>so, to force package:</p>
+
+<pre><code>setenv FORCE_PKG_REGISTER 1</code></pre>
+
+<p>and then run command again ;)</p>
+
+<p>Reference: <a href='http://freebsd.munk.me.uk/archives/199-Portupgrade-fails-to-upgrade-dependencies.html'>http://freebsd.munk.me.uk/archives/199-Portupgrade-fails-to-upgrade-dependencies.html</a></p></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+      <li><span>Jun 15 2010</span> &raquo; <a href="/2010/06/15/compile-kernel-vs-patch-kernel-on-gnu-linux.html">Compile Kernel VS Patch Kernel on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+Powered by <a href="http://jekyllrb.com" target="_new">Jekyll</a> and <a href="/credits.html">credits</a>, running on <a href="http://tor.hu" target="_new">Tor Gigabit Connection</a>
+</div>
+<div id="rightcol">
+<a href="/about.html">about</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

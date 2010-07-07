@@ -1,0 +1,145 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Mengatasi no public key available di apt debian &laquo; dhatNyeng</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+<img src="/images/ashr.gif"><br/>
+	<a class="site" href="/index.html">dhatNyeng</a>
+</div>
+<div id="navbar">
+        <a href="/atom.xml"><img src="/images/bt-rss.gif" alt="Subscribe to RSS Feed" border="0" /></a>
+                <a href="http://github.com/alinuxwebid/"><img src="/images/smartgit.png" alt="github.com/alinux" border="0" /></a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Mengatasi no public key available di apt debian</span><br />
+	<span class="date">Jun 23 2010</span><br />
+	<span class="content"><p>Sekedar catatan pribadi saja sih, sering mendapatkan warning <code>no public key available</code> ketika menjalankan <code>apt-get</code> di <code>debian</code>.</p>
+<div class='highlight'><pre>W: There is no public key available <span class='k'>for </span>the following key IDs:
+9AA38DCD55BE302B
+W: You may want to run apt-get update to correct these problems
+</pre>
+</div>
+<p>solusinya:</p>
+
+<p>Dengan menjalankan <code>gpg --keyserver wwwkeys.eu.pgp.net --recv-keys 9AA38DCD55BE302B</code>. Dimana key <code>9AA38DCD55BE302B</code> adalah key yg <code>untrusted</code>.</p>
+<div class='highlight'><pre>denbaguse:/home/alinux# gpg --keyserver wwwkeys.eu.pgp.net --recv-keys 9AA38DCD55BE302B
+gpg: directory <span class='sb'>`</span>/root/.gnupg<span class='s1'>&#39; created</span>
+<span class='s1'>gpg: can&#39;</span>t open <span class='sb'>`</span>/gnupg/options.skel<span class='s1'>&#39;: No such file or directory</span>
+<span class='s1'>gpg: keyring `/root/.gnupg/secring.gpg&#39;</span> created
+gpg: keyring <span class='sb'>`</span>/root/.gnupg/pubring.gpg<span class='err'>&#39;</span> created
+gpg: requesting key 55BE302B from hkp server wwwkeys.eu.pgp.net
+gpg: /root/.gnupg/trustdb.gpg: trustdb created
+gpg: key 55BE302B: public key <span class='s2'>&quot;Debian Archive Automatic Signing Key (5.0/lenny) &lt;ftpmaster@debian.org&gt;&quot;</span> imported
+gpg: no ultimately trusted keys found
+gpg: Total number processed: 1
+gpg:               imported: 1  <span class='o'>(</span>RSA: 1<span class='o'>)</span>
+</pre>
+</div>
+<p>Lalu menambahkan key yang baru saja dibuat dengan <code>apt-key add</code> pada list key.</p>
+<div class='highlight'><pre>denbaguse:/home/alinux# apt-key add /root/.gnupg/pubring.gpg
+OK
+denbaguse:/home/alinux#
+</pre>
+</div>
+<p>lalu jalankan kembali <code>apt-get</code>, insya Allah warning tidak akan muncul lagi. Dan untuk melihat list key <code>trusted</code> bisa dengan perintah:</p>
+
+<p><code># apt-key list</code></p>
+
+<p>Referensi: <a href='http://wiki.debian.org/SecureApt' target='_new'>http://wiki.debian.org/SecureApt</a></p>
+
+<p>semoga membantu :)</p></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 15 2010</span> &raquo; <a href="/2010/06/15/compile-kernel-vs-patch-kernel-on-gnu-linux.html">Compile Kernel VS Patch Kernel on Gnu/Linux</a></li>
+    
+      <li><span>May 26 2010</span> &raquo; <a href="/2010/05/26/server-was-moved-and-say-goodbye-to-wordpress.html">Server was moved, and say goodbye to Wordpress</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+Powered by <a href="http://jekyllrb.com" target="_new">Jekyll</a> and <a href="/credits.html">credits</a>, running on <a href="http://tor.hu" target="_new">Tor Gigabit Connection</a>
+</div>
+<div id="rightcol">
+<a href="/about.html">about</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>
