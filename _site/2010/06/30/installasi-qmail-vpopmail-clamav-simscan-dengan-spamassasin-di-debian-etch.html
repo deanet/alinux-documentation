@@ -17,7 +17,7 @@
 	
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_setAccount', 'UA-12495571-3']);
 	  _gaq.push(['_trackPageview']);
 	  (function() {
 	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -199,11 +199,11 @@ Connection closed by foreign host.
 </pre>
 </div>
 <h3 id='hasil_tail'>hasil tail:</h3>
-<div class='highlight'><pre>Jun 19 09:12:14 denbaguse qmail: 1276913534.111443 CHKUSER accepted any rcpt: from &lt;test@testaja.com:postmaster@testaja.lg:&gt; remote
+<div class='highlight'><pre>Jun 19 09:12:14 denbaguse qmail: 1276913534.111443 CHKUSER accepted any rcpt: from &lt;<span class='nb'>test</span>@testaja.com:postmaster@testaja.lg:&gt; remote
 &lt;:unknown:127.0.0.1&gt; rcpt &lt;postmaster@testaja.lg&gt; : accepted any recipient <span class='k'>for </span>any rcpt domain                                           
 Jun 19 09:12:14 denbaguse qmail: 1276913534.111512 qmail-smtpd: pid 13748 RCPT TO: &lt;postmaster@testaja.lg&gt;                               
 Jun 19 09:12:24 denbaguse qmail: 1276913544.622077 new msg 78833                                       
-Jun 19 09:12:24 denbaguse qmail: 1276913544.622156 info msg 78833: bytes 190 from &lt;test@testaja.com&gt; qp 13750 uid 0                                          Jun 19 09:12:24 denbaguse qmail: 1276913544.622856 starting delivery 1: msg 78833 to <span class='nb'>local </span>testaja.lg-postmaster@testaja.lg              
+Jun 19 09:12:24 denbaguse qmail: 1276913544.622156 info msg 78833: bytes 190 from &lt;<span class='nb'>test</span>@testaja.com&gt; qp 13750 uid 0                                          Jun 19 09:12:24 denbaguse qmail: 1276913544.622856 starting delivery 1: msg 78833 to <span class='nb'>local </span>testaja.lg-postmaster@testaja.lg              
 Jun 19 09:12:24 denbaguse qmail: 1276913544.622892 status: <span class='nb'>local </span>1/10 remote 0/20                      
 Jun 19 09:12:24 denbaguse qmail: 1276913544.684768 delivery 1: success: did_0+0+1/                     
 Jun 19 09:12:24 denbaguse qmail: 1276913544.684860 status: <span class='nb'>local </span>0/10 remote 0/20                      
@@ -212,7 +212,7 @@ Jun 19 09:12:24 denbaguse qmail: 1276913544.684911 end msg 78833
 </div>
 <h3 id='isi_email'>Isi email:</h3>
 <div class='highlight'><pre>denbaguse:/home/alinux# cat /var/lib/vpopmail/domains/testaja.lg/postmaster/Maildir/new/1276913544.13752.denbaguse<span class='se'>\,</span>S<span class='se'>\=</span>258
-Return-Path: &lt;test@testaja.com&gt;
+Return-Path: &lt;<span class='nb'>test</span>@testaja.com&gt;
 Delivered-To: postmaster@testaja.lg
 Received: <span class='o'>(</span>qmail 13750 invoked by uid 0<span class='o'>)</span>; 19 Jun 2010 09:12:20 +0700
 Received: from unknown <span class='o'>(</span>postmaster@testaja.lg@127.0.0.1<span class='o'>)</span>
@@ -238,7 +238,7 @@ LIST
 .
 RETR 1
 +OK 258 octets
-Return-Path: &lt;test@testaja.com&gt;
+Return-Path: &lt;<span class='nb'>test</span>@testaja.com&gt;
 Delivered-To: postmaster@testaja.lg
 Received: <span class='o'>(</span>qmail 13750 invoked by uid 0<span class='o'>)</span>; 19 Jun 2010 09:12:20 +0700
 Received: from unknown <span class='o'>(</span>postmaster@testaja.lg@127.0.0.1<span class='o'>)</span>

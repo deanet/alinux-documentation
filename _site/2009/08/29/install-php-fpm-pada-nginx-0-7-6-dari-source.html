@@ -17,7 +17,7 @@
 	
 	<script type="text/javascript">
 	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_setAccount', 'UA-12495571-3']);
 	  _gaq.push(['_trackPageview']);
 	  (function() {
 	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
@@ -125,13 +125,81 @@
 <pre><code># vi /etc/nginx/nginx.conf</code></pre>
 
 <p>Ketik seperti ini</p>
-
-<pre><code>Liquid error: Broken pipe</code></pre>
-
+<div class='highlight'><pre>	<span class='k'>user</span>  <span class='s'>nobody</span><span class='p'>;</span>
+	<span class='k'>worker_processes</span>  <span class='mi'>6</span><span class='p'>;</span>
+	<span class='k'>events</span> <span class='p'>{</span>
+	    <span class='kn'>worker_connections</span>  <span class='mi'>1024</span><span class='p'>;</span>
+	<span class='p'>}</span>
+	<span class='k'>http</span> <span class='p'>{</span>
+	    <span class='kn'>include</span>       <span class='s'>mime.types</span><span class='p'>;</span>
+	    <span class='kn'>default_type</span>  <span class='s'>application/octet-stream</span><span class='p'>;</span>
+	    <span class='kn'>log_format</span>  <span class='s'>main</span>  <span class='s'>&#39;</span><span class='nv'>$remote_addr</span> <span class='s'>-</span> <span class='nv'>$remote_user</span> <span class='s'>[</span><span class='nv'>$time_local]</span> <span class='s'>&quot;</span><span class='nv'>$request&quot;</span> <span class='s'>&#39;</span>
+	                      <span class='s'>&#39;</span><span class='nv'>$status</span> <span class='nv'>$body_bytes_sent</span> <span class='s'>&quot;</span><span class='nv'>$http_referer&quot;</span> <span class='s'>&#39;</span>
+	                      <span class='s'>&#39;&quot;</span><span class='nv'>$http_user_agent&quot;</span> <span class='s'>&quot;</span><span class='nv'>$http_x_forwarded_for&quot;&#39;</span><span class='p'>;</span>
+	    <span class='kn'>access_log</span>  <span class='s'>/var/log/nginx_access.log</span>  <span class='s'>main</span><span class='p'>;</span>
+	    <span class='kn'>error_log</span>	<span class='s'>/var/log/nginx_error.log</span>   <span class='s'>debug</span><span class='p'>;</span>
+	    <span class='kn'>sendfile</span>        <span class='no'>on</span><span class='p'>;</span>
+	    <span class='kn'>keepalive_timeout</span>  <span class='mi'>10</span> <span class='mi'>10</span><span class='p'>;</span>
+	    <span class='kn'>gzip</span>  <span class='no'>on</span><span class='p'>;</span>
+	    <span class='kn'>gzip_comp_level</span> <span class='mi'>1</span><span class='p'>;</span>
+	    <span class='kn'>gzip_proxied</span> <span class='s'>any</span><span class='p'>;</span>
+	    <span class='kn'>gzip_types</span> <span class='s'>text/plain</span> <span class='s'>text/css</span> <span class='s'>application/x-javascript</span> <span class='s'>text/xml</span>
+	<span class='s'>application/xml</span> <span class='s'>application/xml+rss</span> <span class='s'>text/javascript</span><span class='p'>;</span>
+	    <span class='kn'>server</span> <span class='p'>{</span>
+	        <span class='kn'>listen</span>       <span class='mi'>80</span><span class='p'>;</span>
+	        <span class='kn'>server_name</span>  <span class='s'>localhost</span><span class='p'>;</span>
+	        <span class='kn'>location</span> <span class='s'>/</span> <span class='p'>{</span>
+	            <span class='kn'>root</span>   <span class='s'>html</span><span class='p'>;</span>
+	            <span class='kn'>index</span>  <span class='s'>index.php</span> <span class='s'>index.html</span> <span class='s'>index.htm</span><span class='p'>;</span>
+	        <span class='p'>}</span>
+	        <span class='kn'>error_page</span>   <span class='mi'>500</span> <span class='mi'>502</span> <span class='mi'>503</span> <span class='mi'>504</span>  <span class='s'>/50x.html</span><span class='p'>;</span>
+	        <span class='kn'>location</span> <span class='p'>=</span> <span class='s'>/50x.html</span> <span class='p'>{</span>
+	            <span class='kn'>root</span>   <span class='s'>html</span><span class='p'>;</span>
+	        <span class='p'>}</span>
+	 	<span class='kn'>location</span> <span class='p'>~</span> <span class='sr'>^/index.php</span>
+	        <span class='p'>{</span>
+	                <span class='kn'>fastcgi_pass</span> <span class='n'>127.0.0.1</span><span class='p'>:</span><span class='mi'>9000</span><span class='p'>;</span>
+	                <span class='kn'>fastcgi_param</span> <span class='s'>SCRIPT_FILENAME</span>
+	<span class='s'>//usr/local/nginx/html</span><span class='nv'>$fastcgi_script_name</span><span class='p'>;</span>
+	                <span class='kn'>fastcgi_param</span> <span class='s'>PATH_INFO</span> <span class='nv'>$fastcgi_script_name</span><span class='p'>;</span>
+	                <span class='kn'>include</span> <span class='s'>/usr/local/nginx/conf/fastcgi_params</span><span class='p'>;</span>
+	        <span class='p'>}</span>
+	    <span class='p'>}</span>
+	<span class='p'>}</span>
+	
+</pre>
+</div>
 <h2 id='konfigurasi_file_fastcgi_params'>Konfigurasi file fastcgi_params</h2>
 
 <p>vi <code>/etc/nginx/fastcgi_params</code></p>
-
+<div class='highlight'><pre><span class='k'>fastcgi_param</span>  <span class='s'>QUERY_STRING</span>       <span class='nv'>$query_string</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>REQUEST_METHOD</span>     <span class='nv'>$request_method</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>CONTENT_TYPE</span>       <span class='nv'>$content_type</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>CONTENT_LENGTH</span>     <span class='nv'>$content_length</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SCRIPT_NAME</span>        <span class='nv'>$fastcgi_script_name</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>REQUEST_URI</span>        <span class='nv'>$request_uri</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>DOCUMENT_URI</span>       <span class='nv'>$document_uri</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>DOCUMENT_ROOT</span>      <span class='nv'>$document_root</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SERVER_PROTOCOL</span>    <span class='nv'>$server_protocol</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>GATEWAY_INTERFACE</span>  <span class='s'>CGI/1.1</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SERVER_SOFTWARE</span>    <span class='s'>nginx/</span><span class='nv'>$nginx_version</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>REMOTE_ADDR</span>        <span class='nv'>$remote_addr</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>REMOTE_PORT</span>        <span class='nv'>$remote_port</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SERVER_ADDR</span>        <span class='nv'>$server_addr</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SERVER_PORT</span>        <span class='nv'>$server_port</span><span class='p'>;</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>SERVER_NAME</span>        <span class='nv'>$server_name</span><span class='p'>;</span>
+<span class='c1'># PHP only, required if PHP was built with --enable-force-cgi-redirect</span>
+<span class='k'>fastcgi_param</span>  <span class='s'>REDIRECT_STATUS</span>    <span class='mi'>200</span><span class='p'>;</span>
+<span class='k'>fastcgi_connect_timeout</span> <span class='mi'>60</span><span class='p'>;</span>
+<span class='k'>fastcgi_send_timeout</span> <span class='mi'>180</span><span class='p'>;</span>
+<span class='k'>fastcgi_read_timeout</span> <span class='mi'>180</span><span class='p'>;</span>
+<span class='k'>fastcgi_buffer_size</span> <span class='mi'>128k</span><span class='p'>;</span>
+<span class='k'>fastcgi_buffers</span> <span class='mi'>4</span> <span class='mi'>256k</span><span class='p'>;</span>
+<span class='k'>fastcgi_busy_buffers_size</span> <span class='mi'>256k</span><span class='p'>;</span>
+<span class='k'>fastcgi_temp_file_write_size</span> <span class='mi'>256k</span><span class='p'>;</span>
+<span class='k'>fastcgi_intercept_errors</span> <span class='no'>on</span><span class='p'>;</span>
+</pre>
+</div>
 <p>Bikin Script di <code>init.d</code> (RH based)</p>
 
 <p>vi <code>/etc/init.d/nginx</code></p>

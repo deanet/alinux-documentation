@@ -4,7 +4,7 @@
 	<link type="application/atom+xml" href="http://alinux.web.id/atom.xml" rel="self" />
 	<link type="text/html" href="http://alinux.web.id/" rel="alternate" />
 	<id>tag:alinux.web.id,2010-05-24:/atom.xml</id>
-	<updated>2010-06-23T13:47:39-04:00</updated>
+	<updated>2010-07-08T09:33:14-04:00</updated>
 	
 	<entry>
 		<title>Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</title>
@@ -163,11 +163,11 @@ Connection closed by foreign host.
 &lt;/pre&gt;
 &lt;/div&gt;
 &lt;h3 id='hasil_tail'&gt;hasil tail:&lt;/h3&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;Jun 19 09:12:14 denbaguse qmail: 1276913534.111443 CHKUSER accepted any rcpt: from &amp;lt;test@testaja.com:postmaster@testaja.lg:&amp;gt; remote
+&lt;div class='highlight'&gt;&lt;pre&gt;Jun 19 09:12:14 denbaguse qmail: 1276913534.111443 CHKUSER accepted any rcpt: from &amp;lt;&lt;span class='nb'&gt;test&lt;/span&gt;@testaja.com:postmaster@testaja.lg:&amp;gt; remote
 &amp;lt;:unknown:127.0.0.1&amp;gt; rcpt &amp;lt;postmaster@testaja.lg&amp;gt; : accepted any recipient &lt;span class='k'&gt;for &lt;/span&gt;any rcpt domain                                           
 Jun 19 09:12:14 denbaguse qmail: 1276913534.111512 qmail-smtpd: pid 13748 RCPT TO: &amp;lt;postmaster@testaja.lg&amp;gt;                               
 Jun 19 09:12:24 denbaguse qmail: 1276913544.622077 new msg 78833                                       
-Jun 19 09:12:24 denbaguse qmail: 1276913544.622156 info msg 78833: bytes 190 from &amp;lt;test@testaja.com&amp;gt; qp 13750 uid 0                                          Jun 19 09:12:24 denbaguse qmail: 1276913544.622856 starting delivery 1: msg 78833 to &lt;span class='nb'&gt;local &lt;/span&gt;testaja.lg-postmaster@testaja.lg              
+Jun 19 09:12:24 denbaguse qmail: 1276913544.622156 info msg 78833: bytes 190 from &amp;lt;&lt;span class='nb'&gt;test&lt;/span&gt;@testaja.com&amp;gt; qp 13750 uid 0                                          Jun 19 09:12:24 denbaguse qmail: 1276913544.622856 starting delivery 1: msg 78833 to &lt;span class='nb'&gt;local &lt;/span&gt;testaja.lg-postmaster@testaja.lg              
 Jun 19 09:12:24 denbaguse qmail: 1276913544.622892 status: &lt;span class='nb'&gt;local &lt;/span&gt;1/10 remote 0/20                      
 Jun 19 09:12:24 denbaguse qmail: 1276913544.684768 delivery 1: success: did_0+0+1/                     
 Jun 19 09:12:24 denbaguse qmail: 1276913544.684860 status: &lt;span class='nb'&gt;local &lt;/span&gt;0/10 remote 0/20                      
@@ -176,7 +176,7 @@ Jun 19 09:12:24 denbaguse qmail: 1276913544.684911 end msg 78833
 &lt;/div&gt;
 &lt;h3 id='isi_email'&gt;Isi email:&lt;/h3&gt;
 &lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/alinux# cat /var/lib/vpopmail/domains/testaja.lg/postmaster/Maildir/new/1276913544.13752.denbaguse&lt;span class='se'&gt;\,&lt;/span&gt;S&lt;span class='se'&gt;\=&lt;/span&gt;258
-Return-Path: &amp;lt;test@testaja.com&amp;gt;
+Return-Path: &amp;lt;&lt;span class='nb'&gt;test&lt;/span&gt;@testaja.com&amp;gt;
 Delivered-To: postmaster@testaja.lg
 Received: &lt;span class='o'&gt;(&lt;/span&gt;qmail 13750 invoked by uid 0&lt;span class='o'&gt;)&lt;/span&gt;; 19 Jun 2010 09:12:20 +0700
 Received: from unknown &lt;span class='o'&gt;(&lt;/span&gt;postmaster@testaja.lg@127.0.0.1&lt;span class='o'&gt;)&lt;/span&gt;
@@ -202,7 +202,7 @@ LIST
 .
 RETR 1
 +OK 258 octets
-Return-Path: &amp;lt;test@testaja.com&amp;gt;
+Return-Path: &amp;lt;&lt;span class='nb'&gt;test&lt;/span&gt;@testaja.com&amp;gt;
 Delivered-To: postmaster@testaja.lg
 Received: &lt;span class='o'&gt;(&lt;/span&gt;qmail 13750 invoked by uid 0&lt;span class='o'&gt;)&lt;/span&gt;; 19 Jun 2010 09:12:20 +0700
 Received: from unknown &lt;span class='o'&gt;(&lt;/span&gt;postmaster@testaja.lg@127.0.0.1&lt;span class='o'&gt;)&lt;/span&gt;
