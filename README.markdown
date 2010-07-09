@@ -1,6 +1,6 @@
 
 #Please don't touch anything files
-#This is repo for site [alinux.web.id](http://alinux.web.id)
+#This is source for site [alinux.web.id](http://alinux.web.id)
 
 ## Muqadimah
 
