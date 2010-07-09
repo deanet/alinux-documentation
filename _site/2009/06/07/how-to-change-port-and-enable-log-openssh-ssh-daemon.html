@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>How to change port and enable log OpenSSH SSH daemon &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">How to change port and enable log OpenSSH SSH daemon</span><br />
+	<span class="date">Jun 07 2009</span><br />
+	<span class="content"><p>The syslog-ng application is a flexible and highly scalable system logging application that is ideal for creating centralized logging solutions. The main features of syslog-ng are; reliable log transfer, secure logging using SSL/TLS, IPv4 and IPv6 support and many others&#8221; (Syslog-ng, 2008).</p>
+
+<h2 id='problem'>Problem:</h2>
+
+<p>On Linux Suse enterprise version, log ssh saved into <code>/var/log/messages</code> , or opensuse 11 like my machine doesn&#8217;t noticed into <code>/var/log/messages</code>. So we have a solution, what is solution ??</p>
+
+<h2 id='solution'>Solution:</h2>
+
+<p>we can add option <code>log</code> on <code>syslog-ng</code> and noticed into self directori or self file. example: <code>sshderr.log</code> for error access and <code>sshd.log</code> for enable access into directori <code>/var/log/sshd</code>.</p>
+
+<h2 id='prepare'>Prepare:</h2>
+
+<h4 id='1_make_sure_syslogng_have_been_installed_on_your_machine'>1. Make sure syslog-ng have been installed on your machine.</h4>
+
+<pre><code># rpm -qa | grep syslog
+syslog-ng-1.6.12-76.2</code></pre>
+
+<p>if nothing of results, you can install by <code>yast</code>:</p>
+
+<pre><code># yast2 -i syslog-ng</code></pre>
+
+<h4 id='2_make_sure_openssh_daemon_is_running'>2. Make sure openssh daemon is running</h4>
+
+<pre><code># ps aux | grep sshd</code></pre>
+
+<p>if not running, assumed we use <code>opensuse 11</code> type,:</p>
+
+<pre><code>/etc/init.d/sshd start</code></pre>
+
+<h4 id='3_make_sure_enable__on_'>3. Make sure enable <code>SyslogFacility</code> on <code>/etc/ssh/sshd_config</code></h4>
+
+<pre><code>SyslogFacility AUTH</code></pre>
+
+<h2 id='configuration'>Configuration:</h2>
+
+<h4 id='1_create_directory_'>1. Create directory <code>/var/log/sshd</code></h4>
+
+<pre><code># mkdir /var/log/sshd</code></pre>
+
+<h4 id='2_create_two_empty_files_into_directori_'>2. create two empty files into directori <code>/var/log/sshd</code></h4>
+
+<pre><code># touch /var/log/sshd/sshderr.log
+# touch /var/log/sshd/sshd.log</code></pre>
+
+<h4 id='3_add_some_option_into_'>3. add some option into <code>/etc/syslog-ng/syslog-ng.cnf</code></h4>
+
+<pre><code># SSH Filters
+filter f_sshderr    { match(&#39;^sshd\[[0-9]+\]: error:&#39;); };
+filter f_sshd       { match(&#39;^sshd\[[0-9]+\]:&#39;); };
+# SSH Logging
+destination sshderr { file(&quot;/var/log/sshd/sshderr.log&quot;); };
+log { source(src); filter(f_sshderr); destination(sshderr); flags(final); };
+destination sshd { file(&quot;/var/log/sshd/sshd.log&quot;); };
+log { source(src); filter(f_sshd); destination(sshd); flags(final); };</code></pre>
+
+<h4 id='4_restart_service'>4. Restart service</h4>
+
+<p>Suseconfig service:</p>
+
+<pre><code># SuSEconfig
+Starting SuSEconfig, the SuSE Configuration Tool...
+Running in full featured mode.
+Reading /etc/sysconfig and updating the system...
+Executing /sbin/conf.d/SuSEconfig.glib2...
+[Default Applications]
+application/x-redhat-package-manager=package-manager.desktop
+application/x-rpm=package-manager.desktop
+Executing /sbin/conf.d/SuSEconfig.groff...
+Executing /sbin/conf.d/SuSEconfig.permissions...
+Finished.</code></pre>
+
+<p>Syslog-ng service:</p>
+
+<pre><code># service syslog restart
+Shutting down syslog services                                         done
+Starting syslog services                                              done</code></pre>
+
+<p>done. finish.</p>
+
+<p>now u can test by remote machine with ssh. try make error and repeat remote that make accessable. see ssh log:</p>
+
+<p>error log:</p>
+
+<pre><code># cat /var/log/sshd/sshderr.log
+Jun  1 06:34:37 dhanuxe sshd 1579: error: PAM: Authentication failure for deanet from 125.208.155.134</code></pre>
+
+<p>accessable log:</p>
+
+<pre><code>dhanuxe:/home/deanet # cat /var/log/sshd/sshd.log
+Jun  1 06:34:35 dhanuxe sshd 1579: reverse mapping checking getaddrinfo for 125.208.155.134.cbn.net.id [125.208.155.134] failed - POSSIBLE BREAK-IN ATTEMPT!</code></pre>
+
+<p>Jun 1 06:34:44 dhanuxe sshd 1579: Accepted keyboard-interactive/pam for deanet from 125.208.155.134 port 1996 ssh2</p>
+
+<h4 id='change_port'>Change Port</h4>
+
+<p>To change ssh service you can edit following file <code>/etc/ssh/sshd_config</code></p>
+
+<pre><code>Port 22</code></pre>
+
+<p>gud lak ;)</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://forums.opensuse.org/network-internet/415433-sshd-log-file.html'>forum.opensuse.org</a></li>
+
+<li><a href='http://www.novell.com/communities/node/5003/syslog-ng-ssh-logging'>novell.com</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

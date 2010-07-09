@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install samba 3.x on FreeBSD 7.2 &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install samba 3.x on FreeBSD 7.2</span><br />
+	<span class="date">Dec 07 2009</span><br />
+	<span class="content"><p>Install samba 3.x on FreeBSD 7.2. Silahkan juga di cobain d FreeBSD 8 :P ..</p>
+
+<h2 id='1_install'>1. Install</h2>
+
+<pre><code># cd /usr/ports/net/samba3
+# make install clean</code></pre>
+
+<h2 id='2_konfigurasi'>2. konfigurasi</h2>
+
+<pre><code># cp /usr/local/etc/smb.conf.default /usr/local/etc/smb.conf</code></pre>
+
+<h2 id='issue'>Issue:</h2>
+
+<ol>
+<li>Setiap user login dengan username dan password.</li>
+
+<li>Setiap user dapat sharing file dengan user lainnya.</li>
+
+<li>Ada sebuah folder yg hanya bisa ditulis/write oleh user tertentu (misal <code>user1</code>)</li>
+</ol>
+
+<h2 id='configure'>configure:</h2>
+
+<p>a. Isi konfigurasi smb.conf seperti dibawah ini:</p>
+
+<p><code>vi /usr/local/etc/smb.conf</code></p>
+<div class='highlight'><pre><span class='c'>#=======  Global Settings  ===========</span>
+<span class='o'>[</span>global<span class='o'>]</span>
+
+   unix <span class='nv'>extensions</span> <span class='o'>=</span> no
+   <span class='nv'>workgroup</span> <span class='o'>=</span> MSHOME
+   server <span class='nv'>string</span> <span class='o'>=</span> samba
+
+   <span class='c'>## issue no 1</span>
+   <span class='nv'>security</span> <span class='o'>=</span> user
+   log <span class='nv'>file</span> <span class='o'>=</span> /var/log/samba/log-%m.log
+   max log <span class='nv'>size</span> <span class='o'>=</span> 50
+   dns <span class='nv'>proxy</span> <span class='o'>=</span> no
+
+
+<span class='c'>#====== Share Definitions  =========</span>
+
+<span class='o'>[</span>homes<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> Home Directories <span class='k'>for</span> %u on %h
+   <span class='nv'>browseable</span> <span class='o'>=</span> no
+   <span class='nv'>writable</span> <span class='o'>=</span> yes
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/%u/Docs
+   valid <span class='nv'>users</span> <span class='o'>=</span> %S
+
+<span class='c'>## issue no 2</span>
+<span class='o'>[</span>public<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> %h shared Public Stuff
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/samba/public
+   force directory <span class='nv'>mode</span> <span class='o'>=</span> 1777
+   force create <span class='nv'>mode</span> <span class='o'>=</span> 1777
+   force <span class='nv'>group</span> <span class='o'>=</span> nobody
+   force <span class='nv'>user</span> <span class='o'>=</span> nobody
+   <span class='nv'>public</span> <span class='o'>=</span> yes
+   <span class='nv'>writable</span> <span class='o'>=</span> yes
+   <span class='nb'>read </span><span class='nv'>only</span> <span class='o'>=</span> no
+
+<span class='c'>## issue nomor 3</span>
+<span class='o'>[</span>software<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> %h shared Software
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/samba/software
+   <span class='nb'>read </span><span class='nv'>only</span> <span class='o'>=</span> yes
+   write <span class='nv'>list</span> <span class='o'>=</span> user1
+   create <span class='nv'>mask</span> <span class='o'>=</span> 0664
+   directory <span class='nv'>mask</span> <span class='o'>=</span> 0775
+</pre>
+</div>
+<p>b. lalu bikin user misalnya <code>user1</code> dan <code>user2</code> , dan user <code>samba</code></p>
+
+<pre><code>adduser -v</code></pre>
+
+<p>c. Bikin folder Docs didalam directory <code>/home/user1</code> dan <code>/home/user2</code></p>
+
+<p>d. jgn lupa chown dan group nya. n pastikan perm</p>
+
+<p><em>owner</em>:</p>
+
+<pre><code>chown user1 public
+chown user2 public</code></pre>
+
+<p><em>group</em>:</p>
+
+<pre><code>chgroup wheel public
+chgroup wheel public</code></pre>
+
+<p>e. bkin dir <code>public</code> (issue no 1) dan software (issue no 3) di home samba untuk sharing antar user</p>
+
+<pre><code>mkdir /home/samba/public</code></pre>
+
+<p>f. beri perm 777 untuk <code>public</code> dan 755 untuk <code>software</code></p>
+
+<pre><code>chmod 777 /home/samba/public
+chmod 755 /home/samba/software</code></pre>
+
+<p>g. klo uda set password user untuk samba nya:</p>
+
+<pre><code>smbpasswd -a user1
+smbpasswd -a user2</code></pre>
+
+<h2 id='3_lalu_jalankan_smba_nya'>3. lalu jalankan smba nya</h2>
+
+<pre><code>/usr/local/etc/rc.d/samba start</code></pre>
+
+<h2 id='4_testing'>4. Testing</h2>
+
+<p>n cek \ip.kamu :)</p>
+
+<p>semoga bermanfaat :)</p>
+
+<p>Referensi: 1. <a href='http://www.us-webmasters.com/FreeBSD/Install/Samba/'>http://www.us-webmasters.com/FreeBSD/Install/Samba/</a></p></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

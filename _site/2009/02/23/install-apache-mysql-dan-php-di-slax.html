@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install apache, mysql dan php di slax &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	
+	<script type="text/javascript">
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', '']);
+	  _gaq.push(['_trackPageview']);
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	  })();
+	</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install apache, mysql dan php di slax</span><br />
+	<span class="date">Feb 23 2009</span><br />
+	<span class="content"><p>Peralatan yang dibutuhkan:</p>
+
+<p><code>pkgtool</code></p>
+
+<p>biasanya <code>pkgtool</code> udah include di distro slax</p>
+
+<p>bahannya:</p>
+
+<p>Download di <a href='http://repository.slacky.eu/slackware-12.1/'>sini</a> (httpd,mysql,php) Di sini menggunakan paket <code>httpd-2.2.8</code>, <code>php-5.2.5-i486</code> dan <code>mysql-5.0.51b</code> dari slacky. Semuanya paket <code>tgz</code>. Kenapa enggak pake paket <code>lzm</code> ?? karena kalo kita pake <code>lzm</code> ntar remove nya susah, so kita pake paket <code>tgz</code> biar ntar remove paket nya lebih mudah :) . Untuk installasi nya cukup mudah. Buka konsole, lalu masuk k direktori anda menyimpan paket2nya. lalu ketik:</p>
+<div class='highlight'><pre>installpkg *.tgz
+</pre>
+</div>
+<h2 id='running_apache'>Running apache</h2>
+
+<p>Untuk menjalankan apache na tinggal ketik</p>
+
+<pre><code>/etc/rc.d/rc.httpd start</code></pre>
+
+<p>pastikan <code>rc.httpd</code> sudah diberi <code>bit x</code>.</p>
+
+<h2 id='enable_php'>Enable PHP</h2>
+
+<p>Untuk enable php tambahkan modul di <code>/etc/httpd/httpd.conf</code>. vim /etc/httpd/httpd.conf</p>
+
+<p>format penambahan modul: LoadModule foo_module modules/mod_foo.so</p>
+
+<p>jadi komplitnya LoadModule php5_module lib/httpd/modules/libphp5.so</p>
+
+<p>Terus tambahkan tipe mime nya AddType application/x-httpd-php .php</p>
+
+<p>ato lebih mudah, bisa juga dengan uncomment pada baris yang ada di <code>/etc/httpd/httpd.conf</code> . vim /etc/httpd/httpd.conf</p>
+
+<p>setelah masuk vim ketik: /mod.php.conf</p>
+
+<p>akan ketemu baris seperti ini # Include /etc/httpd/mod_php.conf</p>
+
+<p>hilangkan tanda <code>#</code> dengan tombol del</p>
+
+<h2 id='testing'>testing</h2>
+
+<p>Buat script php sederhana</p>
+<div class='highlight'><pre><span class='cp'>&lt;?php</span> <span class='k'>echo</span> <span class='s2'>&quot;test&quot;</span><span class='p'>;</span> <span class='cp'>?&gt;</span><span class='x' />
+</pre>
+</div>
+<p>simpan dengan nama <code>test.php</code> misalnya di direktori <code>/var/www/htdocs/</code></p>
+
+<p>Pastikan daemon httpd / apache sudah jalan. ketik <code>localhost/test.php</code> pada browser</p>
+
+<h2 id='mysql'>MySQL</h2>
+
+<p>Ketika kita install MySQL sebenernya belum ada databasenya sama sekali. Karena itu kita mesti bikin sendiri. su mysql mysql_install_db</p>
+
+<p>untuk menjalankan daemon mysql beri <code>bit x</code> ke <code>/etc/rc.d/rc.mysql</code> lalu ketik:</p>
+
+<pre><code>/etc/rc.d/rc.mysql start</code></pre>
+
+<p>jika ada error ERROR 2002 (HY000): Can&#8217;t connect to local MySQL server through socket &#8216;/var/run/mysql/mysql.sock&#8217; (2)</p>
+
+<p>solusi: chown -R mysql:mysql /var/lib/mysql/mysql chmod -R 755 /var/lib/mysql/mysql</p>
+
+<p>kalo ada pertanyaan monggo .. kita sama2 belajar :)</p>
+
+<p>gudlak ;)</p>
+
+<p>Referensi:</p>
+
+<ol>
+<li><code>forum [dot] linux [dot] or [dot] id</code></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>
