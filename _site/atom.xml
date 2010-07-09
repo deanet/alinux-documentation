@@ -4,8 +4,86 @@
 	<link type="application/atom+xml" href="http://alinux.web.id/atom.xml" rel="self" />
 	<link type="text/html" href="http://alinux.web.id/" rel="alternate" />
 	<id>tag:alinux.web.id,2010-05-24:/atom.xml</id>
-	<updated>2010-07-08T22:57:53-04:00</updated>
+	<updated>2010-07-09T16:19:15-04:00</updated>
 	
+	<entry>
+		<title>Upgrade ClamAV di Debian Etch</title>
+		<author>
+			<name>alinux.web.id</name>
+		</author>
+		<link type="text/html" href="http://alinux.web.id/2010/07/14/upgrade-clamav-di-debian-etch.html" rel="alternate" />
+		<updated>2010-07-14T10:52:53-07:00</updated>
+		<id>tag:alinux.web.id,2010-07-14:/2010/07/14/upgrade-clamav-di-debian-etch</id>
+		<content type="html">&lt;p&gt;Bermula dari ketidakberesan &lt;code&gt;clamdscan&lt;/code&gt; membuat &lt;code&gt;simscan&lt;/code&gt; tidak berjalan sebagaimana mestinya. Usul usul punya usul ternyata setelah dicek memang benar &lt;code&gt;clamdscan&lt;/code&gt; tidak berjalan secara normal.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# clamdscan mailtest.txt 
+connect(): No such file or directory           
+WARNING: Can&amp;#39;t connect to clamd.               
+
+----------- SCAN SUMMARY -----------
+Infected files: 0                   
+Time: 0.001 sec (0 m 0 s)           
+denbaguse:/home/deanet#             
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah dipusingkan dengan beberapa daemon dan proses. Alhasil dicek di configurasi nya &lt;code&gt;/etc/clamav/clamd.conf&lt;/code&gt;. Dan stelah dicek beberapa &lt;code&gt;pid&lt;/code&gt; ternyata ada yang janggal.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# ls -al /var/run/clamav/                                                                                   
+total 12                                                                                                                          
+drwxr-xr-x 2 clamav clamav 4096 2010-06-21 12:15 .                                                                                
+drwxr-xr-x 9 root   root   4096 2010-06-19 09:30 ..                                                                               
+-rw-rw---- 1 clamav clamav    5 2010-06-21 12:15 freshclam.pid                                                                    
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Lha??? kemana &lt;code&gt;pid&lt;/code&gt; dari &lt;code&gt;clamav-daemon&lt;/code&gt; ?&lt;/p&gt;
+
+&lt;p&gt;Menyelidiki kasus tersebut&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# dpkg -l clamav                        
+Desired=Unknown/Install/Remove/Purge/Hold                     
+| Status=Not/Installed/Config-files/Unpacked/Failed-config/Half-installed
+|/ Err?=(none)/Hold/Reinst-required/X=both-problems (Status,Err: uppercase=bad)
+||/ Name                Version             Description                        
++++-===================-===================-======================================================
+ii  clamav              0.90.1dfsg-4etch19  antivirus scanner for Unix                            
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Ternyata versi nya sudah sangat old. tambahkan repository list &lt;code&gt;backports&lt;/code&gt;:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# vim /etc/apt/sources.list
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Update repo,&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# apt-get update
+Get:1 http://backports.mithril-linux.org etch-backports Release.gpg [189B]
+Get:2 http://backports.mithril-linux.org etch-backports Release [72.9kB]
+Get:3 http://backports.mithril-linux.org etch-backports/main Packages [561kB]
+Get:4 http://backports.mithril-linux.org etch-backports/contrib Packages [2631B]
+Get:5 http://backports.mithril-linux.org etch-backports/non-free Packages [5785B]
+Fetched 643kB in 43s (14.9kB/s)
+Reading package lists... Done
+denbaguse:/home/deanet#
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Jalankan untuk upgrade clamAV&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;apt-get upgrade clamav clamav-daemon clamav-freshclam
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Test:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;denbaguse:/home/deanet# clamdscan mailtest.txt
+/home/deanet/mailtest.txt: OK
+
+----------- SCAN SUMMARY -----------
+Infected files: 0
+Time: 0.251 sec (0 m 0 s)
+denbaguse:/home/deanet# ls -al /var/run/clamav/
+total 16
+drwxr-xr-x 2 clamav clamav 4096 2010-06-21 13:21 .
+drwxr-xr-x 9 root   root   4096 2010-06-21 13:20 ..
+srwxrwxrwx 1 clamav clamav    0 2010-06-21 13:21 clamd.ctl
+-rw-rw-r-- 1 clamav clamav    5 2010-06-21 13:21 clamd.pid
+-rw-rw-r-- 1 clamav clamav    5 2010-06-21 13:35 freshclam.pid
+denbaguse:/home/deanet#
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;semoga membantu :)&lt;/p&gt;</content>
+	</entry>
 	<entry>
 		<title>Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</title>
 		<author>
@@ -960,33 +1038,5 @@ cacti#&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;and then run command again ;)&lt;/p&gt;
 
 &lt;p&gt;Reference: &lt;a href='http://freebsd.munk.me.uk/archives/199-Portupgrade-fails-to-upgrade-dependencies.html'&gt;http://freebsd.munk.me.uk/archives/199-Portupgrade-fails-to-upgrade-dependencies.html&lt;/a&gt;&lt;/p&gt;</content>
-	</entry>
-	<entry>
-		<title>How to mount iso on FreeBSD</title>
-		<author>
-			<name>alinux.web.id</name>
-		</author>
-		<link type="text/html" href="http://alinux.web.id/2010/02/13/how-to-mount-iso-on-freebsd.html" rel="alternate" />
-		<updated>2010-02-13T13:00:02-07:00</updated>
-		<id>tag:alinux.web.id,2010-02-13:/2010/02/13/how-to-mount-iso-on-freebsd</id>
-		<content type="html">&lt;p&gt;Just simply to mount:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;%sudo mdconfig -a -t vnode -o readonly -f GRTMPOEM_EN.iso
-md0
-%sudo mount -t cd9660 /dev/md0 tmp/
-%ls tmp/
-autorun.inf     i386            setupxp.htm     win51
-docs            readme.htm      support         win51ip
-dotnetfx        setup.exe       valueadd        win51ip.sp3&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;semoga bermanfaat :)&lt;/p&gt;
-
-&lt;p&gt;Referensi:&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;a href='http://forums.freebsd.org/showthread.php?t=4932'&gt;http://forums.freebsd.org/showthread.php?t=4932&lt;/a&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;a href='http://www.freebsddiary.org/iso-mount.php'&gt;http://www.freebsddiary.org/iso-mount.php&lt;/a&gt;&lt;/li&gt;
-&lt;/ol&gt;</content>
 	</entry>
 </feed>
