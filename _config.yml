@@ -1,8 +1,10 @@
 pygments: true
 permalink: date
-#google_analytics_code: UA-12495571-3
+google_analytics_code: UA-12495571-3
 url: http://alinux.web.id
 exclude:
 - Rakefile
 - README.markdown
 - CHANGELOG.markdown
+- credits.markdown
+- about.markdown
