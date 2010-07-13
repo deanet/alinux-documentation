@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installing Slackware dari USB memori Stick atau GRUB &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installing Slackware dari USB memori Stick atau GRUB</span><br />
+	<span class="date">Mar 20 2009</span><br />
+	<span class="content"><p>Hari gini install linux pake CD ?? ogak bangets.. :D. install slackware pake USB ??. Maknyuss banget &#8230; Gak ada USB ?? install pake Grub ?? TOP Bangetss &#8230;:D</p>
+
+<p>Yang mesti dibutuhin</p>
+
+<p><strong>1. ISO Slackware</strong><br /> <strong>2. USB memori stick ato flashdisk</strong><br /> <strong>3. <a href='http://freshmeat.net/projects/lilo/'>lilo</a></strong><br /></p>
+
+<p>lilo mesti di install dulu biar bisa boot pake USB. kalo belum diinstall, download aj executable nya di <a href='http://linux-live.org'>linux-live</a>. Di situ ada koq, uda komplit utk linux, win juga ada (gak dibahas). Klo males dunlud, y pake grub aja :P.</p>
+
+<p>Disini dalam percobaan pake distro slackware 12.1 . Lansung saja mount iso na dg opsi loop dan copy isinya ke direktori terserah.</p>
+
+<h2 id='dengan_usb_memori_stick_ato_flash_disk'>Dengan USB memori Stick ato Flash Disk</h2>
+
+<p><strong>1. Menyiapkan bahan installasi untuk Hardisk:</strong> mount iso na</p>
+
+<pre><code>mount /mnt/sda4/iso/slackware/slackware-12.1-install-d1.iso tmp/ -o loop</code></pre>
+
+<p>lalu copy isi iso na ke <code>/home/terserah</code> misalnya.</p>
+
+<pre><code>cp -a tmp/* /home/terserah</code></pre>
+
+<p><strong>2. Menyiapkan bahan installasi untuk USB:</strong></p>
+
+<p>mount file <code>usbboot.img</code> yg ada di <code>/home/terserah/usb-and-pxe-installers</code> dg loop.</p>
+
+<pre><code>mkdir usb
+mount /home/terserah/usb-and-pxe-installers/usbboot.img usb/ -o loop</code></pre>
+
+<p><strong>3. Menyiapakan alat perang:</strong></p>
+
+<p>mount USB Flashdisk na lalu kopi isi file <code>usbboot.img</code> tadi</p>
+
+<pre><code>mount /mnt/sdb1
+cp usb/* /mnt/sdb1</code></pre>
+
+<p>terus bikin supaya USB na bisa booting ..</p>
+
+<pre><code>lilo -S /dev/null -M /dev/sdb ext
+lilo -S /dev/null -A /dev/sdb 1</code></pre>
+
+<p>selesai n reboot &#8230;</p>
+
+<h2 id='dengan_grub'>Dengan Grub</h2>
+
+<p>tambahkan di <code>Grub</code> kalo mo pake <code>Grub</code>:</p>
+
+<pre><code>title           Slackware Installer - older machine
+root            (hd0,3)
+kernel          /huge.s rw
+initrd          /initrd.img
+
+title           Slackware Installer - i486 machine
+root            (hd0,3)
+kernel          /hugesmp.s rw
+initrd          /initrd.img</code></pre>
+
+<p>Pastikan sudah mengkopi isi file <code>usbboot.img</code> tadi ke partisi 4 <code>(hd0,3)</code></p>
+
+<pre><code>cp usb/* /mnt/sda4</code></pre>
+
+<p>selesai.. reboot n pilih menu grubna</p>
+
+<p><strong>tips:</strong></p>
+
+<p>kalo mau cepet gak pake lilo utk bisa booting na pake cara ini (tidak dianjurkan tapi masih manjur):</p>
+
+<pre><code>dd if=usbboot.img of=/dev/sdb bs=512</code></pre>
+
+<p><strong>warning</strong></p>
+
+<p>hati2 jgn sampe salah nama device na. :) . terus reboot, n seharusnya uda bisa booting.</p>
+
+<p>cara diatas (perintah dd) akan membuat partisi usb menjadi kacau balau (lihat pake <code>fdisk -l</code>). untuk mngembalikannya pake <code>dd</code> lagi.</p>
+
+<pre><code>dd if=/dev/zero of=/dev/sdb bs=512 count=1</code></pre>
+
+<p>terus ketik:</p>
+
+<pre><code>fdisk /dev/sda &lt;&lt;eof
+n
+p
+1
+
+t
+b
+w
+EOF</code></pre>
+
+<p>format dg partisi vfat</p>
+
+<pre><code>mkdosfs -F32 /dev/sda1</code></pre>
+
+<p>slesai ..</p>
+
+<p><strong>Referensi:</strong></p>
+
+<ol>
+<li>Manual READ ME (include ON CD ISO Slackware)</li>
+
+<li><a href='http://www.slackware.com/~alien/dokuwiki/doku.php?id=slackware:usbboot'>slacware:usbboot</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

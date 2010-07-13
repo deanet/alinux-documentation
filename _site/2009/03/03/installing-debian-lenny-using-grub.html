@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installing debian lenny using GRUB &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installing debian lenny using GRUB</span><br />
+	<span class="date">Mar 03 2009</span><br />
+	<span class="content"><p>on <a href='/2009/01/23/installing-debian-lenny-from-a-usb-memory-stick-usb-hdd.html'>previous post</a> we can install debian lenny using USB memori stick. Now, we will try install debian lenny using <code>grub</code>. So without burned on CD.</p>
+
+<p>tools needed:</p>
+
+<ol>
+<li><a href='http://freshmeat.net/projects/gnugrub/'>Grub</a></li>
+
+<li><a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media/'>vmlinuz and initrd</a>.</li>
+
+<li><a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media/'>boot.img.gz</a> (optional)</li>
+</ol>
+
+<p>okay,..</p>
+
+<p>first step, <code>grub</code> must installed on your machine. Then, copy <code>vmlinuz</code> and <code>initrd</code> to partition. example: <code>sda4</code></p>
+
+<pre><code>cp {vmlinuz,initrd} /mnt/sda4</code></pre>
+
+<p>also your lenny ISO</p>
+
+<pre><code>cp /mnt/sda3/iso/debian-sid-lenny-cd/debian-testing-i386-CD-1.iso /mnt/sda4/</code></pre>
+
+<p>Now, just adding list menu on <code>GRUB</code> like this:</p>
+
+<pre><code>title           Debian Installer
+root            (hd0,3)
+kernel          /vmlinuz vga=791
+initrd          /initrd.gz[/sourcecode]</code></pre>
+
+<p>reboot and try it &#8230; maknyuss&#8230;.. ;)</p>
+
+<h2 id='tips'>Tips:</h2>
+
+<p>same as with previous post. we can using graphical installer using <code>boot.img.gz</code> . Extract it, and <code>mount</code> with <code>loop</code>. copy all needed.</p>
+
+<pre><code>mkdir tmp
+gunzip boot.img.gz
+mount boot.img tmp/ -o loop</code></pre>
+
+<p>copy all things on tmp to <code>/mnt/sda4</code></p>
+
+<pre><code>cp tmp/* /mnt/sda4</code></pre>
+
+<p>add on list <code>grub</code></p>
+
+<pre><code>title           Debian Graphic Installer
+root            (hd0,3)
+kernel          /linux vga=791
+initrd          /initrdg.gz</code></pre>
+
+<p>done.</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://debian.org/releases/stable/installmanuall'>Debian Manual</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install Apache 1.3 with mod_ssl and mod_watch, Mysql 4.1, PHP 5 on FreeBSD 7.2 &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install Apache 1.3 with mod_ssl and mod_watch, Mysql 4.1, PHP 5 on FreeBSD 7.2</span><br />
+	<span class="date">Jun 21 2009</span><br />
+	<span class="content"><p>Same as previous posting, we have installed apache 2 , mysql 5.x and php 5. On this posting now, we&#8217;ll try install apache 1.3 with mod_ssl and mod_watch, MySQL 4.1 and PHP 5.</p>
+
+<h2 id='installation'>Installation:</h2>
+
+<h4 id='apache_13'>Apache 1.3</h4>
+
+<p>to install apache 1.3 with <code>mod_ssl</code> :</p>
+
+<pre><code># cd /usr/ports/www/apache13-modssl
+# make install clean</code></pre>
+
+<p>to start just type</p>
+
+<pre><code># /usr/local/sbin/apachectl start</code></pre>
+
+<p>to enable apache on boot add <code>apache_enable=&quot;YES&quot;</code> following file <code>/etc/rc.conf</code></p>
+
+<p>check apache on your browser type localhost / 127.0.0.1 / ip address</p>
+
+<p>install <code>mod_watch</code></p>
+
+<pre><code># wget ftp://ftp.freebsd.org/pub/FreeBSD/ports/distfiles/mod_watch318.tgz
+# tar -xzvf mod_watch318.tgz
+# cd mod_watch
+# make install-dynamic</code></pre>
+
+<h2 id='php_5'>PHP 5</h2>
+
+<pre><code># cd /usr/ports/www/lang/php5</code></pre>
+
+<p>make sure to build Apache module is <code>checked</code></p>
+
+<p>add these option on file <code>/usr/local/etc/apache/httpd.conf</code></p>
+<div class='highlight'><pre>	<span class='nb'>AddType</span> application/x-httpd-php .php
+	<span class='nb'>AddType</span> application/x-httpd-php-source .phps
+	
+</pre>
+</div>
+<p>create file <code>php.ini</code> by copy <code>php.ini-dist</code></p>
+
+<pre><code># cd /usr/local/etc/
+# cp php.ini-dist php.ini</code></pre>
+
+<p>and then restart apache</p>
+
+<pre><code># /usr/local/sbin/apachectl restart</code></pre>
+
+<p>create file php on <code>/usr/local/www/apache22/data/</code></p>
+
+<pre><code>&lt;?php phpinfo();?&gt;</code></pre>
+
+<p>save as <code>test.php</code></p>
+
+<p>now test on your browser <code>http://127.0.0.1/test.php</code></p>
+
+<p>.</p>
+
+<h2 id='mysql_41'>MySQL 4.1</h2>
+
+<pre><code># cd /usr/ports/databases/cd mysql41-server/</code></pre>
+
+<h4 id='create_database'>create database</h4>
+
+<pre><code># /usr/local/bin/mysql_install_db</code></pre>
+
+<h4 id='change_owner_and_group_as_mysql'>change owner and group as mysql</h4>
+
+<pre><code># chown -R mysql /var/db/mysql/
+# chgrp -R mysql /var/db/mysql/</code></pre>
+
+<h4 id='run_mysql_daemon'>run mysql daemon</h4>
+
+<pre><code>/usr/local/bin/mysqld_safe user=mysql &amp;</code></pre>
+
+<h4 id='change_mysql_password'>change mysql password</h4>
+
+<pre><code>/usr/local/bin/mysqladmin -u root password newpass</code></pre>
+
+<p>to automatic msyql enable when boot add <code>/etc/rc.conf</code>:</p>
+
+<pre><code>mysql_enable=&quot;YES&quot;</code></pre>
+
+<h2 id='install_php5mysql_module'>Install PHP5-MySQL Module</h2>
+
+<pre><code>cd /usr/ports/databases/php5-mysql
+make install clean</code></pre>
+
+<p>create file php to check it</p>
+<div class='highlight'><pre><span class='x'>	</span><span class='cp'>&lt;?php</span>
+	<span class='nv'>$test</span><span class='o'>=</span><span class='nb'>mysql_connect</span><span class='p'>(</span><span class='s2'>&quot;localhost&quot;</span><span class='p'>,</span><span class='s2'>&quot;mysql&quot;</span><span class='p'>,</span><span class='s2'>&quot;&quot;</span><span class='p'>);</span>
+	<span class='k'>if</span><span class='p'>(</span><span class='o'>!</span><span class='nv'>$test</span><span class='p'>)</span>
+	<span class='p'>{</span>
+	<span class='k'>print</span> <span class='s2'>&quot;cant connect&quot;</span><span class='p'>;</span>
+	<span class='p'>}</span>
+	<span class='k'>else</span>
+	<span class='p'>{</span>
+	<span class='k'>print</span> <span class='s2'>&quot;connected&quot;</span><span class='p'>;</span>
+	<span class='p'>}</span>
+	<span class='cp'>?&gt;</span><span class='x' />
+<span class='x'>	</span>
+</pre>
+</div>
+<p>save as <code>test-db.php</code> on <code>/usr/local/www/apache22/data/</code> and go to your browser <code>http://localhost/test-db.php</code></p>
+
+<p>done.</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='/2009/06/17/install-apache-php5-and-mysql-on-freebsd-7-2-using-ports'>previous post</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

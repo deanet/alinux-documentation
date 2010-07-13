@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>How to install Plugin Architecture Cacti and Mysql template for cacti &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">How to install Plugin Architecture Cacti and Mysql template for cacti</span><br />
+	<span class="date">Jun 03 2009</span><br />
+	<span class="content"><h2 id='update_2562009'>Update: 25/6/2009</h2>
+
+<p>The Plugin Architecture for Cacti was designed to be both simple in nature and robust enough to allow freedom to do almost anything in Cacti. Cacti itself is designed nicely enough that integrating into it is fairly easy with very little modifications necessary. <code>teMySQLcacti</code> is A highly-modified version of MySQL monitoring templates for Cacti. You import a single host, which includes a bunch of graphs and graph types. To install it you must install Plugin Architecture Cacti first.</p>
+
+<h2 id='preparing_to_install_plugin_architecture_cacti'>Preparing to install Plugin Architecture Cacti:</h2>
+
+<h4 id='1_fresh_installation_cacti_recommanded'>1. Fresh installation cacti (recommanded)</h4>
+
+<p>Recommanded using fresh installation cacti or your cacti will not work. You can see how to install cacti on <a href='/2009/05/26/how-to-install-cacti-0-8-7d.html' target='_new'>previous post</a>.</p>
+
+<h4 id='2_download_and_extract'>2. Download and extract</h4>
+
+<p>Download on <a href='http://cactiusers.org/downloads/patches/' target='_new'>this page</a></p>
+
+<pre><code># cd /temp-directory/plugin/architecture/cacti/
+# wget -c http://mirror.cactiusers.org/downloads/plugins/cacti-plugin-0.8.7d-PA-v2.4.zip
+# tar -zvxf cacti-plugin-arch.tar.gz</code></pre>
+
+<h2 id='installing_plugin_architecture_cacti'>Installing Plugin Architecture Cacti:</h2>
+
+<h4 id='1_patch_cacti'>1. Patch cacti</h4>
+
+<p>change into your cacti directory and patching</p>
+
+<pre><code># cd /srv/www/htdocs/cactifresh
+# patch -p1 -N &amp;lt; /directory/plugin/architecture/cacti/cacti-plugin-0.8.7d-PA-v2.4.diff</code></pre>
+
+<h4 id='2_configration_cacti'>2. Configration cacti</h4>
+
+<p>edit file global.php. Edit this to point to the default URL of your Cacti install ex: if your cacti install as at <code>http://serverip/cactifresh/</code> this would be set to <code>/cactifresh/</code> .</p>
+
+<pre><code>$config[&#39;url_path&#39;] = &#39;/cactifresh/&#39;;</code></pre>
+
+<p>to more information how to add cacti plugins, you can see on <a href='http://wowtutorial.org/tutorial/203.html' target='_blank'>this page</a></p>
+
+<h2 id='installing_mysql_template_for_cacti'>Installing Mysql template for cacti:</h2>
+
+<h4 id='1_download_and_extract_package_from_'>1. Download and extract package from <a href='http://www.faemalia.net/mysqlUtils/' target='_new'>this page</a></h4>
+
+<pre><code># cd /temp-directory/plugin/mysql
+# wget -c http://www.faemalia.net/mysqlUtils/teMySQLcacti-20060810.tar.gz
+# tar -xzvf teMySQLcacti-20060810.tar.gz</code></pre>
+
+<h4 id='2_copy__and__on_'>2. copy <code>mysql_stats.php</code> and <code>dumpMemcachedStats.php</code> on <code>/srv/www/htdocs/cactifresh/scripts/</code></h4>
+
+<h4 id='3_make_sure_your_cacti_poller_running_with_cron_daemon_every__u_can_use_spine_see_on_previous_page'>3. Make sure your cacti poller running with cron daemon every <code>1 minutes</code>. U can use spine, see on previous page.</h4>
+
+<h4 id='4_import_xml_template__ex_'>4. Import xml template . ex: <code>cacti_host_template_x_db_server_ht_0.8.6i.xml</code></h4>
+
+<h4 id='5_login_into_your_cacti_website_then_create_new_device_within_new_template____'>5. Login into your cacti website then Create new device within new template ( <code>cacti_host_template_x_db_server_ht_0.8.6i.xml</code> ) .</h4>
+
+<h4 id='6_done'>6. Done.</h4>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://cactiusers.org/wiki/PluginArchitectureInstall'>wiki cacti user</a></li>
+
+<li><a href='http://www.faemalia.net/mysqlUtils/'>femalia.net</a></li>
+
+<li><a href='http://forums.cacti.net/about15067.html'>List cacti plugin template</a></li>
+
+<li><a href='http://wowtutorial.org/tutorial/203.html'>wowtutorial.org</a> .</li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

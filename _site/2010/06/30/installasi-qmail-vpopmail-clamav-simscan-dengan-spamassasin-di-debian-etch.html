@@ -1,0 +1,554 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</span><br />
+	<span class="date">Jun 30 2010</span><br />
+	<span class="content"><h2 id='muqadimah'>Muqadimah</h2>
+
+<p><code>Qmail</code> = Mail Transfer Agent. Modern SMTP server. Dapat dijalankan di RH,Debian, HP-UX,Gentoo, OpenBSD. <a href='http://www.nrg4u.com/qmail/the-big-qmail-picture-103-p1.gif'>lihat cara kerja qmail</a></p>
+
+<p><code>Vpopmail</code> = POP3 server. Manejemen akun email dengan virtual email domain, dapat dijalankan di qmail atau Postfix mail server. Disini memakai <code>mysql</code> sebagai back-end nya.</p>
+
+<p><code>Simscan</code> = Simcan digunakan untuk menolak email yang kemungkinan berisi spam,virus,ataupun attachments file.</p>
+
+<p><code>chkuser</code> = anti-SPAM features.</p>
+
+<p><code>ClamAV</code> = Anti Virus.</p>
+
+<p><code>SpamAssassin</code> = Anti Spam.</p>
+
+<h2 id='persiapan'>Persiapan</h2>
+
+<p><em>semua dijalankan dengan user root</em></p>
+
+<h3 id='setting_repository'>Setting repository:</h3>
+<div class='highlight'><pre>deb http://ftp.debian.org/debian/ etch main contrib non-free
+deb-src http://ftp.debian.org/debian/ etch main contrib non-free
+deb     http://debian.iuculano.it/apt  etch main contrib non-free
+deb-src http://debian.iuculano.it/apt  etch main contrib non-free
+</pre>
+</div>
+<h3 id='tambahkan_key_public'>tambahkan key public:</h3>
+<div class='highlight'><pre># wget http://debian.iuculano.it/AE3BE9AA.gpg -O- | apt-key add -
+</pre>
+</div>
+<p>lalu jalankan <code>apt-get update</code></p>
+
+<h3 id='install_mysql_server'>Install mysql server</h3>
+
+<p>Install <code>mysql server</code> lalu buat database dengan nama <code>vpopmail</code> terus kasih <code>grant</code>.</p>
+<div class='highlight'><pre># apt-get install mysql-server
+</pre>
+</div>
+<p>jangan lupa rubah password root <code>mysql</code></p>
+<div class='highlight'><pre># mysqladmin -u root password passwordbaru
+</pre>
+</div>
+<p>bikin database <code>vpopmail</code></p>
+<div class='highlight'><pre><span class='n'>mysql</span><span class='o'>&gt;</span> <span class='k'>create</span> <span class='k'>database</span> <span class='n'>vpopmail</span><span class='p'>;</span>
+<span class='n'>mysql</span><span class='o'>&gt;</span> <span class='k'>grant</span> <span class='k'>all</span> <span class='n'>privileges</span> <span class='k'>on</span> <span class='n'>vpopmail</span><span class='p'>.</span><span class='o'>*</span> <span class='k'>to</span> <span class='s1'>&#39;vpopmail&#39;</span><span class='o'>@</span><span class='s1'>&#39;localhost&#39;</span> <span class='n'>identified</span> <span class='k'>by</span> <span class='s1'>&#39;vpopmail123&#39;</span> <span class='k'>with</span> <span class='k'>grant</span> <span class='k'>option</span><span class='p'>;</span>
+</pre>
+</div>
+<h3 id='install___dan_'>Install <code>dpatch</code>, <code>recode</code>, dan <code>telnet</code>.</h3>
+
+<p><code>dpatch</code> digunakan untuk build <code>qmail</code>, <code>recode</code> digunakan untuk generate passwd <code>base64</code>, dan telnet ya tentu saja untuk remote client :).</p>
+<div class='highlight'><pre># apt-get install dpatch recode telnet
+</pre>
+</div>
+<h2 id='installasi_qmail'>Installasi Qmail</h2>
+
+<p>Cek dulu ada <code>MTA</code> laen gak ? .. kalo ada remove segera, contoh: exim.</p>
+<div class='highlight'><pre># apt-get remove exim4 exim4-base exim4-config exim4-daemon-light
+</pre>
+</div>
+<p>jika <code>exim</code> susah dibuang, jalankan perintah ini:</p>
+<div class='highlight'><pre># dpkg --force-depends --purge exim4 exim4-base exim4-config exim4-daemon-light
+</pre>
+</div>
+<p>Kalo sudah terus install qmailna:</p>
+<div class='highlight'><pre># apt-get install qmail-src spamassassin vpopmail-mysql spamc razor pyzor ucspi-tcp-src libmailtools-perl libmail-spf-query-perl libsys-hostname-long-perl
+</pre>
+</div>
+<p>jika ada error:</p>
+<div class='highlight'><pre>stat /usr/bin/tcpserver: No such file or directory
+</pre>
+</div>
+<p>ini karena kita install <code>ucspi-tcp</code>, build saja <code>ucspi-tcp</code> nya:</p>
+<div class='highlight'><pre># build-ucspi-tcp
+</pre>
+</div>
+<p>terus build qmail:</p>
+<div class='highlight'><pre># build-qmail
+</pre>
+</div>
+<h2 id='konfig_'>Konfig <code>qmail</code></h2>
+
+<p>set hostname mail servernya:</p>
+<div class='highlight'><pre><span class='nb'>echo</span> <span class='s2'>&quot;mail.denbaguse.ta&quot;</span> &gt; /etc/qmail/me
+</pre>
+</div>
+<h2 id='konfig_vpopmail'>Konfig Vpopmail</h2>
+
+<p>set username <code>mysql</code> sama password untuk <code>vpopmail</code></p>
+<div class='highlight'><pre># vim /etc/vpopmail/vpopmail.mysql
+	localhost|0|root|passwordbaru|vpopmail
+</pre>
+</div>
+<h2 id='jalankan_service'>Jalankan service</h2>
+
+<p>Jalankan <code>qmail</code> nya dan <code>pop3</code> server atau <code>vpopmail</code> nya</p>
+<div class='highlight'><pre># /etc/init.d/qmail start
+# /etc/init.d/vpopmail-mysql start
+</pre>
+</div>
+<h2 id='test'>Test</h2>
+
+<p>Menambahkan domain dan email address</p>
+<div class='highlight'><pre>denbaguse:/home/alinux# vadddomain testaja.lg
+Please enter password <span class='k'>for </span>postmaster:        
+enter password again:                        
+</pre>
+</div>
+<p>domain: <code>testaja.lg</code> passwd: <code>testaja</code></p>
+
+<p>Encrypt email address dan password ke dalam format <code>base64</code></p>
+
+<p>email address:</p>
+<div class='highlight'><pre>denbaguse:/home/alinux# <span class='nb'>echo</span> -en <span class='s2'>&quot;postmaster@testaja.lg&quot;</span> | recode data..base64
+cG9zdG1hc3RlckB0ZXN0YWphLmxn                                                  
+</pre>
+</div>
+<p>password:</p>
+<div class='highlight'><pre>denbaguse:/home/alinux# <span class='nb'>echo</span> -en <span class='s2'>&quot;testaja&quot;</span> | recode data..base64              
+<span class='nv'>dGVzdGFqYQ</span><span class='o'>==</span>
+</pre>
+</div>
+<p>Jalankan <code>tail -f /var/log/syslog</code></p>
+
+<h2 id='test_smtp_server'>Test SMTP server</h2>
+<div class='highlight'><pre>denbaguse:/home/alinux# telnet localhost 25              
+Trying 127.0.0.1...                                      
+Connected to localhost.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+220 mail.denbaguse.ta ESMTP
+AUTH LOGIN
+334 VXNlcm5hbWU6
+cG9zdG1hc3RlckB0ZXN0YWphLmxn
+334 UGFzc3dvcmQ6
+<span class='nv'>dGVzdGFqYQ</span><span class='o'>==</span>
+235 ok, postmaster@testaja.lg, go ahead <span class='o'>(</span><span class='c'>#2.0.0)</span>
+mail from: <span class='nb'>test</span>@testaja.com
+250 ok
+RCPT TO: postmaster@testaja.lg
+250 ok
+DATA
+354 go ahead
+halooooo
+.
+250 ok 1276913544 qp 13750
+quit
+221 mail.denbaguse.ta
+Connection closed by foreign host.
+</pre>
+</div>
+<h3 id='hasil_tail'>hasil tail:</h3>
+<div class='highlight'><pre>Jun 19 09:12:14 denbaguse qmail: 1276913534.111443 CHKUSER accepted any rcpt: from &lt;<span class='nb'>test</span>@testaja.com:postmaster@testaja.lg:&gt; remote
+&lt;:unknown:127.0.0.1&gt; rcpt &lt;postmaster@testaja.lg&gt; : accepted any recipient <span class='k'>for </span>any rcpt domain                                           
+Jun 19 09:12:14 denbaguse qmail: 1276913534.111512 qmail-smtpd: pid 13748 RCPT TO: &lt;postmaster@testaja.lg&gt;                               
+Jun 19 09:12:24 denbaguse qmail: 1276913544.622077 new msg 78833                                       
+Jun 19 09:12:24 denbaguse qmail: 1276913544.622156 info msg 78833: bytes 190 from &lt;<span class='nb'>test</span>@testaja.com&gt; qp 13750 uid 0                                          Jun 19 09:12:24 denbaguse qmail: 1276913544.622856 starting delivery 1: msg 78833 to <span class='nb'>local </span>testaja.lg-postmaster@testaja.lg              
+Jun 19 09:12:24 denbaguse qmail: 1276913544.622892 status: <span class='nb'>local </span>1/10 remote 0/20                      
+Jun 19 09:12:24 denbaguse qmail: 1276913544.684768 delivery 1: success: did_0+0+1/                     
+Jun 19 09:12:24 denbaguse qmail: 1276913544.684860 status: <span class='nb'>local </span>0/10 remote 0/20                      
+Jun 19 09:12:24 denbaguse qmail: 1276913544.684911 end msg 78833       
+</pre>
+</div>
+<h3 id='isi_email'>Isi email:</h3>
+<div class='highlight'><pre>denbaguse:/home/alinux# cat /var/lib/vpopmail/domains/testaja.lg/postmaster/Maildir/new/1276913544.13752.denbaguse<span class='se'>\,</span>S<span class='se'>\=</span>258
+Return-Path: &lt;<span class='nb'>test</span>@testaja.com&gt;
+Delivered-To: postmaster@testaja.lg
+Received: <span class='o'>(</span>qmail 13750 invoked by uid 0<span class='o'>)</span>; 19 Jun 2010 09:12:20 +0700
+Received: from unknown <span class='o'>(</span>postmaster@testaja.lg@127.0.0.1<span class='o'>)</span>
+by 127.0.0.1 with ESMTPA; 19 Jun 2010 09:12:20 +0700
+halooooo
+denbaguse:/home/alinux#
+</pre>
+</div>
+<h2 id='test_pop3'>Test POP3</h2>
+<div class='highlight'><pre>denbaguse:/home/alinux# telnet localhost pop3
+Trying 127.0.0.1...                          
+Connected to localhost.                      
+Escape character is <span class='s1'>&#39;^]&#39;</span>.                    
++OK &lt;21325.1277029415@denbaguse.ta&gt;          
+USER postmaster@testaja.lg
++OK
+PASS testaja
++OK
+LIST
++OK
+1 258
+2 267
+.
+RETR 1
++OK 258 octets
+Return-Path: &lt;<span class='nb'>test</span>@testaja.com&gt;
+Delivered-To: postmaster@testaja.lg
+Received: <span class='o'>(</span>qmail 13750 invoked by uid 0<span class='o'>)</span>; 19 Jun 2010 09:12:20 +0700
+Received: from unknown <span class='o'>(</span>postmaster@testaja.lg@127.0.0.1<span class='o'>)</span>
+by 127.0.0.1 with ESMTPA; 19 Jun 2010 09:12:20 +0700
+halooooo
+.
+quit
++OK
+Connection closed by foreign host.
+denbaguse:/home/alinux#
+</pre>
+</div>
+<h2 id='test_chkuser'>Test chkuser</h2>
+<div class='highlight'><pre>denbaguse:/home/alinux# telnet localhost 25
+Trying 127.0.0.1...                        
+Connected to localhost.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+220 mail.denbaguse.ta ESMTP
+EHLO
+250-mail.denbaguse.ta
+250-PIPELINING
+250-8BITMIME
+250-SIZE 0
+250 AUTH LOGIN PLAIN CRAM-MD5
+mail from: <span class='nb'>test</span>@asd.tett
+550 5.1.8 sorry, can<span class='s1'>&#39;t find a valid MX for sender domain (chkuser)</span>
+<span class='s1'>mail from: test@test.com</span>
+<span class='s1'>250 ok</span>
+<span class='s1'>rcpt to: test@tests.tstt</span>
+<span class='s1'>553 sorry, that domain isn&#39;</span>t in my list of allowed rcpthosts <span class='o'>(</span><span class='c'>#5.7.1)</span>
+rcpt to: <span class='nb'>test</span>@test.bogus
+550 5.1.1 sorry, no mailbox here by that name <span class='o'>(</span>chkuser<span class='o'>)</span>
+RSET
+250 flushed
+quit
+221 mail.denbaguse.ta
+Connection closed by foreign host.
+denbaguse:/home/alinux#
+</pre>
+</div>
+<h2 id='instal_simscan'>Instal Simscan</h2>
+<div class='highlight'><pre># apt-get install qmailadmin autorespond ezmlm-src clamav clamav-daemon clamav-freshclam ripmime
+# build-ezmlm
+# wget http://downloads.sourceforge.net/simscan/simscan-1.4.0.tar.gz
+# tar -xzvf simscan-1.4.0.tar.gz 
+# cd simscan-1.4.0
+# wget http://qmail.jms1.net/simscan/simscan-1.4.0-clamav.3.patch
+# cat simscan-1.4.0-clamav.3.patch | patch -p1
+# ./configure --enable-user=clamav --enable-clamav=y --enable-custom-smtp-reject=y --enable-attach=y --enable-spam=y
+	--enable-spam-hits=14 --enable-spamc-user=y --enable-received=y --enable-clamavdb-path=/var/lib/clamav --enable-spam-auth-user=n
+	--enable-quarantinedir=/var/qmail/quarantine
+# make
+# make install
+</pre>
+</div>
+<h3 id='aktifkan_qmail_simscan'>aktifkan qmail simscan:</h3>
+<div class='highlight'><pre># vim /etc/init.d/qmail 
+QMAILQUEUE=&quot;/var/qmail/bin/simscan&quot;
+export QMAILQUEUE
+</pre>
+</div>
+<h3 id='restart_qmail'>Restart qmail:</h3>
+<div class='highlight'><pre># /etc/init.d/qmail restart
+</pre>
+</div>
+<h2 id='test_simscan'>Test simscan</h2>
+<div class='highlight'><pre>denbaguse:/home/alinux# <span class='nb'>echo</span> <span class='s2'>&quot;test aja&quot;</span> &gt; mailtest.txt
+denbaguse:/home/alinux# env <span class='nv'>QMAILQUEUE</span><span class='o'>=</span>/var/qmail/bin/simscan <span class='nv'>SIMSCAN_DEBUG</span><span class='o'>=</span>2 /var/qmail/bin/qmail-inject postmaster@testaja.lg &lt;
+mailtest.txt
+simscan: starting: work dir: /var/qmail/simscan/1277102187.556394.25609
+simscan: calling clamdscan
+simscan: cdb looking up version clamav
+simscan: normal clamdscan <span class='k'>return </span>code: 0
+simscan: calling spamc
+simscan: calling /usr/bin/spamc  spamc -u postmaster@testaja.lg
+simscan: cdb looking up version spam
+simscan:<span class='o'>[</span>25608<span class='o'>]</span>:CLEAN <span class='o'>(</span>0.00/0.00<span class='o'>)</span>:3.3011s::<span class='o'>(</span>null<span class='o'>)</span>:root@mail.denbaguse.ta:postmaster@testaja.lg
+simscan: <span class='k'>done</span>, execing qmail-queue
+simscan: qmail-queue exited 0
+denbaguse:/home/alinux#
+</pre>
+</div>
+<h2 id='konfig_relay_tcpserver'>Konfig Relay tcpserver</h2>
+
+<p>buka file <code>/etc/tcp.smtp</code> lalu isi sesuai dengan kebutuhan:</p>
+<div class='highlight'><pre># vim /etc/tcp.smtp
+127.0.0.1:allow,RELAYCLIENT=&quot;&quot;
+192.168.0.177:allow,CHKUSER_RCPTLIMIT=&quot;15&quot;,CHKUSER_WRONGRCPTLIMIT=&quot;3&quot;,QMAILQUEUE=&quot;/var/qmail/bin/simscan&quot;
+:deny	
+</pre>
+</div>
+<p>Semua host digagalkan kecuali host <code>localhost</code> dan host <code>192.168.0.177</code>. Save lalu run <code>/etc/init.d/qmail cdb</code> terus restart <code>/etc/init.d/qmail restart</code></p>
+
+<p>test di localhost:</p>
+<div class='highlight'><pre>denbaguse:/etc/qmail# telnet localhost 25
+Trying 127.0.0.1...                      
+Connected to localhost.                  
+Escape character is <span class='s1'>&#39;^]&#39;</span>.                
+220 mail.denbaguse.ta ESMTP              
+quit                                     
+221 mail.denbaguse.ta                    
+Connection closed by foreign host.       
+denbaguse:/etc/qmail#
+</pre>
+</div>
+<p>test di ip <code>192.168.0.177</code>:</p>
+<div class='highlight'><pre>alinux@debian:~<span class='nv'>$ </span>telnet 192.168.0.5 25
+Trying 192.168.0.5...
+Connected to 192.168.0.5.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+220 mail.denbaguse.ta ESMTP
+quit
+221 mail.denbaguse.ta
+Connection closed by foreign host.
+alinux@debian:~<span class='nv'>$ </span><span class='nb'>cd</span> /home/alinux/alinux/
+alinux@debian:~/alinux<span class='err'>$</span>
+</pre>
+</div>
+<p>test di host laen:</p>
+<div class='highlight'><pre>alinux@ajisaka:~<span class='nv'>$ </span>telnet 192.168.0.5 25
+Trying 192.168.0.5...
+Connected to 192.168.0.5.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+Connection closed by foreign host.
+alinux@ajisaka:~<span class='err'>$</span>
+</pre>
+</div>
+<h2 id='test_spamassassin'>Test SpamAssassin</h2>
+<div class='highlight'><pre>alinux@debian:~<span class='nv'>$ </span>telnet 192.168.0.5 25                      
+Trying 192.168.0.5...                                       
+Connected to 192.168.0.5.                                   
+Escape character is <span class='s1'>&#39;^]&#39;</span>.                                   
+220 mail.denbaguse.ta ESMTP                                 
+EHLO                                                        
+250-mail.denbaguse.ta                                       
+250-PIPELINING                                              
+250-8BITMIME                                                
+250-SIZE 0                                                  
+250 AUTH LOGIN PLAIN CRAM-MD5                               
+MAIL                                                        
+250 ok                                                      
+RCPT TO: alinux@testaja.lg                                  
+250 ok                                                      
+DATA                                                        
+354 go ahead                                                
+Congratulations! You have been selected to receive 2 FREE 2 Day VIP Passes to
+Universal Studios!
+
+Click here http://209.61.190.180
+
+As an added bonus you will also be registered to receive vacations discounted 25%-
+75%!
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+his mailing is <span class='k'>done </span>by an independent marketing co.
+We apologize <span class='k'>if </span>this message has reached you in error.
+Save the Planet, Save the Trees! Advertise via E mail.
+No wasted paper! Delete with one simple keystroke!
+Less refuse in our Dumps! This is the new way of the new millennium
+To be removed please reply back with the word <span class='s2'>&quot;remove&quot;</span> in the subject line.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+.
+quit
+250 ok 1277148214 qp 11685
+221 mail.denbaguse.ta
+Connection closed by foreign host.
+alinux@debian:~<span class='err'>$</span>
+</pre>
+</div>
+<h3 id='cek_header_email_spamassassin'>Cek header email spamAssassin:</h3>
+<div class='highlight'><pre>denbaguse:~# cat mail/1277148214.11693.denbaguse<span class='se'>\,</span>S<span class='se'>\=</span>3160 
+Return-Path: &lt;&gt;                                           
+Delivered-To: alinux@testaja.lg                           
+Received: <span class='o'>(</span>qmail 11691 invoked by uid 0<span class='o'>)</span>; 22 Jun 2010 02:23:34 +0700
+Received: by simscan 1.4.0 ppid: 11684, pid: 11685, t: 11.5012s                
+ scanners: clamav: 0.95.2/m:52/d:11242 spam: 3.2.5                     
+Received: from localhost by denbaguse.ta                                       
+        with SpamAssassin <span class='o'>(</span>version 3.2.5<span class='o'>)</span>;                                     
+        Tue, 22 Jun 2010 02:23:34 +0700                                        
+X-Spam-Flag: YES                                                               
+X-Spam-Checker-Version: SpamAssassin 3.2.5 <span class='o'>(</span>2008-06-10<span class='o'>)</span> on denbaguse.ta        
+X-Spam-Level: *****                                                            
+X-Spam-Status: Yes, <span class='nv'>score</span><span class='o'>=</span>5.9 <span class='nv'>required</span><span class='o'>=</span>5.0 <span class='nv'>tests</span><span class='o'>=</span>ALL_TRUSTED,EXCUSE_4,         
+MISSING_DATE,MISSING_HB_SEP,MISSING_HEADERS,MISSING_MID,MISSING_SUBJECT,
+   NORMAL_HTTP_TO_IP <span class='nv'>autolearn</span><span class='o'>=</span>no <span class='nv'>version</span><span class='o'>=</span>3.2.5                            
+MIME-Version: 1.0                                                               
+Content-Type: multipart/mixed; <span class='nv'>boundary</span><span class='o'>=</span><span class='s2'>&quot;----------=_4C1FBC36.2B3B6E49&quot;</span>         
+	This is a multi-part message in MIME format.
+
+------------<span class='o'>=</span>_4C1FBC36.2B3B6E49
+Content-Type: text/plain; <span class='nv'>charset</span><span class='o'>=</span>iso-8859-1
+Content-Disposition: inline                 
+Content-Transfer-Encoding: 8bit             
+Spam detection software, running on the system <span class='s2'>&quot;denbaguse.ta&quot;</span>, has
+identified this incoming email as possible spam.  The original message
+has been attached to this so you can view it <span class='o'>(</span><span class='k'>if </span>it isn<span class='err'>&#39;</span>t spam<span class='o'>)</span> or label
+similar future email.  If you have any questions, see                   
+the administrator of that system <span class='k'>for </span>details.                           
+	Content preview:  Congratulations! You have been selected to receive 2 FREE
+	2 Day VIP Passes to Universal Studios! Click here http://209.61.190.180 As
+	an added bonus you will also be registered to receive vacations discounted
+	25%- 75%! <span class='o'>[</span>...<span class='o'>]</span>                                                           
+Content analysis details:   <span class='o'>(</span>5.9 points, 5.0 required<span class='o'>)</span>
+ pts rule name              description
+---- ---------------------- --------------------------------------------------
+-1.4 ALL_TRUSTED            Passed through trusted hosts only via SMTP        
+ 0.0 MISSING_MID            Missing Message-Id: header                        
+ 0.0 MISSING_DATE           Missing Date: header                              
+ 2.5 MISSING_HB_SEP         Missing blank line between message header and body
+ 1.6 MISSING_HEADERS        Missing To: header                                
+ 1.9 EXCUSE_4               BODY: Claims you can be removed from the list     
+ 0.0 NORMAL_HTTP_TO_IP      URI: Uses a dotted-decimal IP address in URL      
+ 1.3 MISSING_SUBJECT        Missing Subject: header                           
+
+	------------<span class='o'>=</span>_4C1FBC36.2B3B6E49
+Content-Type: message/rfc822; x-spam-type<span class='o'>=</span>original
+Content-Description: original message before SpamAssassin
+Content-Disposition: inline                              
+Content-Transfer-Encoding: 8bit                          
+
+Received: from unknown <span class='o'>(</span>HELO <span class='o'>)</span> <span class='o'>(</span>192.168.0.177<span class='o'>)</span>
+  by 192.168.0.5 with SMTP; 22 Jun 2010 02:23:22 +0700
+Congratulations! You have been selected to receive 2 FREE 2 Day VIP Passes to
+Universal Studios!
+
+Click here http://209.61.190.180
+
+As an added bonus you will also be registered to receive vacations discounted 25%-
+75%!
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+This mailing is <span class='k'>done </span>by an independent marketing co.
+We apologize <span class='k'>if </span>this message has reached you in error.
+Save the Planet, Save the Trees! Advertise via E mail.
+No wasted paper! Delete with one simple keystroke!
+Less refuse in our Dumps! This is the new way of the new millennium
+To be removed please reply back with the word <span class='s2'>&quot;remove&quot;</span> in the subject line.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+------------<span class='o'>=</span>_4C1FBC36.2B3B6E49--
+
+denbaguse:~#
+</pre>
+</div>
+<h2 id='test_clamav'>Test Clamav</h2>
+<div class='highlight'><pre>denbaguse:~# clamdscan <span class='nb'>test</span>
+WARNING: Can<span class='err'>&#39;</span>t access file /root/test
+/root/test: OK
+----------- SCAN SUMMARY -----------
+Infected files: 0
+Time: 0.011 sec <span class='o'>(</span>0 m 0 s<span class='o'>)</span>
+denbaguse:~#
+</pre>
+</div>
+<p>Referensi:</p>
+<a href='http://wiki.debian.iuculano.it/quick_howto' target='_new'>http://wiki.debian.iuculano.it/quick_howto</a><br /><a href='http://www.qmailwiki.org/index.php/Simscan/Related_Docs/Simscan_ClamAV_Chkuser_Installation_Guide' target='_new'>http://www.qmailwiki.org/index.php/Simscan</a><br /><a href='http://www.qmailwiki.org/SimScanTips' target='_new'>http://www.qmailwiki.org/SimScanTips</a><br /><a href='http://wiki.apache.org/spamassassin/UsingPyzor' target='_new'>http://wiki.apache.org/spamassassin/UsingPyzor</a><br /><a href='http://commons.oreilly.com/wiki/index.php/SpamAssassin/Integrating_SpamAssassin_with_qmail' target='_new'>http://commons.oreilly.com</a><br /><a href='http://old.nabble.com/clamd-not-creating-socket-or-pid-file-td21320116.html' target='_new'>http://old.nabble.com</a><br /><br /></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>
