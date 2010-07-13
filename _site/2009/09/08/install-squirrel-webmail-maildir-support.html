@@ -1,0 +1,316 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install squirrel webmail maildir support &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install squirrel webmail maildir support</span><br />
+	<span class="date">Sep 08 2009</span><br />
+	<span class="content"><p>With Courier-imap, we can use postfix with squirrel webmail supported with Maildir.</p>
+
+<h2 id='postfix_with_maildir'>Postfix with Maildir</h2>
+
+<p>To use the Maildir in postfix just add <code>home_mailbox = Maildir/</code> on <code>main.cf</code></p>
+
+<h2 id='configuration_postfix_with_maildir'>Configuration Postfix with Maildir:</h2>
+<div class='highlight'><pre><span class='nv'>soft_bounce</span> <span class='o'>=</span> no
+<span class='nv'>queue_directory</span> <span class='o'>=</span> /var/spool/postfix
+<span class='nv'>command_directory</span> <span class='o'>=</span> /usr/sbin
+<span class='nv'>daemon_directory</span> <span class='o'>=</span> /usr/lib/postfix
+<span class='nv'>mail_owner</span> <span class='o'>=</span> postfix
+<span class='nv'>default_privs</span> <span class='o'>=</span> nobody
+<span class='nv'>inet_interfaces</span> <span class='o'>=</span> all
+<span class='nv'>unknown_local_recipient_reject_code</span> <span class='o'>=</span> 450
+<span class='nv'>debug_peer_level</span> <span class='o'>=</span> 2
+<span class='nv'>debugger_command</span> <span class='o'>=</span>
+          <span class='nv'>PATH</span> <span class='o'>=</span> /bin:/usr/bin:/usr/local/bin:/usr/X11R6/bin
+          xxgdb <span class='nv'>$ </span>daemon_directory / <span class='nv'>$ </span>process_name <span class='nv'>$ </span>process_id &amp; sleep 5
+<span class='nv'>sendmail_path</span> <span class='o'>=</span> /usr/sbin/sendmail
+<span class='nv'>newaliases_path</span> <span class='o'>=</span> /usr/bin/newaliases
+<span class='nv'>mailq_path</span> <span class='o'>=</span> /usr/bin/mailq
+<span class='nv'>setgid_group</span> <span class='o'>=</span> maildrop
+<span class='nv'>manpage_directory</span> <span class='o'>=</span> /usr/share/man
+<span class='nv'>sample_directory</span> <span class='o'>=</span> /usr/share/doc/packages/postfix/samples
+<span class='nv'>readme_directory</span> <span class='o'>=</span> /usr/share/doc/packages/postfix/README_FILES
+<span class='nv'>mail_spool_directory</span> <span class='o'>=</span> /var/mail
+<span class='nv'>canonical_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/postfix/Canonical
+<span class='nv'>virtual_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/postfix/virtual
+<span class='nv'>relocated_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/postfix/relocated
+<span class='nv'>transport_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/postfix/transport
+<span class='nv'>sender_canonical_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/postfix/sender_canonical
+<span class='nv'>masquerade_exceptions</span> <span class='o'>=</span> root
+<span class='nv'>masquerade_classes</span> <span class='o'>=</span> envelope_sender, header_sender, header_recipient
+<span class='nv'>program_directory</span> <span class='o'>=</span> /usr/lib/postfix
+<span class='nv'>masquerade_domains</span> <span class='o'>=</span>
+<span class='nv'>mydestination</span> <span class='o'>=</span> <span class='nv'>$ </span>myhostname, localhost. <span class='nv'>$ </span>mydomain
+<span class='nv'>defer_transports</span> <span class='o'>=</span>
+<span class='nv'>disable_dns_lookups</span> <span class='o'>=</span> no
+<span class='nv'>relayhost</span> <span class='o'>=</span>
+<span class='nv'>content_filter</span> <span class='o'>=</span>
+<span class='nv'>mailbox_command</span> <span class='o'>=</span>
+<span class='nv'>mailbox_transport</span> <span class='o'>=</span>
+<span class='nv'>smtpd_sender_restrictions</span> <span class='o'>=</span> <span class='nb'>hash</span>:/etc/postfix/access
+<span class='nv'>smtpd_client_restrictions</span> <span class='o'>=</span>
+<span class='nv'>smtpd_helo_required</span> <span class='o'>=</span> no
+<span class='nv'>smtpd_helo_restrictions</span> <span class='o'>=</span>
+<span class='nv'>strict_rfc821_envelopes</span> <span class='o'>=</span> no
+<span class='nv'>mynetworks_style</span> <span class='o'>=</span> subnet
+<span class='nv'>smtpd_recipient_restrictions</span> <span class='o'>=</span> permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination
+<span class='c'># smtpd_recipient_restrictions = permit_sasl_authenticated, reject_unauth_destination</span>
+<span class='nv'>smtp_sasl_auth_enable</span> <span class='o'>=</span> no
+<span class='nv'>smtpd_sasl_auth_enable</span> <span class='o'>=</span> yes
+<span class='nv'>smtpd_use_tls</span> <span class='o'>=</span> no
+<span class='nv'>smtp_use_tls</span> <span class='o'>=</span> no
+<span class='nv'>alias_maps</span> <span class='o'>=</span> <span class='nb'>hash</span>: /etc/aliases
+<span class='nv'>mailbox_size_limit</span> <span class='o'>=</span> 0
+<span class='nv'>message_size_limit</span> <span class='o'>=</span> 10240000
+<span class='c'># myhostname = linux.local</span>
+<span class='c'># change below information as needed</span>
+<span class='nv'>myhostname</span> <span class='o'>=</span> local.net
+<span class='nv'>mynetworks</span> <span class='o'>=</span> 10.100.100.21, 127.0.0.1
+<span class='nv'>home_mailbox</span> <span class='o'>=</span> Maildir /
+</pre>
+</div>
+<h2 id='testing_smtp'>Testing SMTP:</h2>
+
+<p>Open two shell. First for telnet command, and second shell for monitoring logs <code>/var/log/mail</code></p>
+<div class='highlight'><pre>1fvu-linux: /home/deanet# telnet localhost 25
+Trying 127.0.0.1 ...
+Connected to localhost.
+Escape character is<span class='s1'>&#39;^]&#39;</span>.
+220 local.net ESMTP Postfix
+helo local.net
+250 local.net
+mail from: <span class='nb'>test</span>@aja.net
+250 2.1.0 Ok
+rcpt to: deanet@local.net
+250 2.1.5 Ok
+data
+354 End data with &lt;cr&gt; &lt;lf&gt;. &lt;cr&gt; &lt;lf&gt;
+halo testaja
+.
+250 2.0.0 Ok: queued as B753761A3
+quit
+221 2.0.0 Bye
+Connection closed by foreign host.
+1fvu-linux: /home/deanet#
+</pre>
+</div>
+<p>when you type <code>tail -f /var/log/mail</code> on second shell, it will results:</p>
+<div class='highlight'><pre>Aug 21 06:17:15 linux-1fvu postfix / smtpd [10556]: connect from localhost [127.0.0.1]
+Aug 21 06:17:39 linux-1fvu postfix / smtpd [10556]: B753761A3: client = localhost [127.0.0.1]
+Aug 21 06:18:10 linux-1fvu postfix / cleanup [10559]: B753761A3: message-id =
+Aug 21 06:18:10 linux-1fvu postfix / qmgr [7987]: B753761A3:  from =, size = 323, nrcpt = 1 (queue active)
+Aug 21 06:18:10 linux-1fvu postfix / local [10560]: B753761A3:  to =, relay = local, delay = 39, delays = 39/0.05/0/0.01, DSN = 2.0 .0, status = sent (delivered to Maildir)
+Aug 21 06:18:10 linux-1fvu postfix / qmgr [7987]: B753761A3: removed
+Aug 21 06:18:13 linux-1fvu postfix / smtpd [10556]: disconnect from localhost [127.0.0.1]
+</pre>
+</div>
+<p>Messages are stored in <code>~/Maildir/new/</code></p>
+<div class='highlight'><pre>1fvu-linux: /home/deanet# cat Maildir/new/1250810290.V802Ib57bM671042.linux-1fvu
+Return-Path: <span class='nt'>&lt;test</span><span class='err'>@aja.net</span><span class='nt'>&gt;</span>
+X-Original-To: deanet@local.net
+Delivered-To: deanet@local.net
+Received: from local.net (localhost [127.0.0.1])
+         by local.net (Postfix) with SMTP id B753761A3
+         for <span class='nt'>&lt;deanet</span><span class='err'>@local.net</span><span class='nt'>&gt;</span>; Fri, 21 Aug 2009 06:17:31 0700 (WIT)
+Message-Id: <span class='err'>&lt;</span>@ 20090820231739.B753761A3 local.net&gt;
+Date: Fri, 21 Aug 2009 06:17:31 0700 (WIT)
+From: test@aja.net
+To: undisclosed-Recipients:;
+halo testaja
+</pre>
+</div>
+<h2 id='courrierimap'>Courrier-imap.</h2>
+
+<p>Install:</p>
+
+<pre><code># zypper install courrier-imap</code></pre>
+
+<p>run courrier-imap daemon :</p>
+
+<pre><code># rccourier-imap start</code></pre>
+
+<p><strong>Testing Courier-imap :</strong></p>
+
+<pre><code>1fvu-linux: /home/deanet # telnet localhost 143
+Trying 127.0.0.1 ...
+Connected to localhost.
+Escape character is&#39;^]&#39;.
+* OK [IMAP4rev1 capability UIDPLUS CHILDREN Namespace = Thread Thread ORDEREDSUBJECT = Idle REFERENCES Sort QUOTA ACL ACL2 = UNION] Courier-IMAP ready. Copyright 1998-2008 Double Precision, Inc.. See Copying for distribution information.
+a login username password
+a OK LOGIN Ok.
+a logout
+* BYE Courier-IMAP server shutting down
+a OK LOGOUT completed
+Connection closed by foreign host.
+1fvu-linux: /home/deanet#</code></pre>
+
+<h2 id='squirrel_webmail'>Squirrel webmail.</h2>
+
+<p>Install:</p>
+
+<pre><code># cd /srv/www/htdocs
+# tar-xzvf Squirrelmail-1.4.17.tar.gz
+# mv-1.4.17 Squirrelmail Squirrelmail</code></pre>
+
+<p>configuring executable file:</p>
+
+<pre><code># squirrelmail/configure</code></pre>
+
+<p>Select the <code>D</code> option and then configure Squirrelmail with the <code>UW</code> preset. Also make sure to set the data and attachment settings directory <code>/usr/local/squirrelmail/data</code> and <code>/usr/local/squirrelmail/temp</code> respectively under <code>4. General Options</code> . Make any other changes as you see fit, select <code>S</code> to save and then <code>Q</code> to quit.&lt;/p&gt;</p>
+
+<h2 id='configuration_squirrel_in_the_apache_directory'>Configuration squirrel in the apache directory:</h2>
+<div class='highlight'><pre><span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail</span><span class='nt'>&gt;</span>
+   <span class='nb'>Options</span> <span class='k'>None</span>
+   <span class='nb'>AllowOverride</span> <span class='k'>None</span>
+   <span class='nb'>DirectoryIndex</span> index.php
+   <span class='nb'>Order</span> Allow, Deny
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/*</span><span class='nt'>&gt;</span>
+   <span class='nb'>Deny</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/images</span><span class='nt'>&gt;</span>
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/plugins</span><span class='nt'>&gt;</span>
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/src</span><span class='nt'>&gt;</span>
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/templates</span><span class='nt'>&gt;</span>
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/themes</span><span class='nt'>&gt;</span>
+   <span class='nb'>Allow</span> from <span class='k'>all</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/contrib</span><span class='nt'>&gt;</span>
+   <span class='nb'>Order</span> Deny, Allow
+   <span class='nb'>Deny</span> from <span class='k'>All</span>
+   <span class='nb'>Allow</span> from <span class='m'>127</span>
+   <span class='nb'>Allow</span> from <span class='m'>10</span>
+   <span class='nb'>Allow</span> from <span class='m'>192</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+<span class='nt'>&lt;directory</span> <span class='s'>/srv/www/htdocs/squirrelmail/doc</span><span class='nt'>&gt;</span>
+   <span class='nb'>Order</span> Deny, Allow
+   <span class='nb'>Deny</span> from <span class='k'>All</span>
+   <span class='nb'>Allow</span> from <span class='m'>127</span>
+   <span class='nb'>Allow</span> from <span class='m'>10</span>
+   <span class='nb'>Allow</span> from <span class='m'>192</span>
+<span class='nt'>&lt;/</span> <span class='s'>Directory</span><span class='nt'>&gt;</span>
+</pre>
+</div>
+<h2 id='testing_squirrel'>Testing squirrel:</h2>
+
+<p>access on <code>http://localhost/squirrelmail/src/configtest.php</code> On this experiment I use Opensuse. Open SUSE 11 has been included as the default postfix mail system. :)</p>
+
+<p>Thanks</p>
+
+<p>References:</p>
+
+<ol>
+<li><a href='http://www.perturb.org/display/entry/691/'>http://www.perturb.org/display/entry/691/</a></li>
+
+<li><a href='http://squirrelmail.org/docs/admin/admin-3.html'>http://squirrelmail.org/docs/admin/admin-3.html</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

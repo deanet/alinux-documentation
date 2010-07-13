@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installing Debian Lenny from a USB memory stick (USB HDD) &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installing Debian Lenny from a USB memory stick (USB HDD)</span><br />
+	<span class="date">Jan 23 2009</span><br />
+	<span class="content"><p><strong>last Update 22 May 2010</strong></p>
+
+<p>i was doing this on slax machine to create bootable usb memory stick debian lenny.</p>
+
+<p>needed things:</p>
+
+<ol>
+<li><a href='http://freshmeat.net/projects/lilo/'>lilo</a></li>
+
+<li><a href='http://packages.debian.org'>mbr package</a> optional.</li>
+
+<li><a href='http://syslinux.zytor.com/'>syslinux</a>.</li>
+
+<li>vmlinuz, initrd.gz and boot.img.gz (optional). download on <a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images'>here</a>, choose hd-media directory. Thats i386 machine, for Others Machine try download on <a href='http://www.debian.org/devel/debian-installer/'>here</a></li>
+
+<li>USB HDD (i use Kingston Data Traveler 2.0, 4G storage called USB HDD). maybe with USB key possible to install.</li>
+
+<li>ISO can download on <a href='http://cdimage.debian.org'>here</a> before do this, your <code>lilo</code> (or <code>mbr package</code>) and <code>syslinux</code> must installed (check first on your konsole with syslinux command). then, next step are:</li>
+</ol>
+
+<p><strong>1. creating fat filesystem:</strong></p>
+
+<pre><code>mkdosfs /dev/sdb1</code></pre>
+
+<p><strong>2. creating <code>ldlinux.sys</code> on your USB memory stick:</strong></p>
+
+<pre><code>syslinux /dev/sdb1</code></pre>
+
+<p><strong>3. open your favourite editor and fill:</strong> <a name='textmode'>.</a></p>
+
+<pre><code>default /vmlinuz vga=791
+append initrd=/initrd.gz</code></pre>
+
+<p>save as <code>syslinux.cfg</code> and copy <code>syslinux.cfg</code>, <code>vmlinuz, initrd.gz</code> to <code>/mnt/sdb1</code>:</p>
+
+<pre><code>cp {syslinux.cfg,vmlinuz,initrd.gz} /mnt/sdb1</code></pre>
+
+<p><strong>4. also your lenny ISO:</strong></p>
+
+<pre><code>cp /mnt/sda4/iso/debian-sid-lenny-cd/debian-testing-i386-CD-1.iso /mnt/sdb1/</code></pre>
+
+<p><strong>5. then make bootable your USB memory stick, on konsole type:</strong></p>
+
+<pre><code>lilo -S /dev/null -M /dev/sdb ext
+lilo -S /dev/null -A /dev/sdb 1</code></pre>
+
+<p>for mbr package:</p>
+
+<pre><code>install-mbr /dev/sdb</code></pre>
+
+<p>your USB memory stick should be bootable now and possible to install debian lenny using USB memory stick :)</p>
+
+<p>done.</p>
+
+<p><strong>Tips:</strong></p>
+
+<p>to install with graphical install you can ignore step 3 and copy all things on <code>boot.img.gz</code> ( <code>gunzip</code> &amp; mount it with loop before or doing with zcat command).</p>
+
+<h3 id='with_loop'>with loop</h3>
+
+<pre><code>mkdir tmp
+gunzip boot.img.gz
+mount boot.img tmp/ -o loop</code></pre>
+
+<p>copy all things on tmp to <code>/mnt/sdb1</code></p>
+
+<pre><code>cp tmp/* /mnt/sdb1</code></pre>
+
+<p>or u can using <code>vmlinuz</code> and <code>kernel</code> (<code>initrd</code>) from <a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media'>directory gtk</a>. Replace <code>vmlinuz</code> and <code>initrd</code> <a href='#textmode'>on text mode</a> based with them.</p>
+
+<h3 id='with_zcat'>with zcat</h3>
+
+<pre><code>zcat boot.img.gz &gt;/dev/sdb1</code></pre>
+
+<p>using <code>zcat</code>, your usb stick will partitioned 250 M. so,you must use ISO smaller than 250 M. (<code>netinst</code> or etc)</p>
+
+<p>and you can continued next step (step 4)</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://d-i.pascal.at'>Installing Debian Sarge from a USB memory stick (USB key)</a></li>
+
+<li><a href='http://h0bbel.p0ggel.org/installing-debian-from-a-usb-stick'>Installing Debian from a USB Stick</a></li>
+
+<li><a href='http://zuyyin.wordpress.com/2008/05/06/install-gnulinux-debian-etch-dari-usb-flash-disk/'>Install GNU/Linux Debian Etch dari USB Flash Disk</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Oct 04 2010</span> &raquo; <a href="/2010/10/04/Make-usb-installer-OpenBSD-4.8.html">Make usb installer OpenBSD 4.8</a></li>
+    
+      <li><span>Sep 05 2010</span> &raquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html">Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5</a></li>
+    
+      <li><span>Jul 29 2010</span> &raquo; <a href="/2010/07/29/how-to-kill-windows-process-and-integrated-with-nagios-using-nsclient%2B%2B-on-gnu-linux.html">How to kill windows process and integrated with nagios using Nsclient++ on Gnu/Linux</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>
