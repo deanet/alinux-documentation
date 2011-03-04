@@ -5,14 +5,36 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<title>{{ page.title }} &laquo; alinux.web.id</title>
 	<meta name="author" content="deanet">
-	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
-	<link rel="stylesheet" href="{{ site.pet }}/css/site.css" type="text/css" media="screen, projection" />
-	<link rel="stylesheet" href="{{ site.pet }}/css/syntax.css" type="text/css" />
+	<link href="qemutux.xml" rel="alternate" title="Pathing Qemutux" type="application/atom+xml" />
 	<meta name="viewport" content="width=850" />
-	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="{{ site.pet }}/css/iphone.css" type="text/css" />
 
-<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
-<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font1.css">
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-desc.css">
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-melongo.css">
+<link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/syntax.css" />
+
+<style type="text/css">
+{font-family:font-file-56252;font-style:normal;font-weight:400;}
+{font-family:font-file-54039;font-style:normal;font-weight:400;}
+{font-family:font-file-57397;font-style:normal;font-weight:400;}
+.melongo { font-family:font-file-57397;font-style:normal;font-weight:400;}
+.blue { 
+color: orange;
+font-weight:400;}
+.font-variations dd a {
+color: #000000;
+}
+
+.font-variations dd a:hover
+ {
+text-decoration: none;
+}
+
+ul.posts li {
+list-style: none;
+}
+</style>
 
 	<script type="text/javascript">
 
@@ -29,25 +51,37 @@
 </script>
 
 <script type="text/javascript">
-        var disqus_awesome = true; 
-        var disqus_developer = true;
+	var disqus_awesome = {{ site.disqus_awesome }}; 
+	var disqus_developer = {{ site.disqus_devel }};
 </script>    
 </head>
 
-<body>
-<div id="container">
-	<div id="header">
-		{% include header.html %}
-	</div>
-	<div id="page">
-		<div id="content">
+    
+<body bgcolor="#FFFFFF" link="#003984" vlink="#002856" text="#000000">
+<br><br>
+<center>
+<table width ="550" border="0" cellpadding="5">
+<tr><td>
+
+
+		{% include header_new.html %}
+
+
+
+<div align="justify">
+
 		{{ content }}
-		</div>
-	</div>
-	<div id="footer">
-		{% include footer.html %}
-	</div>
+
+
+<!--#include file="footer.html" -->
+		{% include footer_new.html %}
+
 </div>
+<!-- unable to fetch url -->
+</td></tr>
+</table>
+</center>
+
 <script type="text/javascript">
 //<![CDATA[
 (function() {
@@ -63,5 +97,4 @@
 //]]>
 </script>
 </body>
-
-</html>
+</html> 

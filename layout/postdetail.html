@@ -1,0 +1,5 @@
+<div id="{{ post.id }}" class="post">
+<span class="title"><a href="{{ site.pet}}{{post.url }}">{{ post.title }}</a></span>
+{{ post.content }}
+<span class="summary">{{ post.date | date: "%d %b %Y" }} &raquo; <a href="{{ site.pet }}{{ post.url }}">permalink</a> - <a href="{{ site.pet }}{{ post.url }}#disqus_thread">Comments</a></span>
+</div>

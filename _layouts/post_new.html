@@ -1,21 +1,31 @@
 ---
-layout: default
+layout: default_new
 ---
-<div id="post" class="post">
-	<span class="title">{{ page.title }}</span><br />
-	<span class="date">{{ page.date | date: "%b %d %Y" }}</span><br />
-	<span class="content">{{ content }}</span>
-</div>
-<div id="related">
-  <h3>Related Posts</h3>
-  <ul class="posts">
-    {% for post in site.related_posts limit:5 %}
-      <li><span>{{ post.date | date: "%b %d %Y" }}</span> &raquo; <a href="{{ site.pet }}{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
-</div>
+<font size="-1">
+<b>{{ page.title }}</b><br/>
+<br>
+<!-- content here -->
+{{ content }}
+<!-- end content -->
 
-<h3 id="archive"><a href="{{ site.pet }}/archive.html">Archive</a></h3>
+<!-- generate tag -->
+Tags: {% for tag in page.categories %}
+<a rel="tag" href="{{ site.pet }}/tags/{{ tag }}.html">{{ tag }}</a>, 
+{% endfor %}
+
+<br>
+<br>
+<br>
+
+
+</font>
+
+<b>Related Posts</b><br/>
+
+{% for post in site.related_posts limit:5 %}
+      <li><a href="{{ site.pet }}{{ post.url }}">{{ post.title }}</a> - <span>{{ post.date | date: "%b %d %Y" }}</span></li>
+{% endfor %}
+
 <br/>
 <div id="disqus_thread"></div>
 <script type="text/javascript">
