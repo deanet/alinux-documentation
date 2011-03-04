@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installasi BIND, Apache2, Mysql, PHP dan Konfigurasi DNS serta Virtual Host di OpenSuse
+categories: [install, bind, apache, mysql, php, vhost, opensuse]
 date: 2009-05-05 05:05:12
 ---
 

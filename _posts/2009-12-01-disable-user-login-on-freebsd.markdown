@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Disable user Login on FreeBSD
+categories: [login, freebsd]
 date: 2009-12-01 01:12:00
 ---
 How to disable user login on FreeBSD ???

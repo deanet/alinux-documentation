@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Mengatasi no public key available di apt debian
+categories: [apt, debian, key]
 date: 2010-06-23 10:52:53
 ---
 

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installasi Awstats
+categories: [install, awstats]
 date: 2009-07-23 23:06:16
 ---
 

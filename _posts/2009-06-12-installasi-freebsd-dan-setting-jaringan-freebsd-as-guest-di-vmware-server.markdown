@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installasi FreeBSD dan setting jaringan FreeBSD as guest di vmware server
+categories: [install, freebsd, vmware]
 date: 2009-06-12 12:00:00
 ---
 

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install apache, mysql dan php di slax
+categories: [install, apache, mysql, php, slackware]
 date: 2009-02-23 23:00:00
 ---
 Peralatan yang dibutuhkan:

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: SSH (OpenSSH) and SFTP (F-Secure) auto login without password
+categories: [OpenSSH, SFTP, F-Secure, login]
 date: 2010-01-03 03:01:00
 ---
 

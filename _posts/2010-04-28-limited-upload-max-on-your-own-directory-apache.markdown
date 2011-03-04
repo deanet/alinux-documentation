@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Limited Upload max on your own directory apache
+categories: [mod, apache]
 date: 2010-04-28 04:00:04
 ---
 `Apache` is one powerfull web server most used on cyber world. So many module to configuring as you want. One of them called `mod_php`. Sometimes we need different value of php main configuration. An example, on `php main configuration` we've added `upload max 5M`. So, you want a directory have different to upload more 5 M, example: 100M. So just `add` to your own directory directive:

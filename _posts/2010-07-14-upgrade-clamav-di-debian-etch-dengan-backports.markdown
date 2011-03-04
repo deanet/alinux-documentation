@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Upgrade ClamAV di Debian Etch dengan backports
+categories: [ClamAV, debian, etch, upgrade]
 date: 2010-07-14 10:52:53
 ---
 

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to Terminate, Suspend, and Continue a process using kill
+categories: [terminate, suspend, continue, kill]
 date: 2010-03-28 04:00:03
 ---
 Dalam <a title="Computing" href="http://en.wikipedia.org/wiki/Computing" target="_new">computing</a> (komputasi), `kill` adalah sebuah <a title="Command (computing)" href="http://en.wikipedia.org/wiki/Command_%28computing%29">perintah</a> yang digunakan dalam sistem operasi untuk mengirimkan sinyal ke sebuah <a title="Process (computing)" href="http://en.wikipedia.org/wiki/Process_%28computing%29">process</a> yang sedang berjalan. Contohnya kita bisa men-terminate program / process yang sedang berjalan.

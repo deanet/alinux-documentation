@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to install poller cactid or spine on linux
+categories: [cacti, poller, install, spine, linux, cactid]
 date: 2009-05-31 06:05:23
 ---
 ------------------------------------------

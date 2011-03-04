@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install vsftpd FTP Server di openSUSE
+categories: [install, vsftpd, ftp, opensuse]
 date: 2009-05-10 10:05:09
 ---
 ##Apa itu FTP ?

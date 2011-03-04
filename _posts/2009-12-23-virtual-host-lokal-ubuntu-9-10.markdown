@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Virtual Host Lokal Ubuntu 9.10
+categories: [vhost, ubuntu]
 date: 2009-12-23 23:12:00
 ---
 

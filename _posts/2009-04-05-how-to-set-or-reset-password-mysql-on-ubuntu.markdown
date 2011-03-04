@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to set or reset password mysql on Ubuntu
+categories: [mysql, ubuntu]
 date: 2009-04-05 05:00:16
 ---
 

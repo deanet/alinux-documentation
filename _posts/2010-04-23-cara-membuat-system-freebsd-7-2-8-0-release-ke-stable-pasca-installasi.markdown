@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Cara membuat system FreeBSD 7.2 / 8.0 release ke stable pasca installasi
+categories: [freebsd, upgrade, kernel]
 date: 2010-04-23 23:00:04
 ---
 

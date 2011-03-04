@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Perintah Linux beserta kegunaanya
+categories: [general, command]
 date: 2007-02-19 19:00:00
 ---
 

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to install Plugin Architecture Cacti and Mysql template for cacti
+categories: [install, cacti, mysql, template]
 date: 2009-06-03 03:06:16
 ---
 

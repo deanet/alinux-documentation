@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to change port and enable log OpenSSH SSH daemon
+categories: [ssh, openssh, opensuse]
 date: 2009-06-07 07:06:12
 ---
 

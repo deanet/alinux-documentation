@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Update package failed on ports FreeBSD
+categories: [setenv, ports, freebsd]
 date: 2010-02-27 03:02:01
 ---
 This is simple log error when we've failed to install package on freebsd via ports:

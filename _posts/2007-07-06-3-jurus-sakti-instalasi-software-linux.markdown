@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: 3 Jurus Sakti Instalasi Software Linux
+categories: [command]
 date: 2007-07-06 06:00:00
 ---
 <p>just simply</p>

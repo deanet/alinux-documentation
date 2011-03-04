@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installing Slackware dari USB memori Stick atau GRUB
+categories: [install, slackware, usb, grub]
 date: 2009-03-20 20:00:00
 ---
 Hari gini install linux pake CD ?? ogak bangets.. :D. install slackware pake USB ??. Maknyuss banget ... Gak ada USB ?? install pake Grub ?? TOP Bangetss ...:D

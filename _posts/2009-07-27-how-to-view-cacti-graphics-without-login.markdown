@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to view cacti graphics without Login
+categories: [cacti, login]
 date: 2009-07-27 03:07:00
 ---
 

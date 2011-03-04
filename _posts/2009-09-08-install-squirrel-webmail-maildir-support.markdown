@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install squirrel webmail maildir support
+categories: [squirrel, install, webmail, maildir]
 date: 2009-09-08 08:00:09
 ---
 

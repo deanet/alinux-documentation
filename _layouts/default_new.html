@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>{{ page.title }} &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="qemutux.xml" rel="alternate" title="Pathing Qemutux" type="application/atom+xml" />
+	<meta name="viewport" content="width=850" />
+
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font1.css">
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-desc.css">
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-melongo.css">
+<link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/style.css" />
+<link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/syntax.css" />
+
+<style type="text/css">
+{font-family:font-file-56252;font-style:normal;font-weight:400;}
+{font-family:font-file-54039;font-style:normal;font-weight:400;}
+{font-family:font-file-57397;font-style:normal;font-weight:400;}
+.melongo { font-family:font-file-57397;font-style:normal;font-weight:400;}
+.blue { 
+color: orange;
+font-weight:400;}
+.font-variations dd a {
+color: #000000;
+}
+
+.font-variations dd a:hover
+ {
+text-decoration: none;
+}
+
+ul.posts li {
+list-style: none;
+}
+</style>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', '{{ site.google_analytics_code }}']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+	var disqus_awesome = {{ site.disqus_awesome }}; 
+	var disqus_developer = {{ site.disqus_devel }};
+</script>    
+</head>
+
+    
+<body bgcolor="#FFFFFF" link="#003984" vlink="#002856" text="#000000">
+<br><br>
+<center>
+<table width ="550" border="0" cellpadding="5">
+<tr><td>
+
+
+		{% include header_new.html %}
+
+
+
+<div align="justify">
+
+		{{ content }}
+
+
+<!--#include file="footer.html" -->
+		{% include footer_new.html %}
+
+</div>
+<!-- unable to fetch url -->
+</td></tr>
+</table>
+</center>
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+</html> 

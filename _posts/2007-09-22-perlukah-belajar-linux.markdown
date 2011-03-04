@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Perlukah Belajar Linux ??
+categories: [general, case studies]
 date: 2007-09-22 09:00:00
 ---
 

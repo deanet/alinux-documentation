@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to mount iso on FreeBSD
+categories: [mount, iso, freebsd]
 date: 2010-02-13 13:00:02
 ---
 Just simply to mount:

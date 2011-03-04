@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch
+categories: [install, Qmail, Vpopmail, ClamAV, Simscan, Spamasassin, debian, etch]
 date: 2010-06-30 05:52:53
 ---
 

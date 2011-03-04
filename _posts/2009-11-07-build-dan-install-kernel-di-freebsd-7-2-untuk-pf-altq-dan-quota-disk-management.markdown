@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Build dan Install Kernel di FreeBSD 7.2 untuk PF, ALTQ, dan Quota Disk Management
+categories: [install, build, freebsd, kernel, PF, ALTQ, Quota Disk]
 date: 2009-11-07 07:11:09
 ---
 

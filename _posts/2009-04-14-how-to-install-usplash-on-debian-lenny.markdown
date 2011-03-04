@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to Install Usplash on debian lenny
+categories: [usplash, debian, lenny, install]
 date: 2009-04-16 16:00:23
 ---
 Boring with your lenny cause print text mode on kernel message ? . You must try this application called `usplash`. it's cool splash screen to change your text message. Many various installation `usplash` on linux distribution. On debian based u've just typed `apt-get` to install it. Easy ??? yeah.... let's go to prepare installation.

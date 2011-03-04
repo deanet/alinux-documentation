@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to install Postfix, UW IMAP and RoundCube webmail
+categories: [install, postfix, uw imap, roundcube, webmail]
 date: 2009-07-16 16:07:00
 ---
 

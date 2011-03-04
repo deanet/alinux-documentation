@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installation and setting network FreeBSD Virtual Box on Slackware Host
+categories: [install, freebsd, slackware, host, guest]
 date: 2009-10-01 01:00:10
 ---
 On <a href="/2009/06/12/installasi-freebsd-dan-setting-jaringan-freebsd-as-guest-di-vmware-server.html" target="_blank">previous posted</a> by me, we've installed FreeBSD on VmWare and setting networking for it. Now, we'll try install FreeBSD on VirtualBox and setting networking for it on Slackware host.

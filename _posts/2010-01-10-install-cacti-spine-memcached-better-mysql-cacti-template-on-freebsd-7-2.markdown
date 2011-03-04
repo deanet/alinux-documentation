@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install Cacti, Spine, Memcached, Better MySQL Cacti Template on FreeBSD 7.2
+categories: [install, cacti, spine, memcached, mysql, template, freebsd]
 date: 2010-01-10 10:00:00
 ---
 

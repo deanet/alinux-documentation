@@ -1,6 +1,7 @@
 ---
-layout: post
+layout: post_new
 title: Install apache, php5, and mysql on FreeBSD 7.2 using ports  
+categories: [install, apache, php, mysql, freebsd, ports]
 date: 2009-06-17 17:00:06
 ---
   

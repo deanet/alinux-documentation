@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install Apache 1.3 with mod_ssl and mod_watch, Mysql 4.1, PHP 5 on FreeBSD 7.2
+categories: [install, apache, ssl, mysql, php, freebsd]
 date: 2009-06-21 21:00:06
 ---
 

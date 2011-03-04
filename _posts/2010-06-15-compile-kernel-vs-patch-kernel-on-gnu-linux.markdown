@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Compile Kernel VS Patch Kernel on Gnu/Linux
+categories: [kernel, patch]
 date: 2010-06-15 19:43:06
 ---
 

@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installing debian lenny using GRUB
+categories: [install, debian, lenny, grub]
 date: 2009-03-03 03:03:16
 ---
 on [previous post](/2009/01/23/installing-debian-lenny-from-a-usb-memory-stick-usb-hdd.html) we can install debian lenny using USB memori stick. Now, we will try install debian lenny using `grub`. So without burned on CD.

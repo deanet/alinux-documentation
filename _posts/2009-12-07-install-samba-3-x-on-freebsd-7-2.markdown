@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install samba 3.x on FreeBSD 7.2
+categories: [install, samba, freebsd]
 date: 2009-12-07 07:12:06
 ---
 Install samba 3.x on FreeBSD 7.2. Silahkan juga di cobain d FreeBSD 8 :P ..

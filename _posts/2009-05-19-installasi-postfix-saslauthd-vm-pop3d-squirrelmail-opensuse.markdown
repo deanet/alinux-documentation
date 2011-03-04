@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installasi Postfix, Saslauthd, VM-Pop3d, dan SquirrelMail di OpenSuse
+categories: [install, postfix, saslauthd, vm-pop3d, squirrel, mail, opensuse]
 date: 2009-05-19 19:00:05
 ---
 Tutorial ini khusus diperuntukkan bagi seorang pemula / nubie yang ingin belajar lebih dalam mengenai segala tetek bengek sper. So, tutorial ini bagus banget utk saya pribadi :D . Tidak diperuntukkan bagi anda2 yang sudah mahir, hapal, diluar kepala (sampek lupa *just kidding*), jago, super jago tentang segala srper.:D

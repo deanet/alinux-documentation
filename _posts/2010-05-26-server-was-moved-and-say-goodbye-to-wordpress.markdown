@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Server was moved, and say goodbye to Wordpress
+categories: [c0ding, jekyll]
 date: 2010-05-26 02:51:03
 ---
 

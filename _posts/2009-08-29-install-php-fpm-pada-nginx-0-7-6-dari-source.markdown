@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install PHP-FPM pada Nginx 0.7.6 dari source
+categories: [install, php-fpm, php, nginx]
 date: 2009-08-27 03:08:01
 ---
 

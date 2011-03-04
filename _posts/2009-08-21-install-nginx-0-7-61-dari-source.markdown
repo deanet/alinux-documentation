@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install Nginx 0.7.61 dari source
+categories: [install, nginx]
 date: 2009-08-21 21:00:08
 ---
 

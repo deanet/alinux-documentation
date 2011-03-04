@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Install webmin quickly
+categories: [install, webmin]
 date: 2009-09-14 16:37:55
 ---
 

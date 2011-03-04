@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: USB LIVE, INSTALLASI, AND REMASTERING OF SLAX
+categories: [remastering, install, usb, slackware]
 date: 2008-08-07 07:00:00
 ---
 

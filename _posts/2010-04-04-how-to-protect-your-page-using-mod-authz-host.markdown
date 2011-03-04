@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to protect your page using mod authz host
+categories: [mod, authz, apache]
 date: 2010-04-04 04:04:04
 ---
 Pada posting sekarang akan menjelaskan secara sederhana bagaimana menambahkan proteksi pada directory tertentu dengan module apache mod authz host. berdasarkan ip address Hanya menambahkan opsi dibawah ini pada konfigurasi apache `http.conf` atau `apache2.conf` pada bracket directory.

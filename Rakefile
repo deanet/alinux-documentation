@@ -1,22 +1,135 @@
+require 'rubygems'
 require 'rake'
+require 'jekyll'
 require 'fileutils'
 require 'yaml'
-require 'time'
+require 'time' 
 
 ROOT_DIR = File.dirname(__FILE__)
 SITE_DIR = File.join(ROOT_DIR, '_site')
+TAGS_DIR = File.join(ROOT_DIR, 'tags')
 DRAFTS_DIR = File.join(ROOT_DIR, '_drafts')
 POSTS_DIR = File.join(ROOT_DIR, '_posts')
 
-PUBLISH_HOST = "berlin.joyent.us"
-PUBLISH_PATH = "/home/deanet/tmp/asc*/public"
 
-def categories(tags)
-  categories = "categories:\n"
-  if tags
-    tags.split(%r{[\/\s]}).each { |t| categories << "- #{t.strip}\n" }
-  end
-  categories
+options = Jekyll.configuration({})
+site = Jekyll::Site.new(options)
+site.read_posts('')
+
+## Clean garbage vim
+desc "Cleaning Garbage vim..."
+task :vim do
+	sh "find `pwd` -name \"*~\" -exec rm -rf {} \\\;"
+end
+
+## syncing to plox
+desc "Syncing to plox"
+task :rsync do
+	sh "cd _site;rsync -avu --relative -e \"ssh -C\" '.' dhanuxe@store.alinux.web.id:~/www/alinux/"
+end
+
+# Generate tag cloud page
+# -----------------------
+task :cloud do
+    puts 'Generating tag cloud...'
+
+    html =<<-HTML
+---
+layout: default_new
+title: Tag cloud
+---
+
+<p>Click on a tag to see the relevant posts.</p>
+HTML
+
+    html << '<p id="tagcloud">'
+    site.categories.sort.each do |category, posts|
+      font_size = 12 + (posts.count*1.5);
+      html << "<a href=\"{{ site.pet }}/tags/#{category}.html\" title=\"Entries tagged #{category} (#{posts.count})\" style=\"font-size: #{font_size}px\">#{category}</a>\n"
+    end
+    html << '</p>'
+
+    File.open('tags/cloud.html', 'w+') do |file|
+      file.puts html
+    end
+
+    puts 'Done. File written to: ./tags/cloud.html'
+end
+
+# Generate tags page
+# ------------------
+task :tags do
+    puts "Generating tags..."
+
+    site.categories.sort.each do |category, posts|
+        html =<<-HTML
+---
+layout: default_new
+title: Entries tagged "#{category}"
+---
+
+        <section class="nice-link-list">
+            <header>
+                <h1>{{ page.title }}</h1>
+            </header>
+
+		<br/>
+            <ul>
+                {% for post in site.categories['#{category}'] %}
+                <li><a href="{{ site.pet }}{{ post.url }}">{{ post.title }}</a> - <time datetime="{{ post.date | date: "%Y-%m-%d" }}" pubdate>{{ post.date | date_to_string }}</time></li>
+                {% endfor %}
+            </ul>
+		<br/>
+            <p>Go to the <a href="{{ site.pet }}/tags/cloud.html">tag cloud</a> to see other tags..</p>
+HTML
+
+        File.open("tags/#{category}.html", 'w+') do |file|
+          file.puts html
+        end
+    end
+    puts 'Done. Files written to: ./tags/'
+end
+
+# Generate website
+# ----------------
+#task :generate => [:cloud, :tags] do
+#    sh 'jekyll'
+#end
+
+# Clean dir www
+#task :clean do
+#	sh 'rm -rf /var/www/techno/*'
+#end
+
+
+
+desc "Clear generated site."
+task :clean do
+  rm_rf Dir.glob(File.join(SITE_DIR, '*'))
+  rm_rf Dir.glob(File.join(TAGS_DIR, '*'))
+end
+
+# Generate website
+# ----------------
+task :taggen => [:cloud, :tags] do
+    puts 'Generated tag cloud and all tag pages.'
+end
+
+desc "Generate site."
+task :build do
+  sh "jekyll"
+end
+
+desc "Run local jekyll server"
+task :server, [:port] do |t, args|
+  sh "jekyll --server #{args.port || 4000} --auto"
+end
+
+desc "Publish site."
+task :publish => [:clean, :cloud, :tags, :build] do |t|
+ # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
+ sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"
+ # puts "Commit your posts and changes.\nThen run:\n  git push origin master"
 end
 
 def parse_post(post)
@@ -40,28 +153,6 @@ def edit_post(post)
   system "#{editor} #{post}"  
 end
 
-desc "Clear generated site."
-task :clean do
-  rm_rf Dir.glob(File.join(SITE_DIR, '*'))
-end
-
-desc "Generate site."
-task :build do
-  sh "jekyll"
-end
-
-desc "Run local jekyll server"
-task :server, [:port] do |t, args|
-  sh "jekyll --server #{args.port || 4000} --auto"
-end
-
-desc "Publish site."
-task :publish => [ :build ] do |t|
- # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
- sh "rm -rf /var/www/*;cp -r _site/* /var/www/"
- # puts "Commit your posts and changes.\nThen run:\n  git push origin master"
-end
-
 desc "Create a new draft post"
 task :draft, [:title] do |t, args|
   title = args.title || "Untitled"
@@ -72,8 +163,9 @@ task :draft, [:title] do |t, args|
 
   header = <<-END
 ---
-layout: post
 title: #{title}
+layout: post_new
+categories: [Uncategories]
 ---
 
 New draft post
@@ -86,7 +178,7 @@ END
 
   puts "Created draft post #{post}."
   puts "To publish, use:"
-  puts "  rake post [#{postname}]"
+  puts "  rake post[#{postname}]"
 end
 
 desc "Publish draft post. Arguments: [title]"
@@ -97,6 +189,7 @@ task :post, [:title] do |t, args|
   end
 
   published_timestamp = Time.now
+  #names = header["title"].strip.downcase.gsub(/ /, '-')
   date_prefix = published_timestamp.strftime("%Y-%m-%d")
   draft_path = File.join(DRAFTS_DIR, "#{args.title}.markdown")
   header, body = parse_post(IO.readlines(draft_path))
@@ -122,7 +215,14 @@ task :update, [:title] do |t, args|
 
   updated_timestamp = Time.now
   postname = args.title.strip.downcase.gsub(/ /, '-')
-  post_path = File.join(POSTS_DIR, "#{postname}.markdown")
+
+ # name = header["title"].strip.downcase.gsub(/ /, '-')
+ # header["date"] = published_timestamp.strftime("%Y-%m-%d %H:%M:%S") unless header.include?("date")
+
+  published_timestamp = Time.now
+  date_prefix = published_timestamp.strftime("%Y-%m-%d")
+
+  post_path = File.join(POSTS_DIR, "#{date_prefix}-#{postname}.markdown")
   header, body = parse_post(IO.readlines(post_path))
   header["updated"] = updated_timestamp.strftime("%Y-%m-%d %H:%M:%S")
   write_post(header, body, post_path)

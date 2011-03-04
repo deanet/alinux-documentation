@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: How to install Cacti 0.8.7d
+categories: [install, cacti, openusese]
 date: 2009-05-26 01:00:05
 ---
 ##About Cacti

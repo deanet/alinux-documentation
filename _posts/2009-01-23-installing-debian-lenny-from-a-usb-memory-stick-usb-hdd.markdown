@@ -1,6 +1,7 @@
 --- 
-layout: post
+layout: post_new
 title: Installing Debian Lenny from a USB memory stick (USB HDD)
+categories: [debian, lenny, usb, install]
 date: 2009-01-23 03:16:23
 ---
 
