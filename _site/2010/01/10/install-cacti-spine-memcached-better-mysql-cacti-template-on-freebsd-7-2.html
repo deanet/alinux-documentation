@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Install Cacti, Spine, Memcached, Better MySQL Cacti Template on FreeBSD 7.2 &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Install Cacti, Spine, Memcached, Better MySQL Cacti Template on FreeBSD 7.2</span><br />
+	<span class="date">Jan 10 2010</span><br />
+	<span class="content"><p>On this tutorial i would like review how to install cacti. But small differents of previous tutorial. Now, i try out with FreeBSD 7.2. Cacti, Memcached, Spine via ports and Better MySQL Cacti Template. ok,.. let&#8217;s prepare :</p>
+
+<h1 id='install_cacti'>Install Cacti:</h1>
+
+<h4 id='1_cacti_needs_web_server_and_mysql_server'>1. Cacti needs web server and mysql server.</h4>
+
+<p>Please <a href='/2009/06/17/install-apache-php5-and-mysql-on-freebsd-7-2-using-ports.html' target='_new'>Check this out</a> to install web server and mysql server on FreeBSD 7.2 . Make sure php module enable for webserver apache2, also <code>sockets</code>, <code>snmp</code> and <code>xml</code> modul for <code>php</code>. Those checked by <code>pkg_info | grep php</code>. If those aren&#8217;t system, please install:</p>
+
+<pre><code># cd /usr/ports/net/php5-sockets; make install clean
+# cd /usr/ports/net-mgmt/php5-snmp; make install clean
+# cd /usr/ports/net/php5-xmlrpc; make install clean</code></pre>
+
+<h4 id='2_cacti_needs_rrd_tool'>2. Cacti needs RRD TOOL</h4>
+
+<p>to install <code>rrdtool</code> change to into directory below and <code>make install clean</code></p>
+
+<pre><code># cd /usr/ports/databases/rrdtool; make install clean</code></pre>
+
+<p>On this step, you can install cacti, please see previous posting <a href='/2009/05/26/how-to-install-cacti-0-8-7d/' target='_new'>how to install cacti </a> (Step 4)</p>
+
+<p>Make sure cacti running fine.. ;) and then install spine..</p>
+
+<h1 id='install_spine'>Install Spine</h1>
+
+<h4 id='via_ports'>Via Ports:</h4>
+
+<pre><code># cd /usr/ports/net-mgmt/cacti-spine
+# make install clean</code></pre>
+
+<p>when <code>cacti-spine</code> installed, these package included:</p>
+
+<pre><code>libtool-1.5.26
+net-snmp-5.4.2.1_3</code></pre>
+
+<h4 id='via_source'>Via Source:</h4>
+
+<h4 id='1_extract_package'>1. extract package</h4>
+
+<pre><code># tar -xzvf cacti-spine-0.8.7c.tar.gz</code></pre>
+
+<h4 id='2_configure_make_and_make_install_'>2. Configure, make and make install :)</h4>
+
+<pre><code># cd cacti-spine-0.8.7c
+# ./configure &amp;&amp; make &amp;&amp; make install</code></pre>
+
+<p>If you installing <code>cacti-spine</code> via source, please make sure <code>net-snmp</code> installed too</p>
+
+<pre><code>%pkg_info | grep snmp
+net-snmp-5.4.2.1_3  An extendable SNMP implementation
+
+# cd /usr/ports/net-mgmt/net-snmp</code></pre>
+
+<p>Please choose one how to install spine. Maybe you need more specific installation when install spine via source if you won&#8217;t replace binary spine from port. Use option <code>--prefix=/your/own/folder</code> in example when you type <code>make install</code>. ok, until here install <code>spine</code> or <code>cacti-id</code> is done. You need hard configuration now !.. :lol:</p>
+
+<h4 id='3_configuring_spine'>3. Configuring spine:</h4>
+
+<h4 id='1_copying__and_configuring_it'>1. Copying <code>spine.conf</code> and configuring it</h4>
+<div class='highlight'><pre>	# cd /usr/local/spine/etc
+	# cp spine.conf.dist spine.conf
+
+	# vi spine.conf
+	DB_Host         localhost
+	DB_Database     cacti
+	DB_User         cactiuser
+	DB_Pass         cactipassword
+	DB_Port         3306
+	
+</pre>
+</div>
+<h4 id='2_disable_crontab_poller_cacti'>2. Disable crontab poller cacti</h4>
+
+<p><code>#* * * * * /usr/bin/php /srv/www/htdocs/cacti/poller.php &gt; /dev/null 2&gt;&amp;1</code></p>
+
+<p>try to keep your database cacti and rra isn&#8217;t gone or error :D</p>
+
+<h4 id='3_change__configuration_on_cacti'>3. Change <code>poller</code> configuration on cacti</h4>
+
+<p>a. Fill path spine click <code>settings</code>&#160;&#187; <code>Path</code>. Fill spine path on path form, and then click <code>save</code></p>
+
+<p>b. change poller configuration</p>
+
+<p>click <code>settings</code>&#160;&#187; <code>Poller</code>. Set poller with <code>spine</code> not <code>cmd-php</code> and then click <code>save</code></p>
+
+<h2 id='others_configuration'>others configuration:</h2>
+
+<h4 id='1_update_value_of_poller_on_database'>1. Update value of poller on database</h4>
+
+<p>default value of poller on cacti database are <code>300 seconds</code>. We can change that value via mysql console</p>
+
+<pre><code># mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 28894
+Server version: 5.0.77-community MySQL Community Edition (GPL)
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the buffer.</code></pre>
+
+<p>change into cacti database</p>
+
+<pre><code>mysql&gt; use cacti;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+Database changed</code></pre>
+
+<p>and update value of poller on database.</p>
+
+<pre><code>mysql&gt; update data_template_data set rrd_step=&#39;60&#39;;
+mysql&gt; update data_template_rrd set rrd_heartbeat=&#39;120&#39;;
+mysql&gt; flush privileges;</code></pre>
+
+<h4 id='2_remove_rra_data_on_rra_directory'>2. Remove rra data on rra directory.</h4>
+
+<p>Remove old rra data that does not confuse with the new data of spine poller. Backup first if u not sure what r u doing.</p>
+
+<pre><code># cd /srv/www/htdocs/cacti/rra
+# tar -czvf /srv/www/htdocs/backup-rra.tar.gz *</code></pre>
+
+<p>then u can remove rra data</p>
+
+<pre><code># rm *</code></pre>
+
+<h4 id='3_set_crontab_time_for_1_minutes'>3. Set crontab time for 1 minutes</h4>
+
+<pre><code>* * * * * /usr/bin/php /srv/www/htdocs/cacti/poller.php &amp;gt; /dev/null 2&amp;gt;&amp;amp;1</code></pre>
+
+<p>Finish..</p>
+
+<p>check your log to make sure spine is running .. ;)</p>
+
+<h1 id='install_memcached_and_better_mysql_cacti_templates'>Install memcached and Better MySQL Cacti Templates</h1>
+
+<p>We use <a href='http://code.google.com/p/mysql-cacti-templates/' target='_new'>MySQL Cacti Template</a> for create better Cacti templates for MySQL, Apache, Memcached and more. And we use ssh based templates to create graphics of other machine which <code>snmpd</code> run, so we need create public key and secret key to automatic login on that machine. And next, Install MySQL Cacti Template based ssh.</p>
+
+<pre><code># tar zxf better-cacti-templates-1.1.4.tar.gz
+# cd better-cacti-templates-1.1.4
+# cp better-cacti-templates/scripts/ss_get_by_ssh.php /usr/local/www/cacti/scripts/</code></pre>
+
+<p>Now import the template files through your web browser. In the Cacti web interface&#8217;s <code>Console tab</code>, click on the <code>Import Templates</code> link in the left sidebar. Browse to the directory containing the unpacked templates, <code>select</code> the XML file for the templates you&#8217;re installing, and <code>submit</code> the form. In our example, the file will be named something like <code>cacti_host_template_x_mysql_server_ht_0.8.6i-sver1.1.4.xml</code></p>
+
+<h2 id='configuration'>Configuration:</h2>
+
+<p>and then you need set auto login for ssh user as your username. see <a href='/2010/01/03/ssh-openssh-and-sftp-f-secure-auto-login-without-password/' target='_new'>previous post how to make auto login</a>.</p>
+
+<p>next, need some modified of script:</p>
+
+<pre><code># cd  /usr/share/cacti/site/scripts/
+# vi ss_get_by_ssh.php.cnf
+$ssh_user   = &#39;username&#39;;
+$ssh_iden   = &#39;-i /your/locate/id_rsa&#39;;</code></pre>
+
+<p>done.</p>
+
+<p>On others machine (server monitored, ex: <code>172.16.0.22</code>) install <code>memcached</code> from <code>ports</code>:</p>
+
+<pre><code># cd /usr/ports/databases/memcached
+# make install clean</code></pre>
+
+<p>start daemon:</p>
+
+<pre><code>/usr/local/bin/memcached -m 4000 -d -u nobody</code></pre>
+
+<p>-m : memori -d : sebagai daemon -u : user</p>
+
+<h4 id='boot_daemon'>boot daemon:</h4>
+
+<p>add to <code>rc.conf</code> for <code>memchaced</code> daemon activated every boot.</p>
+
+<pre><code>memcached_enable=&quot;YES&quot;;
+memcached_flags=&quot;-t 8 -m 4000&quot;;</code></pre>
+
+<p>Testing your ssh based Templates. Run this command on cacti&#8217;s machine:</p>
+
+<pre><code>%/usr/local/bin/php /usr/local/www/cacti/scripts/ss_get_by_ssh.php --type memcached --host 172.16.0.22 --items b6,b7
+b6:4846539 b7:8779665%</code></pre>
+
+<p>and then just <a href='http://gregsowell.com/?p=115' target='_new'>create graph for new device</a>.</p>
+
+<h1 id='troubleshoot'>Troubleshoot:</h1>
+
+<p>If u got an error:</p>
+
+<pre><code>Call to undefined function session_name()</code></pre>
+
+<p>just install via ports:</p>
+
+<pre><code># /usr/ports/www/php5-session
+# make install clean</code></pre>
+
+<p>done&#8230;</p>
+
+<p>good luck&#8230; ;)</p>
+
+<p>semoga bermanfaat.. :)</p>
+
+<p>reference:</p>
+
+<ol>
+<li><a href='http://code.google.com/p/mysql-cacti-templates/wiki/InstallingTemplates'>http://code.google.com/p/mysql-cacti-templates/wiki/InstallingTemplates</a></li>
+
+<li><a href='http://code.google.com/p/mysql-cacti-templates/wiki/SSHBasedTemplates'>http://code.google.com/p/mysql-cacti-templates/wiki/SSHBasedTemplates</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

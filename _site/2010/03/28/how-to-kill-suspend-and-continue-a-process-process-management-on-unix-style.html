@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>How to Terminate, Suspend, and Continue a process using kill &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">How to Terminate, Suspend, and Continue a process using kill</span><br />
+	<span class="date">Mar 28 2010</span><br />
+	<span class="content"><p>Dalam <a href='http://en.wikipedia.org/wiki/Computing' title='Computing' target='_new'>computing</a> (komputasi), <code>kill</code> adalah sebuah <a href='http://en.wikipedia.org/wiki/Command_%28computing%29' title='Command (computing)'>perintah</a> yang digunakan dalam sistem operasi untuk mengirimkan sinyal ke sebuah <a href='http://en.wikipedia.org/wiki/Process_%28computing%29' title='Process (computing)'>process</a> yang sedang berjalan. Contohnya kita bisa men-terminate program / process yang sedang berjalan.</p>
+
+<p>Jika kita berbicara mengenai kill, tentu saja ini berhubungan dengan <a href='http://en.wikipedia.org/wiki/System_call' target='_new'>system call</a> kill dan <a href='http://en.wikipedia.org/wiki/Signal_%28computing%29' target='_new'>signal processing</a>. Untuk lebih lengkapnya silahkan baca sendiri di <a href='http://en.wikipedia.org'>Wikipedia</a> sudah komplit2.. :P . Pada intinya system call / kill() berhubungan dengan signal. Dibawah ini model status proses di Unix.</p>
+
+<p>Terkait judul diatas hanya Terminate, Suspend, dan Kill. Maka saya hanya menjelaskan tiga hal tersebut. Untuk temen-temennya terminate,suspend,dan kill lainya bisa dibaca sendiri di manual page ( man signal) atau di <a href='http://en.wikipedia.org/wiki/Signal_%28computing%29' target='_new'>wikipedia</a> (pengertian secara umum).</p>
+
+<p>Oiya, dalam percobaan saya ini menggunakan FreeBSD dan Slackware. Silahkan praktikan sendiri dimesin Unix like lainnya :P.</p>
+
+<h1 id='id2'><a href='http://en.wikipedia.org/wiki/SIGTERM' target='_new'>Terminate</a></h1>
+
+<p>Terminate dalam process signal ada beberapa macam.. setahu saya ada 2 macam. Silahkan baca lagi di <a href='http://en.wikipedia.org/wiki/Signal_%28computing%29'>wikipedia</a>. Yang saya coba di sini adalah signal no #9 .. Oiya, signal ini memiliki urutan<a href='http://en.wikipedia.org/wiki/Signal.h'>signal </a>. Jadi Signal #9 adalah signal yang men-terminate secara tidak normal dari sbuah proses dan harus dilaksanakan secepatnya. <em>doh maksude pie kui</em> :D</p>
+
+<p>Ok, sekarang kita praktekan sendiri2..:</p>
+
+<p>Perintahnya:</p>
+
+<p><code>kill -9 pid</code></p>
+
+<p>dimna <code>pid</code> adalah nomor <code>pid</code> = <code>process id</code>.</p>
+
+<p>secara umum perintahnya adalah seperti diatas. Jika menggunakan TOP di FreeBSD pada saat top runninng, ketik <code>k</code> lalu isi <code>-9 pid</code>. Saya coba dengan menggunakan mesin slackware 13, agak sedikit berbeda. Ketik <code>k</code> lalu isi <code>pid</code>, baru <code>nomor signal</code>. Tapi nomor signal kill tetap sama yaitu no <code>9</code> . :D</p>
+
+<h1 id='id3'><a href='http://en.wikipedia.org/wiki/SIGTSTP' target='_new'>Suspend.</a></h1>
+
+<p>Perintah sinyal suspend akan dijalankan pada process yang berjalan dengan perintah: FreeBSD:</p>
+
+<p><code>kill -17 pid</code></p>
+
+<p>Slackware:</p>
+
+<p><code>kill -19 pid</code></p>
+
+<p>Dalam <code>signal suspend</code> ini ada 2 macam jika di environment freebsd. <code>signal 17</code> sama <code>18</code>. Perbedaan nya jika <code>signal 17</code> tidak dapat diabaikan jika perintah dari inputan keyboard atau system sendiri (cron misal). Jika <code>signal 18</code> hanya dapat berjalan jika inputan command berasal dari keyboard / terminal. Begitu juga di Slackware, <code>signal 19</code> dengan <code>20</code> sama seperti <code>signal 17</code> dengan <code>18</code> di FreeBSD.</p>
+
+<h1 id='id4'><a href='http://en.wikipedia.org/wiki/SIGCONT' target='_new'>Continue</a></h1>
+
+<p>Perintah sinyal continue akan dijalankan pada process yang berjalan dengan perintah:</p>
+
+<p>FreeBSD:</p>
+
+<p><code>kill -19 pid</code></p>
+
+<p>Slackware:</p>
+
+<p><code>kill -18 pid</code></p>
+
+<p>Setelah itu bisa anda praktekan sendiri-sendiri. Misal pada pemutar musik anda :mrgreen: serasa hang tapi bukan hang. atau pada ssh koneksi temen anda pada waktu login. Lho.. koq dipencet2 command na g kluar2, apa koneksi nya putus ???? koq g ada connection time out&#8230;. heee.. yaaa.. betul, proses anda sedang di pause / suspend :P.</p>
+
+<h2 id='berikut_list_signal_di_'>Berikut List Signal di <code>Slackware</code>:</h2>
+<div class='highlight'><pre>bash-3.1$ kill -l
+ 1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL
+ 5) SIGTRAP      6) SIGABRT      7) SIGBUS
+8. SIGFPE
+ 9) SIGKILL     10) SIGUSR1     11) SIGSEGV     12) SIGUSR2
+13) SIGPIPE     14) SIGALRM     15) SIGTERM     16) SIGSTKFLT
+17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU
+25) SIGXFSZ     26) SIGVTALRM   27) SIGPROF     28) SIGWINCH
+29) SIGIO       30) SIGPWR      31) SIGSYS      34) SIGRTMIN
+35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3  38) SIGRTMIN+4
+39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12
+47) SIGRTMIN+13 48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14
+51) SIGRTMAX-13 52) SIGRTMAX-12 53) SIGRTMAX-11 54) SIGRTMAX-10
+55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7  58) SIGRTMAX-6
+59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+</pre>
+</div>
+<h2 id='dan_berikut_list_signal_di_'>Dan berikut List signal di <code>FreeBSD</code>:</h2>
+<div class='highlight'><pre> No    Name 	Default Action	     Description
+     1	   SIGHUP	terminate process    terminal line hangup
+     2	   SIGINT	terminate process    interrupt program
+     3	   SIGQUIT	create core image    quit program
+     4	   SIGILL	create core image    illegal instruction
+     5	   SIGTRAP	create core image    trace trap
+     6	   SIGABRT	create core image    abort program (formerly SIGIOT)
+     7	   SIGEMT	create core image    emulate instruction executed
+     8	   SIGFPE	create core image    floating-point exception
+     9	   SIGKILL	terminate process    kill program
+     10    SIGBUS	create core image    bus error
+     11    SIGSEGV	create core image    segmentation violation
+     12    SIGSYS	create core image    non-existent system call invoked
+     13    SIGPIPE	terminate process    write on a pipe with no reader
+     14    SIGALRM	terminate process    real-time timer expired
+     15    SIGTERM	terminate process    software termination signal
+     16    SIGURG	discard signal	     urgent condition present on
+					     socket
+     17    SIGSTOP	stop process	     stop (cannot be caught or
+					     ignored)
+     18    SIGTSTP	stop process	     stop signal generated from
+					     keyboard
+     19    SIGCONT	discard signal	     continue after stop
+     20    SIGCHLD	discard signal	     child status has changed
+     21    SIGTTIN	stop process	     background read attempted from
+					     control terminal
+     22    SIGTTOU	stop process	     background write attempted to
+					     control terminal
+     23    SIGIO	discard signal	     I/O is possible on a descriptor
+					     (see fcntl(2))
+     24    SIGXCPU	terminate process    cpu time limit exceeded (see
+					     setrlimit(2))
+     25    SIGXFSZ	terminate process    file size limit exceeded (see
+					     setrlimit(2))
+     26    SIGVTALRM	terminate process    virtual time alarm (see
+					     setitimer(2))
+     27    SIGPROF	terminate process    profiling timer alarm (see
+					     setitimer(2))
+     28    SIGWINCH	discard signal	     Window size change
+     29    SIGINFO	discard signal	     status request from keyboard
+     30    SIGUSR1	terminate process    User defined signal 1
+     31    SIGUSR2	terminate process    User defined signal 2
+     32    SIGTHR	terminate process    thread interrupt
+</pre>
+</div>
+<p>semoga bermanffaat :)</p>
+
+<p>ref:</p>
+
+<ol>
+<li>man signal</li>
+
+<li>man kill</li>
+
+<li>wikipedia</li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

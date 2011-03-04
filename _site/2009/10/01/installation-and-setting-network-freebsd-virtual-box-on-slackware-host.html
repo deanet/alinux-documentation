@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installation and setting network FreeBSD Virtual Box on Slackware Host &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installation and setting network FreeBSD Virtual Box on Slackware Host</span><br />
+	<span class="date">Oct 01 2009</span><br />
+	<span class="content"><p>On <a href='/2009/06/12/installasi-freebsd-dan-setting-jaringan-freebsd-as-guest-di-vmware-server.html' target='_blank'>previous posted</a> by me, we&#8217;ve installed FreeBSD on VmWare and setting networking for it. Now, we&#8217;ll try install FreeBSD on VirtualBox and setting networking for it on Slackware host.</p>
+
+<p>At first step. we must have installed Virtual Box. On this experiment, i use Virtual Box version 3.0.6 rxxxx and Slackware 12.0 as host. Just download on <a href='http://www.virtualbox.org/wiki/Linux_Downloads' target='_new'>virtualbox.org</a> (choose linux all compability) and install it by execute binary file.</p>
+
+<pre><code>./VirtualBox-xxx.run</code></pre>
+
+<p>Ok, now lets begin to install FreeBSD on Virtual Box using Slackware Host.</p>
+
+<h2 id='create_new_machine_freebsd_on_virtual_box'>Create new machine FreeBSD on Virtual Box</h2>
+
+<ol>
+<li>
+<p>Run Virtual Box and Click Machine -&#62; New .. or using shortcut <code>Ctrl + N</code></p>
+</li>
+
+<li>
+<p>Click <code>Next</code> and give <code>name for machine</code>, choose <code>Type Operating System</code>, then <code>Version Os</code>. And click <code>next</code>.</p>
+</li>
+
+<li>
+<p>At memory (RAM) for virtual machine, leave as <code>default</code>. Then Click <code>next</code></p>
+</li>
+
+<li>
+<p>Choose create <code>new Hardisk</code>, and click <code>next</code></p>
+</li>
+
+<li>
+<p>click <code>next</code></p>
+</li>
+
+<li>
+<p>choose <code>dinamically</code> bla &#8230; bla.. bla.. , and click <code>next</code></p>
+</li>
+
+<li>
+<p>Type <code>name of Virtual Hardisk (leave as default)</code> .. and then choose <code>size of virtual hardisk</code>. On this experiment using 2G is enaugh. We&#8217;ll install on minimum system ;) . so click <code>next</code> and click <code>Finish</code></p>
+</li>
+
+<li>
+<p>On summary Window, click next <code>Finish</code>.</p>
+</li>
+</ol>
+
+<h2 id='install_freebsd_on_new_virtual_machine'>Install FreeBSD on new Virtual Machine</h2>
+
+<ol>
+<li>Choose <code>Machine (FreeBSD-7)</code></li>
+
+<li>Click <code>Setting</code></li>
+
+<li>Choose <code>CDROM</code> tab</li>
+
+<li>Checked <code>Mount CD/DVD Drive option</code></li>
+
+<li>Checked <code>ISO Image File option</code></li>
+
+<li>Locate <code>ISO Image File</code></li>
+
+<li>Click <code>Yellow Arrow</code></li>
+
+<li>Click <code>Add</code></li>
+
+<li>Choose <code>File and open</code>, and <code>select</code>. at last, click <code>OK</code>.</li>
+</ol>
+
+<h2 id='now_click_start_on_virtual_box'>Now, click Start on virtual box</h2>
+
+<ol>
+<li>
+<p>Press <code>Enter</code> for default.</p>
+</li>
+
+<li>
+<p>Choose <code>country</code>, press <code>enter</code>, and press <code>enter</code> again (leave as default)</p>
+</li>
+
+<li>
+<p>Choose <code>Standard installation</code>, press <code>enter</code>, and press <code>enter</code> again</p>
+</li>
+
+<li>
+<p>Partitioning Disk on FreeBSD</p>
+
+<p>a. Type <code>a</code> to use all entire Disk, and type <code>q</code>.<br /> b. Press <code>enter</code> (we use FreeBSD boot manager), then <code>press</code> enter again.<br /> c. Type <code>c</code> and type <code>256M</code> . then <code>press</code> enter.<br /> d. Choose <code>A swap partition</code>.. then <code>press</code> enter.<br /> e. Type <code>c</code> and then press <code>enter</code>.<br /> f. Choose <code>A File System</code> , press <code>enter</code> and type <code>/</code>.<br /> g. Now, <code>root partition</code> and <code>swap partition</code> was created.<br /></p>
+
+<p>press <code>q</code> to finish.</p>
+</li>
+
+<li>
+<p>choose <code>1 CD/DVD</code>, then press <code>enter</code>, and press <code>enter</code> again to continue the installation. Please make sure back up all your data.</p>
+</li>
+
+<li>
+<p>Processing installation</p>
+</li>
+
+<li>
+<p>FreeBSD was installed, and then press enter.</p>
+</li>
+
+<li>
+<p>Configure any Ethernet or SLIP/PP network devices choose <code>yes</code></p>
+
+<p>a. choose <code>em0 Card</code>&#160;&#187; <code>enter</code>&#160;&#187; <code>IPV6 (no)</code>&#160;&#187; <code>DHCP no</code> ;<br /> b. and then configure network for your new FreeBSD Machine which u needed.<br /> c. press <code>enter</code>&#160;&#187; <code>em0 interface up right now (yes)</code>&#160;&#187; <code>as network gateway (no)</code>&#160;&#187; <code>configure inetd and network services (no)</code>&#160;&#187; <code>SSH Login (yes)</code>&#160;&#187; <code>FTP anonymouse access (no)</code>&#160;&#187; <code>NFS server no</code>&#160;&#187; <code>NFS Client no</code>&#160;&#187; <code>customize console no</code>&#160;&#187; <code>set machine time zone yes</code>&#160;&#187; <code>UTC no</code>&#160;&#187; <code>choose as yourself</code>&#160;&#187; <code>Linux binary compability (yes)</code>&#160;&#187; <code>Mouse Integrated (no)</code>&#160;&#187; <code>browse colletion (no)</code>&#160;&#187; <code>user confirmation requested (yes)</code>&#160;&#187; choose <code>user</code> and fill as requested (<code>login id</code>, <code>password</code>, and <code>name</code>. also fill <code>wheel</code> on member groups for this member allowed login as super user&#160;&#187; press <code>enter</code> and exit&#160;&#187; <code>setup new password for root</code>&#160;&#187; <code>back to configuration menu (no)</code>&#160;&#187; select <code>exit Install</code>&#160;&#187; <code>Yes</code> .<br /></p>
+</li>
+
+<li>
+<p>Unchecked iso image FreeBSD on CDROMS Machine Settings and press <code>OK</code>, then boot that machine.</p>
+</li>
+</ol>
+
+<h2 id='setting_network_virtual_box_on_slackware_host'>Setting Network Virtual Box on Slackware Host</h2>
+
+<ol>
+<li>
+<p>Active tun module</p>
+
+<p><code># modprobe tun</code></p>
+</li>
+
+<li>
+<p>create virtual card (<code>vbox0</code>) and give permission for user <code>deanet</code>.</p>
+
+<p><code># /opt/VirtualBox/VBoxTunctl -t vbox0 -u deanet</code></p>
+</li>
+
+<li>
+<p>Set ip address for Slackware Host: <code>192.168.1.1</code> and netmask <code>255.255.255.0</code></p>
+
+<p><code># ip addr add 192.168.1.1/24 brd + dev vbox0</code></p>
+</li>
+
+<li>
+<p>up interface card</p>
+
+<p><code># iconfig vbox0 up</code></p>
+</li>
+</ol>
+
+<p>check configuration</p>
+
+<pre><code># ip a</code></pre>
+
+<p>On network FreeBSD Virtual Box select card for <code>bridge</code> and <code>vbox0</code> . then boot again using new virtual card.</p>
+
+<h2 id='note'>NOTE:</h2>
+
+<h4 id='please_make_sure_you_have_authorized_for_device_its_means_you_can_controlled_virtual_device_on_virtual_box_like_usbniccametc'>Please make sure you have authorized for device. It&#8217;s means you can controlled virtual device on virtual box like usb,nic,cam,etc.</h4>
+
+<h2 id='tips'>tips:</h2>
+
+<p>To use slackware host as router just add value 1 on /proc/sys/net/ipv4/ip_forward</p>
+
+<pre><code>echo &quot;1&quot; &gt; /proc/sys/net/ipv4/ip_forward</code></pre>
+
+<p>Add nameserver on FreeBSD machine to look up domain from FreeBSD machine. :)</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://makassar-slackers.org/node/215'>http://makassar-slackers.org/node/215</a></li>
+
+<li><a href='http://www.freebsd.org/doc/en/books/handbook'>http://www.freebsd.org/doc/en/books/handbook</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>

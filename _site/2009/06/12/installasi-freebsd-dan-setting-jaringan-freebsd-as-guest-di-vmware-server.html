@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Installasi FreeBSD dan setting jaringan FreeBSD as guest di vmware server &laquo; alinux.web.id</title>
+	<meta name="author" content="deanet">
+	<link href="atom.xml" rel="alternate" title="build system from God's systems" type="application/atom+xml" />
+	<link rel="stylesheet" href="/css/site.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/css/syntax.css" type="text/css" />
+	<meta name="viewport" content="width=850" />
+	<link rel="stylesheet" media="screen and (max-device-width: 480px)" href="/css/iphone.css" type="text/css" />
+
+<script type="text/javascript" src="http://use.typekit.com/aoe6dic.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-12495571-3']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+        var disqus_awesome = true; 
+        var disqus_developer = true;
+</script>    
+</head>
+
+<body>
+<div id="container">
+	<div id="header">
+		<div id="logo">
+	<a class="site" href="/index.html">home</a>
+</div>
+<div id="navbar">
+	<a class="site" href="/atom.xml">rss</a>
+</div>
+
+	</div>
+	<div id="page">
+		<div id="content">
+		<div id="post" class="post">
+	<span class="title">Installasi FreeBSD dan setting jaringan FreeBSD as guest di vmware server</span><br />
+	<span class="date">Jun 12 2009</span><br />
+	<span class="content"><h2 id='freebsd_'>FreeBSD &#8230;.</h2>
+
+<p>hmm&#8230; sudah lama sekali skitar satu tahun yang lalu pgen nyobain FreeBSD tapi lum kesampean2. Dulu pertama kali denger rasanya aneh. lagian ada juga teman2 nya seperti NetBSD terus lagi OpenBSD. Waduh.. makanan apalagi tuh. Kalau ga salah pertama kali dengar sistem operasi ini pas semester 5-6 lah. Macam kayak kutu kupret aq g tahu makanan kek gini (sampek skrg :mrgreen:) . Alhasil, setelah baca2 waktu itu akrhirnya tau juga kalo FreeBSD,OpenBSD, sama NetBSD adalah satu keturunan dari BSD. BSD sendiri kepanjangan dari Bumi Serpong Damai &#8230; eh g dink :D . klo km cari di wikipedia emang ada 2 :mrgreen: . BSD ituh kepanjangan dari barkeley software distribution. Tadi smpet lupa SD nya kepanjangan dari apa. Kalo B nya itu memang dari sebuah kota Barkeley sono, kampus barkeley. <em>back to topic</em>.</p>
+
+<p>Barkeley itu dikembangkan untuk sistem unix AT&#38;T. (doh) pa lagi tuh AT&#38;T sama unix ? . mending baca selengkapnya <a href='http://id.wikipedia.org/wiki/Berkeley_Software_Distribution' target='_new'>di sini</a>. Nah BSD ini punya anak 3 dan anak2 yg lainnya, FreeBSD terus NetBSD sama OpenBSD, dll. semua lahir karena punya karakteristik sendiri2. Biasalah namanya juga kreativitas ;) .</p>
+
+<p>Ok, Installasi FreeBSD sebenernya gampang-gampang susah. Gampang kalo pas lancar, n susah kalo pas g lancar. hehe. Ya intinya jangan pernah menyerah lah. ok, aq install FreeBSD ini di mesin virtual <a href='http://vmware.com' target='_new'>vmware</a>, km bisa coba ke mesin asli.</p>
+
+<h2 id='installasi_freebsd'>Installasi FreeBSD:</h2>
+
+<ol>
+<li>Donlot dulu isonya di <a href='http://www.freebsd.org' target='_new'>freebsd.org</a></li>
+
+<li>Boot iso nya, terus liat langkah selanjutnya di <a href='http://www.freebsd.org/doc/en/books/handbook/install-start.html' target='_new'>sini</a> :D</li>
+</ol>
+
+<p>Di situ uda komplit banget panduannya, tinggal merhatiin apa2 aj yg mesti dilakukan. Yang kudu diperhatiin:</p>
+
+<ol>
+<li>FreeBSD mesti pake partisi primary.</li>
+
+<li>Setiap partisi diistilahkan sebagai slice (cmiiw)</li>
+</ol>
+
+<p>Itu aja sih. perintah-perintah bikin slice sudah lengkap di <a href='http://www.freebsd.org/doc/en/books/handbook/install-start.html'>situ</a> . seperti <code>n</code> untuk bikin slice baru, <code>d</code> untuk hapus slice, baca deh manualnya :). Jangan lupa install openssh dan aktifkan daemonnya biar waktu boot langsung diaktifkan service na. Terus bikin user baru juga.</p>
+
+<p>Nah, kalo uda ke install dengan baik, coba kita setting biar FreeBSD na bisa nge-ping jaringan kita, terus konek internet supaya bisa install httpd php mysql dengan mudah via <code>ports</code> (posting selanjutnya).</p>
+
+<h4 id='1_setting_network_freebsd_di_vmware_na_pake_bridge'>1. setting network FreeBSD di vmware na pake bridge</h4>
+
+<h4 id='2_lalu_boot_dan_login_via_root_di_vmware'>2. lalu boot, dan Login via root di vmware</h4>
+
+<h4 id='3_ketik_ifconfig_untuk_liat_nama_interface_na'>3. Ketik ifconfig untuk liat nama interface na</h4>
+
+<p>ketik <code>ifconfig</code> untuk liat nama interface nya</p>
+
+<pre><code>FreeBSD# ifconfig
+le0: flags=8843&lt;up,BROADCAST,RUNNING,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+    options=8&lt;vlan_MTU&gt;
+    ether 00:0c:29:82:21:3e
+    inet 10.100.100.22 netmask 0xffffff00 broadcast 10.100.100.255
+    media: Ethernet autoselect
+    status: active
+plip0: flags=108810&lt;pointopoint,SIMPLEX,MULTICAST,NEEDSGIANT&gt; metric 0 mtu 1500
+lo0: flags=8049&lt;up,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
+    inet6 fe80::1%lo0 prefixlen 64 scopeid 0x3
+    inet6 ::1 prefixlen 128
+    inet 127.0.0.1 netmask 0xff000000</code></pre>
+
+<p>Disitu terlihat nama interface yang dipake adalah <code>le0</code> . dan juga sudah ada ip nya karena memang sudah diseting, kalo belum pasti belum keliatan.</p>
+
+<h4 id='4_tambahkan_opsi_di_'>4. Tambahkan opsi di <code>/etc/rc.conf</code></h4>
+
+<pre><code>ifconfig_le0=&quot;inet 10.100.100.22 netmask 255.255.255.0&quot;</code></pre>
+
+<p><code>ifconfig_le0</code> = <code>le0</code> sesuai dengan nama interface na <code>10.100.100.22</code> = ini ip yang masih nganggur di jaringan kmputer kita (bukan virtual/host). <code>255.255.255.0</code> = netmask yang kita pake di jaringan kmputer kita (bukan virtual/host).</p>
+
+<p>nah kalo sudah restart jaringannya dengan ketik:</p>
+
+<pre><code>/etc/rc.d/netif restart</code></pre>
+
+<p>lalu coba ping ke alamat ip komputer kita (host). misal ip yang aq pake di host adalah 10.100.100.23. harusnya smpai sini kita sudah bisa ngeping alamat ip host. kalo gak bisa coba restart dolo guest/ FreeBSD na. :D .</p>
+
+<p>.. uda bos, tapi Lho&#8230; koq g bisa ngeping google ?? hehe .. tenang dulu bos, kita mesti nambahin gateway sama name server /dns nya.</p>
+
+<h4 id='5_tambahkan_name_server'>5. Tambahkan name server</h4>
+
+<p>tambahkan dns / domain name server di <code>/etc/resolv.conf</code></p>
+
+<pre><code>nameserver xxx.xxx.3.7
+nameserver xxx.xxx.3.6</code></pre>
+
+<h4 id='6_tambahkan_gateway_dan_hostname_di_'>6. Tambahkan gateway dan hostname di <code>/etc/rc.conf</code></h4>
+
+<pre><code>defaultrouter=&quot;10.100.100.1&quot;
+hostname=&quot;FreeBSD.mesinvirtual.com&quot;</code></pre>
+
+<h4 id='7_tambahkan_alias_host_di_'>7. Tambahkan alias host di <code>/etc/hosts</code></h4>
+
+<pre><code>10.100.100.22           FreeBSD.mesinvirtual.com</code></pre>
+
+<p>coba reboot guestna, dan ping ke gogel. :)</p>
+
+<h4 id='experiment_laen'>Experiment laen:</h4>
+
+<p>FreeBSD ni agak aneh. waktu pertama kali habis di-install su untuk user biasa digagalkan. Terus ssh untuk root juga di disable. so, kita mesti config sedikit biar enak nanti.</p>
+
+<p>enable su untuk user biasa:</p>
+
+<ol>
+<li>
+<p>login ke root via vmware</p>
+</li>
+
+<li>
+<p>ketik sperti berikut untuk menambahkan user baru ke group <code>wheel</code></p>
+</li>
+</ol>
+<div class='highlight'><pre>	#pw groupmod wheel -M user_baru
+	
+</pre>
+</div>
+<p>untuk liat apa sudah masuk ke group <code>wheel</code> ketik:</p>
+
+<pre><code># pw groupshow wheel
+wheel:*:0:root,user_baru</code></pre>
+
+<p>ok, coba akses ssh via putty ke mesin guest :D .. mantap bukan :mrgreen: .. mklum nih masi cupu :-P</p>
+
+<p>Referensi:</p>
+
+<ol>
+<li><a href='http://www.freebsd.org/doc/en/books/handbook/install-start.html'>Official freebsd book</a></li>
+
+<li><a href='http://www.freebsd.org/doc/en/books/handbook/config-network-setup.html'>Panduan resmi setting Network</a></li>
+
+<li><a href='http://www.freebsd.org/doc/en/books/handbook/users-groups.html'>Manual groupadd</a></li>
+
+<li><a href='http://osdir.com/ml/freebsd.newbies/2004-12/msg00119.html'>osdir.com</a></li>
+
+<li><a href='http://communities.vmware.com/thread/20779'>communities.vmware.com</a></li>
+</ol></span>
+</div>
+<div id="related">
+  <h3>Related Posts</h3>
+  <ul class="posts">
+    
+      <li><span>Jul 14 2010</span> &raquo; <a href="/2010/07/14/upgrade-clamav-di-debian-etch-dengan-backports.html">Upgrade ClamAV di Debian Etch dengan backports</a></li>
+    
+      <li><span>Jun 30 2010</span> &raquo; <a href="/2010/06/30/installasi-qmail-vpopmail-clamav-simscan-dengan-spamassasin-di-debian-etch.html">Installasi Qmail, Vpopmail, ClamAV, Simscan, Spamassasin di Debian Etch</a></li>
+    
+      <li><span>Jun 23 2010</span> &raquo; <a href="/2010/06/23/mengatasi-no-public-key-available-di-apt-debian.html">Mengatasi no public key available di apt debian</a></li>
+    
+  </ul>
+</div>
+
+<h3 id="archive"><a href="/archive.html">Archive</a></h3>
+<br/>
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+  /**
+    * var disqus_identifier; [Optional but recommended: Define a unique identifier (e.g. post id or slug) for this thread]
+    */
+  (function() {
+   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+   dsq.src = 'http://buildsystem.disqus.com/embed.js';
+   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=buildsystem">comments powered by Disqus.</a></noscript>
+
+		</div>
+	</div>
+	<div id="footer">
+		<div id="leftcol">
+maintenance and developed by <a href="http://deanet.web.id" target="_new">deanet.web.id</a>
+</div>
+
+	</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/buildsystem/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
+</script>
+</body>
+
+</html>
