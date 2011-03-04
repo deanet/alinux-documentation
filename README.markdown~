@@ -4,7 +4,7 @@
 `rake clean`
 `rake taggen`
 `rake server`
-`rake publish`
+`rake publish
 
 `rake draft["untitled"]`
 `rake post[untitled]`
