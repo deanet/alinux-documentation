@@ -1,12 +1,32 @@
 
 ## update 4 March 2011
 ###command list
-- `rake clean`
-- `rake taggen`
-- `rake server`
-- `rake publish`
+
+
 - `rake draft["untitled"]`
+creating draft untitled, make sure your env $EDITOR have been set to your favourite editor.
+
 - `rake post[untitled]`
+posting untitled file.
+
+- `rake update["untitled"]`
+updating untitled file.
+
+- `rake clean`
+cleaning up dir `tags/` `_site/`
+
+- `rake taggen`
+generating tag cloud
+
+- `rake server`
+run webrick server
+
+- `rake publish`
+run clean, taggen, and jekyll
+
+- `rake sync`
+sync dir `_site/` to publish dir server
+
 
 
 #Please don't touch anything files
