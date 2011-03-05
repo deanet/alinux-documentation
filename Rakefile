@@ -11,6 +11,8 @@ TAGS_DIR = File.join(ROOT_DIR, 'tags')
 DRAFTS_DIR = File.join(ROOT_DIR, '_drafts')
 POSTS_DIR = File.join(ROOT_DIR, '_posts')
 
+PUBLISH_HOST = "dhanuxe@store.alinux.web.id"
+PUBLISH_PATH = "~/www/alinux/"
 
 options = Jekyll.configuration({})
 site = Jekyll::Site.new(options)
@@ -26,7 +28,8 @@ end
 ## syncing to plox
 desc "Syncing to plox"
 task :rsync do
-	sh "cd _site;rsync -avu --relative -e \"ssh -C\" '.' dhanuxe@store.alinux.web.id:~/www/alinux/"
+	#sh "cd _site;rsync -avu --relative -e \"ssh -C\" '.' dhanuxe@store.alinux.web.id:~/www/alinux/"
+ 	 sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
 end
 
 # Generate tag cloud page

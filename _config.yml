@@ -12,9 +12,8 @@ exclude:
 - Rakefile
 - README.markdown
 - CHANGELOG.markdown
-- credits.markdown
-- about.markdown
 - _drafts
 - layout
 - .git*
 - css
+- _posts/README
