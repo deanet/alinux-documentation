@@ -20,7 +20,7 @@ site.read_posts('')
 
 ## Clean garbage vim
 desc "Cleaning Garbage vim..."
-task :cleanvimg do
+task :vimclean do
 	puts "Cleaning Garbage vim..."
 	sh "find `pwd` -name \"*~\" -exec rm -rf {} \\\;"
 end
