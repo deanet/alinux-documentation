@@ -1,16 +1,13 @@
 
 ## update 4 March 2011
+###command list
+- `rake clean`
+- `rake taggen`
+- `rake server`
+- `rake publish`
+- `rake draft["untitled"]`
+- `rake post[untitled]`
 
-`rake clean`
-`rake taggen`
-`rake server`
-`rake publish`
-
-`rake draft["untitled"]`
-`rake post[untitled]`
-
-`rake draft`
-`rake update`
 
 #Please don't touch anything files
 #This is source for site [alinux.web.id](http://alinux.web.id)
