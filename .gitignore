@@ -1,8 +1,8 @@
-_site/
-_posts/
-tags/
-_drafts/
-#except
+_site/*
+_posts/*
+tags/*
+_drafts/*
+
 !_posts/README
 !_drafts/README
 !_posts/2011-03-04-create-own-repo-rhel-6.0-beta-from-iso.markdown
