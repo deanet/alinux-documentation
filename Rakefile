@@ -117,6 +117,7 @@ end
 # ----------------
 task :taggen => [:cloud, :tags] do
     puts 'Generated tag cloud and all tag pages.'
+    sh "touch tags/index.html"
 end
 
 desc "Generate site."
