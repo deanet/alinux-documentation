@@ -131,7 +131,7 @@ task :server, [:port] do |t, args|
 end
 
 desc "Publish site."
-task :publish => [:clean, :cloud, :tags, :build] do |t|
+task :publish => [:vimclean, :clean, :cloud, :tags, :build] do |t|
  # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
  sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"
  # puts "Commit your posts and changes.\nThen run:\n  git push origin master"
