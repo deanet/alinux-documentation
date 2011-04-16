@@ -4,10 +4,10 @@ disqus_devel: false
 permalink: /:year/:month/:day/:title.html
 paginate: 7
 google_analytics_code: UA-12495571-3
-#url: http://alinux.web.id
-#pet: http://alinux.web.id
-url: /alinux
-pet: /alinux
+url: http://alinux.web.id
+pet: http://alinux.web.id
+#url: /alinux
+#pet: /alinux
 exclude:
 - Rakefile
 - README.markdown
