@@ -1,3 +1,4 @@
+
 require 'rubygems'
 require 'rake'
 require 'jekyll'
@@ -154,8 +155,9 @@ def write_post(header, body, file)
 end
 
 def edit_post(post)
-  editor = ENV['VISUAL'] || ENV['EDITOR']
-  system "#{editor} #{post}"  
+   editor = ENV['VISUAL'] || ENV['EDITOR']
+  # editor = ENV['EDITOR']
+   system "#{editor} #{post}"  
 end
 
 desc "Create a new draft post"
