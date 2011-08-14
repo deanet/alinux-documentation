@@ -8,5 +8,5 @@ _gist_cache/*
 !_drafts/README
 !_posts/2010-10-04-Make-usb-installer-OpenBSD-4.8.markdown
 !_drafts/sample-draft.markdown
-!_drafts/posts.tar
+!_drafts/_posts.tar
 
