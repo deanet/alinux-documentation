@@ -26,7 +26,6 @@
     {
         font-style: inherit;
         font-weight: inherit;
-	white-space: pre-wrap;
     }
     del, ins
     {
@@ -98,8 +97,6 @@
     }
     body
     {
-       // background: #e6e7e8 url(../images/page_bg.png) repeat-x 0 0;
-       // font: normal 13px/1.2 Verdana;
         color: #363534;
 	font-family: "bitstream vera sans", "verdana", "arial", "helvetica", sans-serif;
         font-size: 12px;
@@ -127,7 +124,7 @@
 		border-radius: 7px 7px 7px 7px;
         margin: 0 20px 10px 10px;
         padding: 20px 15px 20px 20px;
-     //   overflow-x: auto;
+      // overflow-x: auto;
     }
     table, pre
     {
@@ -136,8 +133,10 @@
         border-radius: 7px 7px 7px 7px;
        // background-color: #F6F6F6;
         border: 1px solid #E6E6E6;
+	overflow: auto;
         border-collapse: separate;
         font-size: 11px;
+width: 600px !important;
         margin-bottom: 25px;
     }
 /**	pre.highlightedCode, div.highlight pre code.xml {
@@ -146,7 +145,7 @@
 	}	
 **/
 	div.highlight pre {
-//	overflow: auto;
+	//overflow: auto;
 width: 600px !important;
 white-space:pre-wrap;
 //overflow:hidden;
@@ -268,7 +267,6 @@ white-space:pre-wrap;
         width: 302px;
         height: 22px;
         text-indent: -999em;
-        background: url(../images/sprites-combined.png) no-repeat -78px -235px;
     }
     .content a:visited
     {
@@ -308,7 +306,6 @@ white-space:pre-wrap;
 
     #nav-topright li a
     {
-        background: transparent url(../images/sprites-combined.png) no-repeat;
         height: 18px;
         display: block;
         overflow: hidden;
@@ -385,7 +382,6 @@ white-space:pre-wrap;
 
     #nav-logo
     {
-        background: transparent url(../images/sprites-combined.png ) no-repeat 0 -225px;
         left: -3px;
         position: absolute;
         width: 75px;
@@ -406,7 +402,6 @@ white-space:pre-wrap;
     {
         padding-left: 3px;
         padding-right: 3px;
-        background: transparent url( ../images/sprites-combined.png) no-repeat 0px -58px;
         height: 20px;
     }
     .shortCut-topleft-inactive span
@@ -452,13 +447,11 @@ white-space:pre-wrap;
 /* content and sidebar elements */
     .wrapper
     {
-        background: url(../images/bg_r.png) repeat-y 100% 0;
     }
     .wrapper .hd
     {
         padding-left: 216px;
         height: 15px;
-        background: url(../images/page.png) no-repeat 0 0;
         overflow: hidden;
     }
 
@@ -470,11 +463,9 @@ white-space:pre-wrap;
         height: 15px;
         display: block;
         overflow: hidden;
-        background: url(../images/page.png) no-repeat 100% -30px;
     }
     .wrapper .bd
     {
-        background: url(../images/bg_l.png) repeat-y 0 0;
         position: relative;
     }
 
@@ -485,7 +476,6 @@ white-space:pre-wrap;
     {
         padding-left: 216px;
         height: 15px;
-        background: url(../images/page.png) no-repeat 0 -75px;
         overflow: hidden;
     }
 
@@ -496,7 +486,6 @@ white-space:pre-wrap;
     {
         height: 15px;
         display: block;
-        background: url(../images/page.png) no-repeat 100% -60px;
         overflow: hidden;
     }
 	.navTop{ 
@@ -537,7 +526,6 @@ white-space:pre-wrap;
 
     .sidebar .search form
     {
-        background: url(../images/sprites-combined.png) no-repeat -6px -348px;
 		height:21px;
 		padding:2px 0 0 5px;
 		width:167px;
@@ -616,12 +604,10 @@ white-space:pre-wrap;
     .sidebar .box ul li
     {
         padding-left: 12px;
-        background: url(../images/bullet_gt.png) no-repeat 0 5px;
         margin-bottom: 5px;
     }
     .sidebar .bottombar
     {
-        background: url(../images/box_bg.png) repeat-x 0 bottom;
     }
 	 .sidebar .box ul li.noMatch
     {
@@ -637,7 +623,6 @@ white-space:pre-wrap;
     }	
 	.sidebar .search form input.loading
 	{
-			background:url("../images/spinner.gif") no-repeat scroll right center transparent;
 	}
 
 .floatingResult{
@@ -652,11 +637,11 @@ white-space:pre-wrap;
 	overflow-y:auto;
 }
 
-	.floatingResult:hover{
+	.floatingResult:hover {
 		display:block;
 	}
-	.floatingResult:hover{
-	}
+	.floatingResult:hover {
+	} 
 	
 /* end sidebar elements */
 /* content elements */
@@ -732,7 +717,6 @@ white-space:pre-wrap;
         text-indent: -999em;
         display: block;
         overflow: hidden;
-        background: url(../images/sprites-combined.png) no-repeat -137px -311px;
     }
 
     .toolbuttons #smallA
@@ -767,7 +751,6 @@ white-space:pre-wrap;
     .wrap .breadcrumb ul li
     {
         float: left;
-        background: url(../images/breadcrumb.png) no-repeat 0 3px;
         padding-left: 15px;
         margin-left: 15px;
         font-weight: bold;
@@ -809,7 +792,6 @@ white-space:pre-wrap;
 	
     .wrap .content li
     {
-        background: url(../images/bullet_sq.png) no-repeat 0 5px;
         font: normal 400 10pt/1.2 Verdana;
         margin-bottom: 10px; 
 		padding-left:12px;
@@ -1015,7 +997,6 @@ white-space:pre-wrap;
         left: 0px;
         right: 0px;
         bottom: 0px;
-        background: transparent url(../images/feedbackground.png) 0 0;
         z-index: 3;
     }
     .toc
@@ -1065,6 +1046,9 @@ white-space:pre-wrap;
 	 div.highlight pre
 	{
 	margin:10px;
+	overflow: auto;
+width: 600px !important;
+white-space: pre-wrap;
 	}
 	.LegaleseLeft{}
 	.valuelist{}
@@ -1114,7 +1098,6 @@ white-space:pre-wrap;
     .content .toc li
     {
         font: normal 10px/1.2 Verdana;
-        background: url(../images/bullet_dn.png) no-repeat 0 5px;
     }
     .relpage
     {
@@ -1219,7 +1202,6 @@ white-space:pre-wrap;
 
     .indexboxbar
     {
-        background: transparent url(../images/horBar.png ) repeat-x left bottom;
         margin-bottom: 25px;
 
 
@@ -1302,7 +1284,6 @@ white-space:pre-wrap;
     {
         width: 96px;
         height: 137px;
-        background: url(../images/sprites-combined.png) no-repeat -5px -376px;
         padding: 0;
     }
     
@@ -1310,7 +1291,6 @@ white-space:pre-wrap;
     {
         width: 115px;
         height: 137px;
-        background: url(../images/sprites-combined.png) no-repeat -111px -376px;
         padding: 0;
     }
     .indexboxcont:after

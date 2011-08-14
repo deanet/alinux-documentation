@@ -7,10 +7,11 @@
 	<meta name="author" content="deanet">
 	<link href="qemutux.xml" rel="alternate" title="Pathing Qemutux" type="application/atom+xml" />
 	<meta name="viewport" content="width=850" />
-	<!--
+<!--
 <link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font1.css">
-<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-desc.css">
+<link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-desc.css"> 
 -->
+
 <link type="text/css" rel="stylesheet" href="{{ site.pet }}/css-new/font-melongo.css">
 <link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/style.css" />
 <link rel="stylesheet" type="text/css" href="{{ site.pet }}/css-new/syntax.css" />
@@ -36,18 +37,10 @@ ul.posts li {
 list-style: none;
 }
 </style>
-<!-- Place this tag where you want the +1 button to render 
-<g:plusone size="small"></g:plusone> -->
 
-<!-- Place this tag after the last plusone tag -->
-<script type="text/javascript">
-	  (function() {
-		      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-		          po.src = 'https://apis.google.com/js/plusone.js';
-			      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-			        })();
-			</script>
 
+<script type="text/javascript" src="{{ site.pet }}/js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="{{ site.pet }}/js/site.js"></script>
 
 	<script type="text/javascript">
 
@@ -83,9 +76,12 @@ list-style: none;
 
 <div align="justify">
 
-		{{ content }}
 
+	{{ content }}
 
+	<script type="text/javascript">
+		  window.onload=initArchive();
+	  </script>
 <!--#include file="footer.html" -->
 		{% include footer_new.html %}
 

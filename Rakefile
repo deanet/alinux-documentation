@@ -40,19 +40,30 @@ task :cloud do
 
     html =<<-HTML
 ---
-layout: default_new
+layout: cloud
 title: Tag cloud
 ---
 
 <p>Click on a tag to see the relevant posts.</p>
 HTML
 
-    html << '<p id="tagcloud">'
+    html << '<nav id="post-archive-category-list">'
     site.categories.sort.each do |category, posts|
       font_size = 12 + (posts.count*1.5);
-      html << "<a href=\"{{ site.pet }}/tags/#{category}.html\" title=\"Entries tagged #{category} (#{posts.count})\" style=\"font-size: #{font_size}px\">#{category}</a>\n"
+      html << "<a href=\"javascript:filterByCategory('#{category}')\" class=\"#{category} \" style=\"font-size: #{font_size}px\">#{category}</a>\n"
     end
-    html << '</p>'
+    html << '<a class="reset selected" href="javascript:filterByCategory(\'reset\')">ALL</a></nav>
+    <br/>
+      <nav id="post-archive-list">
+          <ul>
+	  	{% for post in site.posts  %}
+		<li class="{% for tag in post.categories %} {{ tag }}{% endfor %}"><a href="{{ site.pet }}{{ post.url }}">{{ post.title | xml_escape }}</a> - <span>{{ post.date | date: "%b %d %Y" }}</span></li>
+				{% endfor %}
+				    </ul>
+      </nav>
+    
+    
+    '
 
     File.open('tags/cloud.html', 'w+') do |file|
       file.puts html
@@ -134,6 +145,7 @@ end
 desc "Publish site."
 task :publish => [:vimclean, :clean, :cloud, :tags, :build] do |t|
  # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
+# sh "rm -rf /usr/local/nginx/html/*;cp -a _site/* /usr/local/nginx/html/"
  sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"
  # puts "Commit your posts and changes.\nThen run:\n  git push origin master"
 end

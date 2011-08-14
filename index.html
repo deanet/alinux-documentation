@@ -5,7 +5,7 @@ title: home
 
   {% for post in paginator.posts %}
   <div class="post" id="postid-{{post.id}}">
-    <h3 class="title"><a href="{{ site.pet }}{{post.url}}">{{ post.title }}</a></h3>
+	  <h3 class="title"><a href="{{ site.pet }}{{post.url}}">{{ post.title }}</a> <g:plusone size="small"></g:plusone> </h3>
 
     {{ post.content | strip_html | truncatewords: 50 }}
       <a href="{{ site.pet }}{{ post.url }}" class="next">more</a>

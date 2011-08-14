@@ -1,7 +1,7 @@
 --- 
 layout: post_new
-title: Make usb installer OpenBSD 4.8
-categories: [usb, installer, openbsd]
+title: Make USB installer OpenBSD 4.8
+categories: [USB, installer, OpenBSD]
 date: 2010-10-04 21:45:18
 ---
   
