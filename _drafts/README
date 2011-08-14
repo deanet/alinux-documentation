@@ -2,4 +2,4 @@ This is directory post file. i've one sample for u.
 
 #update 14 Aug 2011
 
-i've tarball for post content for u (mv posts.markdown to posts.tar).  extract it into _post dir. and run jekyll, enjoy it .. ;)
+i've tarball for post content for u ( post.tar).  extract it into _post dir. and run jekyll, enjoy it .. ;)
