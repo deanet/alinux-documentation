@@ -1,3 +1,7 @@
+##latest use on 2011
+- based opencontent theme
+- next theme is ftw, or follow the theme 
+
 ## update 11 jun 2011
 key check
 ## update 4 March 2011
