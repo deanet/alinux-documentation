@@ -1,3 +1,6 @@
+disqus_awesome: true
+disqus_devel: true
+google_analytics_code: UA-12495571-3
 permalink: /:year/:month/:day/:title.html
 #permalink: /posts/:title.html
 pygments: true

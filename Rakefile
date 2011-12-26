@@ -249,7 +249,8 @@ task :draft, [:title] do |t, args|
 ---
 title: #{title}
 layout: post_new
-categories: [Uncategories]
+categories:
+- Uncategories
 ---
 
 New draft post
