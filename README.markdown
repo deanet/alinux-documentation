@@ -1,6 +1,6 @@
 ##latest use on 2011
 - based opencontent theme
-- next theme is ftw, or follow the theme 
+- next theme is neban 
 
 ## update 11 jun 2011
 key check
