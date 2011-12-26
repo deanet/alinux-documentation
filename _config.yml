@@ -1,0 +1,10 @@
+permalink: /:year/:month/:day/:title.html
+#permalink: /posts/:title.html
+pygments: true
+pet:
+url:
+exclude: 
+- readme.md
+- Rakefile
+#- archives
+- highlight.css

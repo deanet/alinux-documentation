@@ -1,0 +1,25 @@
+
+<div class="title">
+    Archives 
+
+</div>
+
+<div class="innercontent">
+    <div class="archives">
+
+ 	<form>Type to search entries titles: <input type="text" id="search"></form>
+        <p> All entries in {{ cattext }} sorted by date: </p>
+        <table id="c3">
+            {% for post in catiterator %}
+                <tr id="c2">
+                    <td class="postlink" id="c1"> &raquo; <a href="{{ post.url }}"> {{ post.title }} </a> </td>
+		    <td class="postdate"> {{ post.date | date: "%Y-%m-%d" }} </td>
+	        </tr>
+            {% endfor %}
+	 <script type="text/javascript">
+                $('input#search').quicksearch('tr#c2 td');
+         </script>
+        </table>
+    </div>
+</div>
+

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = {{ site.disqus_awesome }}; 
+        var disqus_developer = {{ site.disqus_devel }};
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="{{ site.pet }}/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                {{ content }}
+            </div>
+            {% include footer.html %}
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+
+<div class="prevnext">
+    {% if post.previous %}
+        <div class="prev">
+            &laquo; <a href="{{ post.previous.url }}"> {{ post.previous.title }} </a>
+        </div>
+    {% endif %}
+
+    {% if post.next %}
+        <div class="next">
+            <a href="{{ post.next.url }}"> {{ post.next.title }} </a> &raquo;
+        </div>
+    {% endif %}
+</div>
+
