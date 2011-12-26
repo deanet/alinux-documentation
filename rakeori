@@ -1,6 +1,0 @@
-
-task :default do
-    `chcp 65001`
-    `jekyll --server --auto`
-end
-
