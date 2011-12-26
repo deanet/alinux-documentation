@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Perintah Linux beserta kegunaanya</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Perintah Linux beserta kegunaanya
+</div>
+
+<div class="date">
+<!--    
+
+    published: 19 Feb 2007,
+    in category: <a href="/archives/generalcommand.html">generalcommand</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/general.html">general</a>, 
+
+<a rel="tag" href="/archives/command.html">command</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p><code>cd x</code> atau <code>cd /x</code> : masuk ke direktori x<br /> <code>cd ..</code> atau <code>cd ../</code> atau <code>cd/..</code> : pindah ke direktori satu level di bawah<br /> <code>x lalu [tab] [tab]</code> : berguna untuk mengetahui perintah apa saja yang tersedia yang berawalan huruf x. <em>hanya di bash shell atau csh</em><br /> <code>adduser</code> : untuk menambahkan user baru<br /> <code>ls</code> atau <code>dir</code> : untuk melihat isi suatu direktori<br /> <code>cat</code> : untuk melihat isi dari suatu file text<br /> <code>mv x y</code> : untuk memindahkan atau merename file x ke file y<br /> <code>cp x y</code> : untuk mengkopi file x ke file y<br /> <code>rm x</code> : untuk menghapus file x<br /> <code>mkdir x</code> : untuk membuat direktori x<br /> <code>rmdir x</code> : untuk menghapus direktori x<br /> <code>rm -r x</code> : untuk menghapus direktori x beserta seluruh isinya<br /> <code>rm p</code> : untuk menghapus paket tertentu<br /> <code>df</code> atau <code>df x</code> : untuk mengetahui space kosong dalam device x<br /> <code>top</code> : untuk mengetahui status memori (tekan q untuk quit)<br /> <code>man x</code> : untuk mengetahui keterangan manual dari suatu perintah<br /> <code>less x</code> : untuk melihat isi dari suatu file text<br /> <code>echo x</code> : untuk mencetak isi dari suatu file x ke screen<br /> <code>mc</code> : untuk menghidupkan Norton Commander dalam Linux (sangat berguna dan memudahkan bagi newbie)<br /> <code>mount</code> : untuk menghidupkan suatu device spt cdrom<br /> <code>halt</code> : untuk shutdown<br /> <code>reboot</code> atau <code>[ctl + alt + del]</code> : untuk reboot<br /></p>
+
+<p><code>chmod</code> : untuk mengubah permission suatu file<br /> <code>ls -l x</code> : untuk melihat isi suatu direktori secara rinci<br /> <code>ln -s x y</code> : untuk membuat symbolik link dari suatu file x ke nama file y. x=target y=nama link<br /> <code>find x -name y -print</code> : untuk menemukan file y, dengan mencari mulai dari direktori x dan tampilkan hasilnya pada layar<br /> <code>ps</code> : untuk melihat seluruh proses yang sedang berjalan<br /> <code>kill x</code> : untuk mematikan proses x (x adalah PID di dalam ps)<br /> <code>[alt] + F1 - F7</code> : untuk berpindah dari terminal 1 - 7 (ciri khas Linux)<br /> <code>lilo</code> : untuk membuat boot disk<br /></p>
+
+<p><code>startx</code> : untuk menjalankan X-Windows<br /> <code>[ctl] + [alt] + [backspace]</code> : untuk keluar dari X-Windows jika terjadi trouble<br /> <code>[ctl] + [alt] + F1 - F6</code> : untuk pindah dari satu terminal ke terminal lain dalam X-Windows<br /> <code>xf86Config</code> : untuk mengeset X (primitif) dalam text mode<br /></p>
+
+<p><code>Xconfigurator</code> : sama seperti di atas<br /></p>
+
+<blockquote>
+<p><em>diambil dari sebuah artikel entah dari mana saya lupa :D</em></p>
+</blockquote>
+
+<p><strong>Tambahan dari saya</strong></p>
+
+<p><code>lsof</code> : melihat akses file system, digunakan untuk mengetahui file mana yang sedang digunakan.<br /> <code>vmstat</code> : digunakan untuk melihat virtual memori statistik.<br /> <code>lsmod</code> : digunakan untuk melihat modul2 kernel yang diload.<br /> <code>lspci</code>: digunakan untuk melihat daftar device pci yang ada.<br /> <code>lsusb</code> : digunakan untuk melihat daftar device usb yang ada.<br /> <code>init [0-6]</code> : init 0 untuk shutdown, init 6 untuk reboot, init 1-5 tergantung dari inittab distro.<br /> <code>ps</code> : digunakan untuk melihat proses yang sudah dijalankan. bisa dengan tambahan opsi <code>aux</code>. <code>ps aux</code> atau <code>ps --help</code> untuk lengkapnya.<br /> <code>netstat</code> : digunakan untuk melihat port yang listen atau eta. umumnya sysadmin / netadmin menggunakan dengan perintah <code>netstat -ntlp</code>.<br /> <code>grep</code> : digunakan untuk memotong hasil tangkapan perintah dengan bantuan pipe (<code>|</code>). misal <code>ls | grep daftar</code> .<br /> <code>ldd</code> : digunakan untuk melihat dinamik link library dari file binary. contoh, <code>ldd /bin/sh</code><br /> <code>w</code> : digunakan untuk melihat siapa saja yang login dan sedang melakukan apa, dari terminal mana.<br /> <code>who</code> : mirip perintah <code>w</code> tetapi lebih ringkas.<br /> <code>traceroute</code> : digunakan untuk melihat routing dari pc kita ke sebuah server yang dituju.<br /> <code>&amp;</code> : perintah <code>&amp;</code> , eh bukan perintah sih. lebih ke parameter, atau apa ? . kegunaannya untuk melaksanakan sebuah proses menjadi background/tanpa ditampilkan dilayar. contoh, <code>find / &gt; test.txt &amp; </code><br /> <code>nohup</code> : digunakan untuk melakukan proses tanpa hang up. artinya jika sebuah session terminal diclose, maka proses akan tetap berjalan. misal, <code>nohup find / &gt; test.txt &amp;</code>.<br /> <code>whereis</code>, <code>which</code>, <code>locate</code> : digunakan untuk mencari lokasi file.<br /> <code>last</code> : digunakan untuk melihat login terakhir dari user yang sudah login.<br /> <code>lastlog</code> : digunakan untuk melihat semua user, kapan terakhir login.<br /> <code>adduser</code> : untuk menambahkan user baru dengan interaktif prompt. misal <code>adduser deanet</code> <br /> <code>useradd</code> : digunakan untuk menambahkan user baru tanpa interaktif prompt. misal, <code>adduser -G nama_user -ms /bin/sh nama_user</code>.<br /> <code>usermod</code> : digunakan untuk merubah group dari user. misal : <code>usermod -G group1,group2,group3 nama_user</code>.<br /> <code>groupadd</code> : digunakan untuk menambahkan group. misal : <code>groupadd nama_group</code><br /> <code>groupdel</code> : digunakan untuk menghapus group. misal: <code>groupdel nama_group</code><br /></p>
+
+<p>perintah2 diatas hanyalah sebagian kecil dari yang ada, masih banyak perintah lain (progi). untuk lebih lengkap informasi dari perintah diatas, bisa dilihat dengan manual pages dan opsi help. misal:</p>
+
+<p><code>cat --help</code></p>
+
+<p><code>man cat</code></p>
+
+<blockquote>
+<p><em>seorang hacker sekalipun tidak dapat menghafal semua perintah2 linux maupun <code>*nix</code> like lainnya. ~S&#8217;to</em><br /> <em>jadi jangan anda berbangga hati jika anda sudah hafal semua perintah yang ada, Allah Maha Besar. ~dhan</em><br /> <em>last update: 21 May 2010</em></p>
+</blockquote>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+
+    
+        <div class="next">
+            <a href="/2007/07/06/3-jurus-sakti-instalasi-software-linux.html"> 3 Jurus Sakti Instalasi Software Linux </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

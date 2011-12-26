@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>create own repo RHEL 6.0 beta from ISO</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    create own repo RHEL 6.0 beta from ISO
+</div>
+
+<div class="date">
+<!--    
+
+    published: 04 Mar 2011,
+    in category: <a href="/archives/RHELrepo.html">RHELrepo</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/RHEL.html">RHEL</a>, 
+
+<a rel="tag" href="/archives/repo.html">repo</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>This is simply way what i&#8217;ve done create repository without copy all package rpm. this is not crazy. xD</p>
+<pre>
+[root@rhel6 ~]# cd /mnt/cdrom/Packages/
+[root@rhel6 Packages]# mkdir /mnt/repo
+[root@rhel6 Packages]# find . -name "*.rpm" -exec ln -s `pwd`/{} /mnt/repo/{} \;
+[root@rhel6 Packages]# cd /mnt/repo/
+[root@rhel6 repo]# createrepo .
+2865/2865 - pcsc-lite-libs-1.5.2-3.1.el6.i686.rpm
+Saving Primary metadata
+Saving file lists metadata
+Saving other metadata
+[root@rhel6 repo]# cat /etc/yum.repos.d/rhel-beta.repo
+[rhel-beta-6]
+name=Red Hat Enterprise Linux Beta
+baseurl=file:///mnt/repo/
+enabled=1
+gpgcheck=0
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-redhat-beta-2
+[root@rhel6 repo]# yum update
+Loaded plugins: rhnplugin
+This system is not registered with RHN.
+RHN support will be disabled.
+rhel-beta-6                                              | 1.3 kB     00:00 ...
+rhel-beta-6/primary                                      | 1.3 MB     00:00 ...
+rhel-beta-6                                                           2865/2865
+Setting up Update Process
+No Packages marked for Update
+[root@rhel6 repo]# yum list | grep mysql-server
+This system is not registered with RHN.
+RHN support will be disabled.
+mysql-server.i686                     5.1.42-4.el6                   rhel-beta-6
+[root@rhel6 repo]#
+[root@rhel6 repo]# yum install mysql-server.i686
+Loaded plugins: rhnplugin
+This system is not registered with RHN.
+RHN support will be disabled.
+Setting up Install Process
+Resolving Dependencies
+--> Running transaction check
+---> Package mysql-server.i686 0:5.1.42-4.el6 set to be updated
+--> Processing Dependency: mysql = 5.1.42-4.el6 for package: mysql-server-5.1.42-4.el6.i686
+--> Processing Dependency: perl-DBD-MySQL for package: mysql-server-5.1.42-4.el6.i686
+--> Running transaction check
+---> Package mysql.i686 0:5.1.42-4.el6 set to be updated
+---> Package perl-DBD-MySQL.i686 0:4.013-3.el6 set to be updated
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+================================================================================
+ Package               Arch        Version             Repository          Size
+================================================================================
+Installing:
+ mysql-server          i686        5.1.42-4.el6        rhel-beta-6        8.6 M
+Installing for dependencies:
+ mysql                 i686        5.1.42-4.el6        rhel-beta-6        3.8 M
+ perl-DBD-MySQL        i686        4.013-3.el6         rhel-beta-6        134 k
+
+Transaction Summary
+================================================================================
+Install       3 Package(s)
+Upgrade       0 Package(s)
+
+Total download size: 13 M
+Installed size: 30 M
+Is this ok [y/N]: y
+Downloading Packages:
+--------------------------------------------------------------------------------
+Total                                            19 MB/s |  13 MB     00:00
+Running rpm_check_debug
+Running Transaction Test
+Transaction Test Succeeded
+Running Transaction
+  Installing     : mysql-5.1.42-4.el6.i686                                  1/3
+  Installing     : perl-DBD-MySQL-4.013-3.el6.i686                          2/3
+  Installing     : mysql-server-5.1.42-4.el6.i686                           3/3
+
+Installed:
+  mysql-server.i686 0:5.1.42-4.el6
+
+Dependency Installed:
+  mysql.i686 0:5.1.42-4.el6          perl-DBD-MySQL.i686 0:4.013-3.el6
+
+Complete!
+[root@rhel6 repo]#
+
+</pre>
+<p>done . :)</p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/02/16/failover-and-clustering-mirror-node-openldap-2.4-on-centos-5.5-%28part-2%29.html"> Failover and Clustering Mirror Node OpenLdap 2.4 on Centos 5.5 (part 2) </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2011/04/10/install-rhel-via-network-and-auto-installation-using-kickstart.html"> Install RHEL via Network and Auto Installation using Kickstart </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

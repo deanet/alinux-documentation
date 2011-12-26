@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Install samba 3.x on FreeBSD 7.2</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Install samba 3.x on FreeBSD 7.2
+</div>
+
+<div class="date">
+<!--    
+
+    published: 07 Dec 2009,
+    in category: <a href="/archives/installSambaFreeBSD.html">installSambaFreeBSD</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+<a rel="tag" href="/archives/Samba.html">Samba</a>, 
+
+<a rel="tag" href="/archives/FreeBSD.html">FreeBSD</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>Install samba 3.x on FreeBSD 7.2. Silahkan juga di cobain d FreeBSD 8 :P ..</p>
+
+<h2 id='1_install'>1. Install</h2>
+
+<pre><code># cd /usr/ports/net/samba3
+# make install clean</code></pre>
+
+<h2 id='2_konfigurasi'>2. konfigurasi</h2>
+
+<pre><code># cp /usr/local/etc/smb.conf.default /usr/local/etc/smb.conf</code></pre>
+
+<h2 id='issue'>Issue:</h2>
+
+<ol>
+<li>Setiap user login dengan username dan password.</li>
+
+<li>Setiap user dapat sharing file dengan user lainnya.</li>
+
+<li>Ada sebuah folder yg hanya bisa ditulis/write oleh user tertentu (misal <code>user1</code>)</li>
+</ol>
+
+<h2 id='configure'>configure:</h2>
+
+<p>a. Isi konfigurasi smb.conf seperti dibawah ini:</p>
+
+<p><code>vi /usr/local/etc/smb.conf</code></p>
+<div class='highlight'><pre><code class='bash'><span class='c'>#=======  Global Settings  ===========</span>
+<span class='o'>[</span>global<span class='o'>]</span>
+
+   unix <span class='nv'>extensions</span> <span class='o'>=</span> no
+   <span class='nv'>workgroup</span> <span class='o'>=</span> MSHOME
+   server <span class='nv'>string</span> <span class='o'>=</span> samba
+
+   <span class='c'>## issue no 1</span>
+   <span class='nv'>security</span> <span class='o'>=</span> user
+   log <span class='nv'>file</span> <span class='o'>=</span> /var/log/samba/log-%m.log
+   max log <span class='nv'>size</span> <span class='o'>=</span> 50
+   dns <span class='nv'>proxy</span> <span class='o'>=</span> no
+
+
+<span class='c'>#====== Share Definitions  =========</span>
+
+<span class='o'>[</span>homes<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> Home Directories <span class='k'>for</span> %u on %h
+   <span class='nv'>browseable</span> <span class='o'>=</span> no
+   <span class='nv'>writable</span> <span class='o'>=</span> yes
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/%u/Docs
+   valid <span class='nv'>users</span> <span class='o'>=</span> %S
+
+<span class='c'>## issue no 2</span>
+<span class='o'>[</span>public<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> %h shared Public Stuff
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/samba/public
+   force directory <span class='nv'>mode</span> <span class='o'>=</span> 1777
+   force create <span class='nv'>mode</span> <span class='o'>=</span> 1777
+   force <span class='nv'>group</span> <span class='o'>=</span> nobody
+   force <span class='nv'>user</span> <span class='o'>=</span> nobody
+   <span class='nv'>public</span> <span class='o'>=</span> yes
+   <span class='nv'>writable</span> <span class='o'>=</span> yes
+   <span class='nb'>read </span><span class='nv'>only</span> <span class='o'>=</span> no
+
+<span class='c'>## issue nomor 3</span>
+<span class='o'>[</span>software<span class='o'>]</span>
+   <span class='nv'>comment</span> <span class='o'>=</span> %h shared Software
+   <span class='nv'>path</span> <span class='o'>=</span> /usr/home/samba/software
+   <span class='nb'>read </span><span class='nv'>only</span> <span class='o'>=</span> yes
+   write <span class='nv'>list</span> <span class='o'>=</span> user1
+   create <span class='nv'>mask</span> <span class='o'>=</span> 0664
+   directory <span class='nv'>mask</span> <span class='o'>=</span> 0775
+</code></pre>
+</div>
+<p>b. lalu bikin user misalnya <code>user1</code> dan <code>user2</code> , dan user <code>samba</code></p>
+
+<pre><code>adduser -v</code></pre>
+
+<p>c. Bikin folder Docs didalam directory <code>/home/user1</code> dan <code>/home/user2</code></p>
+
+<p>d. jgn lupa chown dan group nya. n pastikan perm</p>
+
+<p><em>owner</em>:</p>
+
+<pre><code>chown user1 public
+chown user2 public</code></pre>
+
+<p><em>group</em>:</p>
+
+<pre><code>chgroup wheel public
+chgroup wheel public</code></pre>
+
+<p>e. bkin dir <code>public</code> (issue no 1) dan software (issue no 3) di home samba untuk sharing antar user</p>
+
+<pre><code>mkdir /home/samba/public</code></pre>
+
+<p>f. beri perm 777 untuk <code>public</code> dan 755 untuk <code>software</code></p>
+
+<pre><code>chmod 777 /home/samba/public
+chmod 755 /home/samba/software</code></pre>
+
+<p>g. klo uda set password user untuk samba nya:</p>
+
+<pre><code>smbpasswd -a user1
+smbpasswd -a user2</code></pre>
+
+<h2 id='3_lalu_jalankan_smba_nya'>3. lalu jalankan smba nya</h2>
+
+<pre><code>/usr/local/etc/rc.d/samba start</code></pre>
+
+<h2 id='4_testing'>4. Testing</h2>
+
+<p>n cek \ip.kamu :)</p>
+
+<p>semoga bermanfaat :)</p>
+
+<p>Referensi: 1. <a href='http://www.us-webmasters.com/FreeBSD/Install/Samba/'>http://www.us-webmasters.com/FreeBSD/Install/Samba/</a></p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2009/12/01/disable-user-login-on-freebsd.html"> Disable user Login on FreeBSD </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/12/23/virtual-host-lokal-ubuntu-9-10.html"> Virtual Host Lokal Ubuntu 9.10 </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

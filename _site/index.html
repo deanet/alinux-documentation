@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Syslog linux - admin juga manusia</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+
+<div class="title">
+    Load Balancing MySQL Replication Master to Master with HAProxy
+</div>
+
+<div class="date">
+<!--    
+
+    published: 17 Aug 2011,
+    in category: <a href="/archives/Load BalanceMySQLReplicationHAProxy.html">Load BalanceMySQLReplicationHAProxy</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/Load Balance.html">Load Balance</a>, 
+
+<a rel="tag" href="/archives/MySQL.html">MySQL</a>, 
+
+<a rel="tag" href="/archives/Replication.html">Replication</a>, 
+
+<a rel="tag" href="/archives/HAProxy.html">HAProxy</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h2 id='quick_how_to_load_balancing_mysql_master_to_master_with_haproxy'>Quick How to Load Balancing MySQL master to master with HAProxy</h2>
+
+<p>On <a href='/2011/08/16/replicate-master-to-master-mysql.html'>previous post</a>, we&#8217;ve installed MySQL Server Replication Master to Master. Now, we can do that for Load Balancing with HAProxy. We need one server again to do this.</p>
+
+<p>Do this section on HAProxy server (on example).</p>
+
+<h3 id='installing_haproxy'>Installing HAProxy</h3>
+<div class='highlight'><pre><code class='bash'>wget -c http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.15.tar.gz
+tar -xvf haproxy-1.4.15.tar.gz 
+<span class='nb'>cd </span>haproxy-1.4.15
+make install
+vim /usr/local/etc/haproxy.cfg
+</code></pre>
+</div>
+<h3 id='configuring_haproxy'>Configuring HAProxy</h3>
+<script src='https://gist.github.com/1144737.js?file=haproxy.cfg' type='text/javascript'>
+</script>
+<p>Do this section on srv14 (or master 1).</p>
+
+<h2 id='create_mysql_service_on_xinetd'>Create mysql service on xinetd</h2>
+<script src='https://gist.github.com/1144737.js?file=opt.mysqlchk.bash' type='text/javascript'>
+</script>
+<h2 id='create_mysql_script_to_check_mysql_server_is_healthy_running_on_localhost'>Create MySQL Script to check mysql server is healthy running on localhost</h2>
+<script src='https://gist.github.com/1144737.js?file=xinetd.mysqlchk.sh' type='text/javascript'>
+</script>
+<h2 id='make_sure_mysqlchk_is_allowed_as_xinet_services'>Make sure mysqlchk is allowed as xinet services</h2>
+<div class='highlight'><pre><code class='bash'>root@srv14 src# cat /etc/services | grep 9200
+<span class='c'>#wap-wsp		9200/tcp			# WAP connectionless session service</span>
+wap-wsp		9200/udp			<span class='c'># WAP connectionless session service</span>
+mysqlchk	9200/tcp			<span class='c'># mysqlchk</span>
+</code></pre>
+</div>
+<h2 id='create_user_mysqlchkuser_and_give_grant'>Create user mysqlchkuser and give grant.</h2>
+<script src='https://gist.github.com/1144737.js?file=create-user.sql' type='text/javascript'>
+</script>
+<p>Do this section on srv15 (or master 2).</p>
+
+<h2 id='create_mysql_service_on_xinetd'>Create mysql service on xinetd</h2>
+<script src='https://gist.github.com/1144737.js?file=opt.mysqlchk.bash' type='text/javascript'>
+</script>
+<h2 id='create_mysql_script_to_check_mysql_server_is_healthy_running_on_localhost'>Create MySQL Script to check mysql server is healthy running on localhost</h2>
+<script src='https://gist.github.com/1144737.js?file=xinetd.mysqlchk.sh' type='text/javascript'>
+</script>
+<h2 id='make_sure_mysqlchk_is_allowed_as_xinet_services'>Make sure mysqlchk is allowed as xinet services</h2>
+<div class='highlight'><pre><code class='bash'>root@srv15 ~# cat /etc/services | grep 9200
+<span class='c'>#wap-wsp		9200/tcp			# WAP connectionless session service</span>
+wap-wsp		9200/udp			<span class='c'># WAP connectionless session service</span>
+mysqlchk	9200/tcp
+</code></pre>
+</div>
+<h2 id='create_user_mysqlchkuser_and_give_grant'>Create user mysqlchkuser and give grant.</h2>
+<script src='https://gist.github.com/1144737.js?file=create-user.sql' type='text/javascript'>
+</script>
+<h2 id='give_permission_777_for_'>Give permission 777 for <code>/tmp/mysqlchk.*</code></h2>
+<div class='highlight'><pre><code class='bash'><span class='c'># chmod 777 /tmp/mysqlchk.*</span>
+</code></pre>
+</div>
+<h2 id='run_haproxy_now'>RUN HAProxy now</h2>
+<div class='highlight'><pre><code class='bash'><span class='c'># /usr/local/sbin/haproxy -f /usr/local/etc/haproxy.cfg -p /var/run/haproxy.pid</span>
+</code></pre>
+</div>
+<h2 id='at_last'>at Last</h2>
+
+<p>We can use port 3306 as <code>master</code> of Load Balancer. Look at <code>http://ip-load-balancer:31337</code> to monitor service both of them servers.</p>
+
+<p>&#8230;</p>
+
+<h2 id='troubleshoot'>Troubleshoot</h2>
+
+<h3 id='check_mysql_on_localhost'>check mysql on localhost</h3>
+<div class='highlight'><pre><code class='bash'>root@srv14 src# /opt/mysqlchk 
+HTTP/1.1 200 OK
+
+Content-Type: Content-Type: text/plain
+
+
+
+MySQL is running.
+
+
+
+root@srv14 src# 
+root@srv15 ~# /opt/mysqlchk 
+HTTP/1.1 200 OK
+
+Content-Type: Content-Type: text/plain
+
+
+
+MySQL is running.
+
+
+
+root@srv15 ~# 
+</code></pre>
+</div>
+<h3 id='check_mysql_service_from_haproxy_server'>Check mysql service from HAProxy Server</h3>
+<div class='highlight'><pre><code class='bash'>root@master mysql# telnet 111.68.112.43 9200
+Trying 111.68.112.43...
+Connected to 111.68.112.43.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+HTTP/1.1 200 OK
+
+Content-Type: Content-Type: text/plain
+
+
+
+MySQL is running.
+
+
+
+Connection closed by foreign host.
+root@master mysql# telnet 111.68.112.44 9200
+Trying 111.68.112.44...
+Connected to 111.68.112.44.
+Escape character is <span class='s1'>&#39;^]&#39;</span>.
+HTTP/1.1 200 OK
+
+Content-Type: Content-Type: text/plain
+
+
+
+MySQL is running.
+
+
+
+Connection closed by foreign host.
+root@master mysql# 
+</code></pre>
+</div>
+<h2 id='addtional_section'>Addtional Section</h2>
+
+<h3 id='mysql_configuration_file'>MySQL Configuration File</h3>
+
+<h3 id='master_1'>Master 1</h3>
+<script src='https://gist.github.com/1144737.js?file=haproxy.m1-mysql.cnf' type='text/javascript'>
+</script>
+<h3 id='master_2'>Master 2</h3>
+<script src='https://gist.github.com/1144737.js?file=haproxy.m2-mysql.cnf' type='text/javascript'>
+</script>
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://www.dancryer.com/2010/01/load-balancing-mysql-with-ha-proxy'>http://www.dancryer.com/2010/01/load-balancing-mysql-with-ha-proxy</a></li>
+
+<li><a href='http://andyleonard.com/2011/02/01/haproxy-and-keepalived-example-configuration/'>http://andyleonard.com/2011/02/01/haproxy-and-keepalived-example-configuration/</a></li>
+
+<li><a href='http://blog.loadbalancer.org/configure-haproxy-with-tproxy-kernel-for-full-transparent-proxy/'>http://blog.loadbalancer.org/configure-haproxy-with-tproxy-kernel-for-full-transparent-proxy/</a></li>
+
+<li><a href='http://blog.loadbalancer.org/ec2-load-balancer-appliance-rocks-and-its-free-for-now-anyway/'>http://blog.loadbalancer.org/ec2-load-balancer-appliance-rocks-and-its-free-for-now-anyway/</a></li>
+
+<li><a href='http://agiletesting.blogspot.com/2010/02/use-haproxy-14-if-you-need-mysql-health.html'>http://agiletesting.blogspot.com/2010/02/use-haproxy-14-if-you-need-mysql-health.html</a></li>
+
+<li><a href='http://www.cowboycoded.com/2009/08/17/mysql-haproxy-tutorial/'>http://www.cowboycoded.com/2009/08/17/mysql-haproxy-tutorial/</a></li>
+
+<li><a href='http://sysbible.org/2008/12/04/having-haproxy-check-mysql-status-through-a-xinetd-script/'>http://sysbible.org/2008/12/04/having-haproxy-check-mysql-status-through-a-xinetd-script/</a></li>
+
+<li><a href='http://www.tritux.com/blog/2010/11/19/partitioning-mysql-database-with-high-load-solutions/11/1'>http://www.tritux.com/blog/2010/11/19/partitioning-mysql-database-with-high-load-solutions/11/1</a></li>
+</ol>
+</div>
+
+
+
+<a href="/2011/08/17/load-balancing-mysql-replication-master-to-master-with-haproxy.html#disqus_thread">View comments</a>
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/08/16/replicate-master-to-master-mysql.html"> Replicate Master to Master MySQL </a>
+        </div>
+    
+
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

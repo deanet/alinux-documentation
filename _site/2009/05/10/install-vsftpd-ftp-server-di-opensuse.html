@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Install vsftpd FTP Server di openSUSE</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Install vsftpd FTP Server di openSUSE
+</div>
+
+<div class="date">
+<!--    
+
+    published: 10 May 2009,
+    in category: <a href="/archives/installvsftpdftpopensuse.html">installvsftpdftpopensuse</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+<a rel="tag" href="/archives/vsftpd.html">vsftpd</a>, 
+
+<a rel="tag" href="/archives/ftp.html">ftp</a>, 
+
+<a rel="tag" href="/archives/opensuse.html">opensuse</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h2 id='apa_itu_ftp_'>Apa itu FTP ?</h2>
+
+<p>FFTP merupakan salah satu protokol Internet yang paling awal dikembangkan, dan masih digunakan hingga saat ini untuk melakukan pengunduhan (download) dan penggugahan (upload) berkas-berkas komputer antara klien FTP dan server FTP. Sebuah Klien FTP merupakan aplikasi yang dapat mengeluarkan perintah-perintah FTP ke sebuah server FTP, sementara server FTP adalah sebuah Windows Service atau daemon yang berjalan di atas sebuah komputer yang merespons perintah-perintah dari sebuah klien FTP. Perintah-perintah FTP dapat digunakan untuk mengubah direktori, mengubah modus transfer antara biner dan ASCII, menggugah berkas komputer ke server FTP, serta mengunduh berkas dari server FTP.</p>
+
+<h3 id='installasi_vsftpd'>Installasi vsftpd</h3>
+
+<pre><code>yast -i vsftpd</code></pre>
+
+<p>untuk menjalankan service vsftpd ketik:</p>
+
+<pre><code>/etc/init.d/vsftpd start</code></pre>
+
+<p>agar user didalam mesin bisa login edit file <code>/etc/vsftpd.conf</code> . ubah sperti berikut:</p>
+
+<pre><code>local_enable=YES</code></pre>
+
+<p>lalu agar kita bisa menulis/write ke dalam mesin ubah bagian berikut:</p>
+
+<pre><code>write_enable=YES</code></pre>
+
+<p>lalu bisa di coba dengan <a href='http://filezilla-project.org'>FileZilla</a>. gud lak ;)</p>
+
+<p>Referensi:</p>
+
+<ol>
+<li><a href='http://id.wikipedia.org/wiki/File_Transfer_Protocol'>wikipedia.org</a></li>
+
+<li><a href='http://en.opensuse.org/FTP_Server_HOWTO'>en.opensuse.org</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2009/05/05/installasi-bind-apache2-mysql-php-dan-konfigurasi-dns-serta-virtual-host-di-opensuse.html"> Installasi BIND, Apache2, Mysql, PHP dan Konfigurasi DNS serta Virtual Host di OpenSuse </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/05/19/installasi-postfix-saslauthd-vm-pop3d-squirrelmail-opensuse.html"> Installasi Postfix, Saslauthd, VM-Pop3d, dan SquirrelMail di OpenSuse </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

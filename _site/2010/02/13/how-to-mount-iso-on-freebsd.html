@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>How to mount iso on FreeBSD</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    How to mount iso on FreeBSD
+</div>
+
+<div class="date">
+<!--    
+
+    published: 13 Feb 2010,
+    in category: <a href="/archives/mountISOFreeBSD.html">mountISOFreeBSD</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/mount.html">mount</a>, 
+
+<a rel="tag" href="/archives/ISO.html">ISO</a>, 
+
+<a rel="tag" href="/archives/FreeBSD.html">FreeBSD</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>Just simply to mount:</p>
+
+<pre><code>%sudo mdconfig -a -t vnode -o readonly -f GRTMPOEM_EN.iso
+md0
+%sudo mount -t cd9660 /dev/md0 tmp/
+%ls tmp/
+autorun.inf     i386            setupxp.htm     win51
+docs            readme.htm      support         win51ip
+dotnetfx        setup.exe       valueadd        win51ip.sp3</code></pre>
+
+<p>semoga bermanfaat :)</p>
+
+<p>Referensi:</p>
+
+<ol>
+<li><a href='http://forums.freebsd.org/showthread.php?t=4932'>http://forums.freebsd.org/showthread.php?t=4932</a></li>
+
+<li><a href='http://www.freebsddiary.org/iso-mount.php'>http://www.freebsddiary.org/iso-mount.php</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2010/01/10/install-cacti-spine-memcached-better-mysql-cacti-template-on-freebsd-7-2.html"> Install Cacti, Spine, Memcached, Better MySQL Cacti Template on FreeBSD 7.2 </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2010/02/27/how-to-force-package-on-ports-freebsd.html"> Update package failed on ports FreeBSD </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Install Nginx 1.0.4 and PHP-FPM Patch 0.5.14</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Install Nginx 1.0.4 and PHP-FPM Patch 0.5.14
+</div>
+
+<div class="date">
+<!--    
+
+    published: 31 Jul 2011,
+    in category: <a href="/archives/NginxPHPFPMPHP-FPM.html">NginxPHPFPMPHP-FPM</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/Nginx.html">Nginx</a>, 
+
+<a rel="tag" href="/archives/PHP.html">PHP</a>, 
+
+<a rel="tag" href="/archives/FPM.html">FPM</a>, 
+
+<a rel="tag" href="/archives/PHP-FPM.html">PHP-FPM</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>Quick how to.</p>
+
+<p>here we go&#8230;</p>
+
+<h2 id='install_nginx_104_version'>Install Nginx 1.0.4 version.</h2>
+
+<p>grab this code and execute it.</p>
+<script src='https://gist.github.com/1055952.js?file=nginx.sh' type='text/javascript'>
+</script>
+<h2 id='install_php_and_patch_fpm_0514'>Install PHP and Patch FPM 0.5.14</h2>
+
+<p>grab this code and execute it.</p>
+<script src='https://gist.github.com/1055952.js?file=php-fpm-patch.sh' type='text/javascript'>
+</script>
+<h2 id='configure_phpfpmconf'>Configure PHP-FPM.conf</h2>
+
+<p>Grab this code and put as <code>/usr/local/php/etc/php-fpm.conf</code>.</p>
+<script src='https://gist.github.com/1055952.js?file=php-fpm.conf' type='text/javascript'>
+</script>
+<h2 id='configure_phpini'>Configure PHP.ini</h2>
+
+<p>we can use php.ini on <a href='https://gist.github.com/raw/1055952/e6c720170ef0d0771c2d75afb93a332ee2b9fbcb/php.ini' target='_new'>this page</a></p>
+
+<h2 id='phpcgi_script'>PHP-CGI Script</h2>
+
+<p>grab this code and run it..</p>
+<script src='https://gist.github.com/1055952.js?file=php-fpm.bash' type='text/javascript'>
+</script>
+<p>to make sure php-cgi run or not, just type <code>netstat -ntlp</code> or <code>lsof -i tcp:9000</code>.</p>
+
+<p>hope this help.. ;)</p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/07/31/upgrading-zpool-and-zfs-version-on-freebsd.html"> Upgrading ZPOOL and ZFS version on FreeBSD </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2011/07/31/install-rrdtool-1.4.5-on-linux-machine.html"> Install rrdtool 1.4.5 on Linux machine </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

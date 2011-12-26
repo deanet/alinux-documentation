@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Installing Slackware dari USB memori Stick atau GRUB</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Installing Slackware dari USB memori Stick atau GRUB
+</div>
+
+<div class="date">
+<!--    
+
+    published: 20 Mar 2009,
+    in category: <a href="/archives/installSlackwareUSBGRUB.html">installSlackwareUSBGRUB</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+<a rel="tag" href="/archives/Slackware.html">Slackware</a>, 
+
+<a rel="tag" href="/archives/USB.html">USB</a>, 
+
+<a rel="tag" href="/archives/GRUB.html">GRUB</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>Hari gini install linux pake CD ?? ogak bangets.. :D. install slackware pake USB ??. Maknyuss banget &#8230; Gak ada USB ?? install pake Grub ?? TOP Bangetss &#8230;:D</p>
+
+<p>Yang mesti dibutuhin</p>
+
+<p><strong>1. ISO Slackware</strong><br /> <strong>2. USB memori stick ato flashdisk</strong><br /> <strong>3. <a href='http://freshmeat.net/projects/lilo/'>lilo</a></strong><br /></p>
+
+<p>lilo mesti di install dulu biar bisa boot pake USB. kalo belum diinstall, download aj executable nya di <a href='http://linux-live.org'>linux-live</a>. Di situ ada koq, uda komplit utk linux, win juga ada (gak dibahas). Klo males dunlud, y pake grub aja :P.</p>
+
+<p>Disini dalam percobaan pake distro slackware 12.1 . Lansung saja mount iso na dg opsi loop dan copy isinya ke direktori terserah.</p>
+
+<h2 id='dengan_usb_memori_stick_ato_flash_disk'>Dengan USB memori Stick ato Flash Disk</h2>
+
+<p><strong>1. Menyiapkan bahan installasi untuk Hardisk:</strong> mount iso na</p>
+
+<pre><code>mount /mnt/sda4/iso/slackware/slackware-12.1-install-d1.iso tmp/ -o loop</code></pre>
+
+<p>lalu copy isi iso na ke <code>/home/terserah</code> misalnya.</p>
+
+<pre><code>cp -a tmp/* /home/terserah</code></pre>
+
+<p><strong>2. Menyiapkan bahan installasi untuk USB:</strong></p>
+
+<p>mount file <code>usbboot.img</code> yg ada di <code>/home/terserah/usb-and-pxe-installers</code> dg loop.</p>
+
+<pre><code>mkdir usb
+mount /home/terserah/usb-and-pxe-installers/usbboot.img usb/ -o loop</code></pre>
+
+<p><strong>3. Menyiapakan alat perang:</strong></p>
+
+<p>mount USB Flashdisk na lalu kopi isi file <code>usbboot.img</code> tadi</p>
+
+<pre><code>mount /mnt/sdb1
+cp usb/* /mnt/sdb1</code></pre>
+
+<p>terus bikin supaya USB na bisa booting ..</p>
+
+<pre><code>lilo -S /dev/null -M /dev/sdb ext
+lilo -S /dev/null -A /dev/sdb 1</code></pre>
+
+<p>selesai n reboot &#8230;</p>
+
+<h2 id='dengan_grub'>Dengan Grub</h2>
+
+<p>tambahkan di <code>Grub</code> kalo mo pake <code>Grub</code>:</p>
+
+<pre><code>title           Slackware Installer - older machine
+root            (hd0,3)
+kernel          /huge.s rw
+initrd          /initrd.img
+
+title           Slackware Installer - i486 machine
+root            (hd0,3)
+kernel          /hugesmp.s rw
+initrd          /initrd.img</code></pre>
+
+<p>Pastikan sudah mengkopi isi file <code>usbboot.img</code> tadi ke partisi 4 <code>(hd0,3)</code></p>
+
+<pre><code>cp usb/* /mnt/sda4</code></pre>
+
+<p>selesai.. reboot n pilih menu grubna</p>
+
+<p><strong>tips:</strong></p>
+
+<p>kalo mau cepet gak pake lilo utk bisa booting na pake cara ini (tidak dianjurkan tapi masih manjur):</p>
+
+<pre><code>dd if=usbboot.img of=/dev/sdb bs=512</code></pre>
+
+<p><strong>warning</strong></p>
+
+<p>hati2 jgn sampe salah nama device na. :) . terus reboot, n seharusnya uda bisa booting.</p>
+
+<p>cara diatas (perintah dd) akan membuat partisi usb menjadi kacau balau (lihat pake <code>fdisk -l</code>). untuk mngembalikannya pake <code>dd</code> lagi.</p>
+
+<pre><code>dd if=/dev/zero of=/dev/sdb bs=512 count=1</code></pre>
+
+<p>terus ketik:</p>
+
+<pre><code>fdisk /dev/sda &lt;&lt;eof
+n
+p
+1
+
+t
+b
+w
+EOF</code></pre>
+
+<p>format dg partisi vfat</p>
+
+<pre><code>mkdosfs -F32 /dev/sda1</code></pre>
+
+<p>slesai ..</p>
+
+<p><strong>Referensi:</strong></p>
+
+<ol>
+<li>Manual READ ME (include ON CD ISO Slackware)</li>
+
+<li><a href='http://www.slackware.com/~alien/dokuwiki/doku.php?id=slackware:usbboot'>slacware:usbboot</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2009/03/03/installing-debian-lenny-using-grub.html"> Installing debian lenny using GRUB </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/04/05/how-to-set-or-reset-password-mysql-on-ubuntu.html"> How to set or reset password mysql on Ubuntu </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

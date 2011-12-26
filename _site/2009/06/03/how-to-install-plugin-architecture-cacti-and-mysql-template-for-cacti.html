@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>How to install Plugin Architecture Cacti and Mysql template for cacti</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    How to install Plugin Architecture Cacti and Mysql template for cacti
+</div>
+
+<div class="date">
+<!--    
+
+    published: 03 Jun 2009,
+    in category: <a href="/archives/installCactiMySQLtemplate.html">installCactiMySQLtemplate</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+<a rel="tag" href="/archives/Cacti.html">Cacti</a>, 
+
+<a rel="tag" href="/archives/MySQL.html">MySQL</a>, 
+
+<a rel="tag" href="/archives/template.html">template</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h2 id='update_2562009'>Update: 25/6/2009</h2>
+
+<p>The Plugin Architecture for Cacti was designed to be both simple in nature and robust enough to allow freedom to do almost anything in Cacti. Cacti itself is designed nicely enough that integrating into it is fairly easy with very little modifications necessary. <code>teMySQLcacti</code> is A highly-modified version of MySQL monitoring templates for Cacti. You import a single host, which includes a bunch of graphs and graph types. To install it you must install Plugin Architecture Cacti first.</p>
+
+<h2 id='preparing_to_install_plugin_architecture_cacti'>Preparing to install Plugin Architecture Cacti:</h2>
+
+<h4 id='1_fresh_installation_cacti_recommanded'>1. Fresh installation cacti (recommanded)</h4>
+
+<p>Recommanded using fresh installation cacti or your cacti will not work. You can see how to install cacti on <a href='/2009/05/26/how-to-install-cacti-0-8-7d.html' target='_new'>previous post</a>.</p>
+
+<h4 id='2_download_and_extract'>2. Download and extract</h4>
+
+<p>Download on <a href='http://cactiusers.org/downloads/patches/' target='_new'>this page</a></p>
+
+<pre><code># cd /temp-directory/plugin/architecture/cacti/
+# wget -c http://mirror.cactiusers.org/downloads/plugins/cacti-plugin-0.8.7d-PA-v2.4.zip
+# tar -zvxf cacti-plugin-arch.tar.gz</code></pre>
+
+<h2 id='installing_plugin_architecture_cacti'>Installing Plugin Architecture Cacti:</h2>
+
+<h4 id='1_patch_cacti'>1. Patch cacti</h4>
+
+<p>change into your cacti directory and patching</p>
+
+<pre><code># cd /srv/www/htdocs/cactifresh
+# patch -p1 -N &amp;lt; /directory/plugin/architecture/cacti/cacti-plugin-0.8.7d-PA-v2.4.diff</code></pre>
+
+<h4 id='2_configration_cacti'>2. Configration cacti</h4>
+
+<p>edit file global.php. Edit this to point to the default URL of your Cacti install ex: if your cacti install as at <code>http://serverip/cactifresh/</code> this would be set to <code>/cactifresh/</code> .</p>
+
+<pre><code>$config[&#39;url_path&#39;] = &#39;/cactifresh/&#39;;</code></pre>
+
+<p>to more information how to add cacti plugins, you can see on <a href='http://wowtutorial.org/tutorial/203.html' target='_blank'>this page</a></p>
+
+<h2 id='installing_mysql_template_for_cacti'>Installing Mysql template for cacti:</h2>
+
+<h4 id='1_download_and_extract_package_from_'>1. Download and extract package from <a href='http://www.faemalia.net/mysqlUtils/' target='_new'>this page</a></h4>
+
+<pre><code># cd /temp-directory/plugin/mysql
+# wget -c http://www.faemalia.net/mysqlUtils/teMySQLcacti-20060810.tar.gz
+# tar -xzvf teMySQLcacti-20060810.tar.gz</code></pre>
+
+<h4 id='2_copy__and__on_'>2. copy <code>mysql_stats.php</code> and <code>dumpMemcachedStats.php</code> on <code>/srv/www/htdocs/cactifresh/scripts/</code></h4>
+
+<h4 id='3_make_sure_your_cacti_poller_running_with_cron_daemon_every__u_can_use_spine_see_on_previous_page'>3. Make sure your cacti poller running with cron daemon every <code>1 minutes</code>. U can use spine, see on previous page.</h4>
+
+<h4 id='4_import_xml_template__ex_'>4. Import xml template . ex: <code>cacti_host_template_x_db_server_ht_0.8.6i.xml</code></h4>
+
+<h4 id='5_login_into_your_cacti_website_then_create_new_device_within_new_template____'>5. Login into your cacti website then Create new device within new template ( <code>cacti_host_template_x_db_server_ht_0.8.6i.xml</code> ) .</h4>
+
+<h4 id='6_done'>6. Done.</h4>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://cactiusers.org/wiki/PluginArchitectureInstall'>wiki cacti user</a></li>
+
+<li><a href='http://www.faemalia.net/mysqlUtils/'>femalia.net</a></li>
+
+<li><a href='http://forums.cacti.net/about15067.html'>List cacti plugin template</a></li>
+
+<li><a href='http://wowtutorial.org/tutorial/203.html'>wowtutorial.org</a> .</li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2009/05/31/how-to-install-poller-cactid-or-spine-on-linux.html"> How to install poller cactid or spine on linux </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/06/07/how-to-change-port-and-enable-log-openssh-ssh-daemon.html"> How to change port and enable log OpenSSH SSH daemon </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

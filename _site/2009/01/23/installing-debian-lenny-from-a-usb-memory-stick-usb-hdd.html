@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Installing Debian Lenny from a USB memory stick (USB HDD)</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Installing Debian Lenny from a USB memory stick (USB HDD)
+</div>
+
+<div class="date">
+<!--    
+
+    published: 23 Jan 2009,
+    in category: <a href="/archives/DebianLennyUSBinstall.html">DebianLennyUSBinstall</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/Debian.html">Debian</a>, 
+
+<a rel="tag" href="/archives/Lenny.html">Lenny</a>, 
+
+<a rel="tag" href="/archives/USB.html">USB</a>, 
+
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p><strong>last Update 22 May 2010</strong></p>
+
+<p>i was doing this on slax machine to create bootable usb memory stick debian lenny.</p>
+
+<p>needed things:</p>
+
+<ol>
+<li><a href='http://freshmeat.net/projects/lilo/'>lilo</a></li>
+
+<li><a href='http://packages.debian.org'>mbr package</a> optional.</li>
+
+<li><a href='http://syslinux.zytor.com/'>syslinux</a>.</li>
+
+<li>vmlinuz, initrd.gz and boot.img.gz (optional). download on <a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images'>here</a>, choose hd-media directory. Thats i386 machine, for Others Machine try download on <a href='http://www.debian.org/devel/debian-installer/'>here</a></li>
+
+<li>USB HDD (i use Kingston Data Traveler 2.0, 4G storage called USB HDD). maybe with USB key possible to install.</li>
+
+<li>ISO can download on <a href='http://cdimage.debian.org'>here</a> before do this, your <code>lilo</code> (or <code>mbr package</code>) and <code>syslinux</code> must installed (check first on your konsole with syslinux command). then, next step are:</li>
+</ol>
+
+<p><strong>1. creating fat filesystem:</strong></p>
+
+<pre><code>mkdosfs /dev/sdb1</code></pre>
+
+<p><strong>2. creating <code>ldlinux.sys</code> on your USB memory stick:</strong></p>
+
+<pre><code>syslinux /dev/sdb1</code></pre>
+
+<p><strong>3. open your favourite editor and fill:</strong> <a name='textmode'>.</a></p>
+
+<pre><code>default /vmlinuz vga=791
+append initrd=/initrd.gz</code></pre>
+
+<p>save as <code>syslinux.cfg</code> and copy <code>syslinux.cfg</code>, <code>vmlinuz, initrd.gz</code> to <code>/mnt/sdb1</code>:</p>
+
+<pre><code>cp {syslinux.cfg,vmlinuz,initrd.gz} /mnt/sdb1</code></pre>
+
+<p><strong>4. also your lenny ISO:</strong></p>
+
+<pre><code>cp /mnt/sda4/iso/debian-sid-lenny-cd/debian-testing-i386-CD-1.iso /mnt/sdb1/</code></pre>
+
+<p><strong>5. then make bootable your USB memory stick, on konsole type:</strong></p>
+
+<pre><code>lilo -S /dev/null -M /dev/sdb ext
+lilo -S /dev/null -A /dev/sdb 1</code></pre>
+
+<p>for mbr package:</p>
+
+<pre><code>install-mbr /dev/sdb</code></pre>
+
+<p>your USB memory stick should be bootable now and possible to install debian lenny using USB memory stick :)</p>
+
+<p>done.</p>
+
+<p><strong>Tips:</strong></p>
+
+<p>to install with graphical install you can ignore step 3 and copy all things on <code>boot.img.gz</code> ( <code>gunzip</code> &amp; mount it with loop before or doing with zcat command).</p>
+
+<h3 id='with_loop'>with loop</h3>
+
+<pre><code>mkdir tmp
+gunzip boot.img.gz
+mount boot.img tmp/ -o loop</code></pre>
+
+<p>copy all things on tmp to <code>/mnt/sdb1</code></p>
+
+<pre><code>cp tmp/* /mnt/sdb1</code></pre>
+
+<p>or u can using <code>vmlinuz</code> and <code>kernel</code> (<code>initrd</code>) from <a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media'>directory gtk</a>. Replace <code>vmlinuz</code> and <code>initrd</code> <a href='#textmode'>on text mode</a> based with them.</p>
+
+<h3 id='with_zcat'>with zcat</h3>
+
+<pre><code>zcat boot.img.gz &gt;/dev/sdb1</code></pre>
+
+<p>using <code>zcat</code>, your usb stick will partitioned 250 M. so,you must use ISO smaller than 250 M. (<code>netinst</code> or etc)</p>
+
+<p>and you can continued next step (step 4)</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://d-i.pascal.at'>Installing Debian Sarge from a USB memory stick (USB key)</a></li>
+
+<li><a href='http://h0bbel.p0ggel.org/installing-debian-from-a-usb-stick'>Installing Debian from a USB Stick</a></li>
+
+<li><a href='http://zuyyin.wordpress.com/2008/05/06/install-gnulinux-debian-etch-dari-usb-flash-disk/'>Install GNU/Linux Debian Etch dari USB Flash Disk</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2008/08/07/cara-flash-usb-live-installasi-and-remastering-of-slax.html"> USB LIVE, INSTALLASI, AND REMASTERING OF SLAX </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/02/23/install-apache-mysql-dan-php-di-slax.html"> Install apache, mysql dan php di slax </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

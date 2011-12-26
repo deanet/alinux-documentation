@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Limited Upload max on your own directory apache</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Limited Upload max on your own directory apache
+</div>
+
+<div class="date">
+<!--    
+
+    published: 28 Apr 2010,
+    in category: <a href="/archives/modapache.html">modapache</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/mod.html">mod</a>, 
+
+<a rel="tag" href="/archives/apache.html">apache</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p><code>Apache</code> is one powerfull web server most used on cyber world. So many module to configuring as you want. One of them called <code>mod_php</code>. Sometimes we need different value of php main configuration. An example, on <code>php main configuration</code> we&#8217;ve added <code>upload max 5M</code>. So, you want a directory have different to upload more 5 M, example: 100M. So just <code>add</code> to your own directory directive:</p>
+<div class='highlight'><pre><code class='apacheconf'><span class='nt'>&lt;Directory</span> <span class='s'>/usr/local/www/upload</span><span class='nt'>&gt;</span>
+<span class='err'>php_</span><span class='nb'>value</span> upload_max_filesize <span class='m'>100</span>M
+<span class='err'>php_</span><span class='nb'>value</span> post_max_size <span class='m'>100</span>M
+<span class='err'>php_</span><span class='nb'>value</span> max_execution_time <span class='m'>200</span>
+<span class='err'>php_</span><span class='nb'>value</span> max_input_time <span class='m'>200</span>
+<span class='nt'>&lt;/Directory&gt;</span>
+</code></pre>
+</div>
+<p>semoga membantu.. :)</p>
+
+<p>ref: <a href='http://php.net/manual/en/configuration.changes.php' target='_blank'>
+http://php.net/manual/en/configuration.changes.php
+</a></p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2010/04/23/cara-membuat-system-freebsd-7-2-8-0-release-ke-stable-pasca-installasi.html"> Cara membuat system FreeBSD 7.2 / 8.0 release ke stable pasca installasi </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2010/05/26/server-was-moved-and-say-goodbye-to-wordpress.html"> Server was moved, and say goodbye to Wordpress </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Compiling MySQL 5.5.12 with CMAKE on CentOS</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Compiling MySQL 5.5.12 with CMAKE on CentOS
+</div>
+
+<div class="date">
+<!--    
+
+    published: 14 Aug 2011,
+    in category: <a href="/archives/CompileMySQLCMAKECentOs.html">CompileMySQLCMAKECentOs</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/Compile.html">Compile</a>, 
+
+<a rel="tag" href="/archives/MySQL.html">MySQL</a>, 
+
+<a rel="tag" href="/archives/CMAKE.html">CMAKE</a>, 
+
+<a rel="tag" href="/archives/CentOs.html">CentOs</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h2 id='install_dependencies_package'>Install dependencies package</h2>
+<div class='highlight'><pre><code class='bash'>yum install -y cmake.x86_64 gcc44-gfortran-4.4.4-13.el5 gcc-objc++-4.1.2-50.el5 gcc-4.1.2-50.el5 gcc44-4.4.4-13.el5 libgcc-4.1.2-50.el5 gcc44-c++-4.4.4-13.el5 gcc-c++-4.1.2-50.el5 gcc-gfortran.x86_64 ncurses-devel.x86_64 bison-devel.x86_64
+</code></pre>
+</div>
+<h2 id='getting_source_and_cmake'>Getting source and cmake</h2>
+<div class='highlight'><pre><code class='bash'>wget -c http://ftp.jaist.ac.jp/pub/mysql/Downloads/MySQL-5.5/mysql-5.5.12.tar.gz
+tar -xvf mysql-5.5.12.tar.gz
+<span class='nb'>cd </span>mysql-5.5.12
+
+cmake . -DCMAKE_INSTALL_PREFIX:PATH<span class='o'>=</span>/usr/local/mysql -DENABLE_DEBUG_SYNC:BOOL<span class='o'>=</span>OFF -DMYSQL_DATADIR:PATH<span class='o'>=</span>/home/mysql -DMYSQL_DATADIR<span class='o'>=</span>/usr/local/mysql/data -DSYSCONFDIR<span class='o'>=</span>/usr/local/mysql -DMYSQL_UNIX_ADDR:FILE_NAME<span class='o'>=</span>/usr/local/mysql/tmp/mysql.sock -DWITH_EMBEDDED_SERVER:BOOL<span class='o'>=</span>ON -DWITH_EXTRA_CHARSETS:STRING<span class='o'>=</span>all
+</code></pre>
+</div>
+<h2 id='make_and_make_install'>Make and make install</h2>
+<div class='highlight'><pre><code class='bash'>make;
+make install
+groupadd mysql
+useradd -r -g mysql mysql
+<span class='nb'>cd</span> /usr/local/mysql/
+chgrp -R mysql .
+chown -R mysql data
+touch /var/log/mysqld.log;
+touch /var/log/mysql/mysql-slow.log
+mkdir /home/mysql;
+mkdir /var/log/mysql;
+chown mysql.mysql -Rf /var/log/mysqld.log /home/mysql /var/log/mysql
+</code></pre>
+</div>
+<h2 id='mycnf_configuration'>My.cnf Configuration</h2>
+<div class='highlight'><pre><code class='bash'>vi /etc/my.cnf
+</code></pre>
+</div><script src='https://gist.github.com/1144636.js?file=my.cnf' type='text/javascript'>
+</script>
+<h2 id='run_daemon'>Run daemon</h2>
+<div class='highlight'><pre><code class='bash'>scripts/mysql_install_db --user<span class='o'>=</span>mysql
+./bin/mysqld_safe &amp;
+./bin/mysql_secure_installation
+
+
+
+110511 10:37:27 mysqld_safe Starting mysqld daemon with databases from /home/mysql/
+110511 10:37:27 InnoDB: The InnoDB memory heap is disabled
+110511 10:37:27 InnoDB: Mutexes and rw_locks use GCC atomic builtins
+110511 10:37:27 InnoDB: Compressed tables use zlib 1.2.3
+110511 10:37:27 InnoDB: Initializing buffer pool, <span class='nv'>size</span> <span class='o'>=</span> 128.0M
+110511 10:37:27 InnoDB: Completed initialization of buffer pool
+110511 10:37:27 InnoDB: highest supported file format is Barracuda.
+InnoDB: The log sequence number in ibdata files does not match
+InnoDB: the log sequence number in the ib_logfiles!
+110511 10:37:27  InnoDB: Database was not shut down normally!
+InnoDB: Starting crash recovery.
+InnoDB: Reading tablespace information from the .ibd files...
+InnoDB: Restoring possible half-written data pages from the doublewrite
+InnoDB: buffer...
+110511 10:37:27  InnoDB: Waiting <span class='k'>for </span>the background threads to start
+110511 10:37:28 InnoDB: 1.1.6 started; log sequence number 1595685
+110511 10:37:28 <span class='o'>[</span>Note<span class='o'>]</span> Event Scheduler: Loaded 0 events
+110511 10:37:28 <span class='o'>[</span>Note<span class='o'>]</span> /usr/local/mysql/bin/mysqld: ready <span class='k'>for </span>connections.
+Version: <span class='s1'>&#39;5.5.12-log&#39;</span>  socket: <span class='s1'>&#39;/usr/local/mysql/tmp/mysql.sock&#39;</span>  port: 3306  Source distribution
+</code></pre>
+</div>
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://www.geeksww.com/tutorials/database_management_systems/mysql/configuration/initializing_mysql_database_after_installation.php'>http://www.geeksww.com/tutorials/database_management_systems/mysql/configuration/initializing_mysql_database_after_installation.php</a></li>
+
+<li><a href='http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide'>http://forge.mysql.com/wiki/Autotools_to_CMake_Transition_Guide</a></li>
+
+<li><a href='http://www.howtoforge.com/installing-nginx-with-php5-and-mysql-support-on-centos-5.5-p2'>http://www.howtoforge.com/installing-nginx-with-php5-and-mysql-support-on-centos-5.5-p2</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/08/07/install-nginx-php-and-fcgi-perl-on-ubuntu.html"> Install Nginx PHP and FCGI Perl on ubuntu </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2011/08/16/replicate-master-to-master-mysql.html"> Replicate Master to Master MySQL </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

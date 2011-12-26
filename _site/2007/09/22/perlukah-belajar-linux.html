@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Perlukah Belajar Linux ??</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Perlukah Belajar Linux ??
+</div>
+
+<div class="date">
+<!--    
+
+    published: 22 Sep 2007,
+    in category: <a href="/archives/generalcase-studies.html">generalcase-studies</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/general.html">general</a>, 
+
+<a rel="tag" href="/archives/case-studies.html">case-studies</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <blockquote>
+<p><em>Perlukah Belajar Linux/Unix kalau Sudah Ada Software Komersial di Industri?</em></p>
+</blockquote>
+
+<p><strong>Pengantar :</strong></p>
+
+<p>Pertanyaan di atas pernah diajukan oleh salah seorang rekan saya. Pertanyaannya sederhana tapi menggelitik. &#8220;Perlu nggak sih kita belajar Linux/UNIX kalau akhirnya waktu kerja di industri kita menggunakan software komersial yang tinggal click here dan click there&#8221;, kira-kira begitu pertanyaan rekan tersebut. Jawaban paling gampang adalah : &#8220;Ya terserah kamu saja&#8221; .</p>
+
+<p><strong>Contoh Kasus :</strong></p>
+
+<p>Yaaak, jawaban yang pas mungkin demikian. Terserah kepada Anda apakah mau belajar Linux/UNIX atau tidak. Sebagian orang punya keinginan untuk mengembangkan diri, sedang sebagian lagi &#8220;cari yang praktis saja&#8221;. Bagi yang punya keinginan mengembangkan diri (baca : menambah pengetahuan) pasti pertanyaan di atas dijawab dengan &#8220;perlu&#8221;. Tulisan ini tidak bermaksud untuk &#8220;memaksa Anda&#8221; untuk belajar Linux, tapi untuk &#8220;mengenal&#8221; kelebihan Linux. Selanjutnya : terserah Anda (begitu bunyi salah satu iklan yang populer di Indonesia).</p>
+
+<p>Baru-baru ini, seorang rekan saya yang sedang melakukan penelitian dengan sebuah software komersial yang dijalankan dengan sistem operasi UNIX menceritakan problem yang dialaminya kepada saya. Problemnya adalah sebagai berikut : Software komersial yang digunakannya menghasilkan sebuah file ASCII yang cukup panjang (puluhan ribu baris &#8230;!!). Dari file ASCII tersebut dia harus mengambil data tertentu (nilai x dan y) dan menyimpannya ke sebuah file yang lain, untuk dibuatkan kurva berdasarkan harga-harga yang diambilnya. &#8220;Gimana ngedit-nya kalau begini?&#8221; , tanya teman saya. Itu baru satu file. Kalau satu hari sepuluh file &#8230; ???</p>
+
+<p>Ketika saya perhatikan, file output dari software tersebut memiliki pola yang berulang (karena memang biasanya demikian, untuk memudahkan kita &#8230;. !!!). Polanya kurang lebih seperti ini (misalnya) :</p>
+
+<pre><code>x-value= 0.0000e+00
+y-value= 1.0000e+00
+.......................... (angka-angka)
+.......................... (angka-angka)
+:::
+::: (masih ada angka lagi)
+:::
+x-value= 1.0000e+00
+y-value= 2.5000e+00
+..........................
+..........................
+:::
+::: (dan seterusnya)
+:::</code></pre>
+
+<h1 id='problem_solving_'>Problem Solving :</h1>
+
+<p>Saya-pun memberitahukan rekan saya tersebut beberapa rahasia Linux/UNIX. Rahasianya adalah sebagai berikut : Andaikan file ASCII tersebut bernama dataku. Maka untuk membuat file output yang berbentuk data x dan y, maka kita cukup gunakan kombinasi perintah Linux seperti cat, grep, awk, paste, &#8221;&#62;&#8221; (redirection), dan &#8221;|&#8221; (pipe). Sebagai contoh, bila kita ketikkan</p>
+
+<pre><code>cat dataku | grep &#39;x-value=&#39;</code></pre>
+
+<p>maka kita akan dapatkan keluaran di layar monitor sebagai berikut:</p>
+
+<pre><code>x-value= 0.0000e+00
+x-value= 1.0000e+00
+:::
+::: (dan seterusnya)
+:::</code></pre>
+
+<p>Kalau kita gabungkan dengan awk :</p>
+
+<pre><code>cat dataku | grep &#39;x-value=&#39; | awk &#39;{print $2}&#39;</code></pre>
+
+<p>maka kita akan dapatkan:</p>
+
+<pre><code>0.0000e+00
+1.0000e+00
+:::
+::: (dan seterusnya)
+:::</code></pre>
+
+<p>Untuk menyimpan ke file kita gunakan tanda &#8221;&#62;&#8221; dan nama file output. Jadi lengkapnya</p>
+
+<pre><code>cat dataku | grep &#39;x-value=&#39; | awk &#39;{print $2}&#39; &amp;gt; datax</code></pre>
+
+<p>Untuk menyimpan data y, cukup ketikkan :</p>
+
+<pre><code>cat dataku | grep &#39;y-value=&#39; | awk &#39;{print $2}&#39; &amp;gt; datay</code></pre>
+
+<p>Bagaimana menggabung kedua file tersebut? Cukup gunakan :</p>
+
+<pre><code>paste -d&#39; &#39; datax datay &amp;gt; dataxy</code></pre>
+
+<p>Kalau kita display isi file dataxy dengan more dataxy atau cat dataxy maka akan kita dapatkan : 0.0000e+00 1.0000e+00 1.0000e+00 2.5000e+00 ::: ::: (dan seterusnya) :::</p>
+
+<p>Untuk membuat plot-nya, bisa digunakan gnuplot atau perangkat lunak lainnya. Akhir Cerita Rekan saya segera mencoba resep tersebut, dan tidak lama kemudian dia telah tersenyum lebar. Kesimpulannya ? IT&#8217;S UP TO YOU . Dr. Leonard Lisapaly Program Geofisika - Universitas Indonesia Depok 16424</p>
+
+<p>Diambil dari www.elektroindonesia.com setelah ngabul-abul file di Os nya miekarosup. :D</p>
+
+<blockquote>
+<p><em>tambahan editor: berita lama yg masih enak dibaca. Masih mau lanjut dg Linux ?</em></p>
+</blockquote>
+
+<p>keyword : linux, unix, awk, cat, perintah, command, belajar, more, grep</p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2007/07/06/3-jurus-sakti-instalasi-software-linux.html"> 3 Jurus Sakti Instalasi Software Linux </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2008/08/07/cara-flash-usb-live-installasi-and-remastering-of-slax.html"> USB LIVE, INSTALLASI, AND REMASTERING OF SLAX </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,328 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Install Earthquake Ruby dan Gem di local user</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Install Earthquake Ruby dan Gem di local user
+</div>
+
+<div class="date">
+<!--    
+
+    published: 30 Jul 2011,
+    in category: <a href="/archives/TwitterClientRubyGem.html">TwitterClientRubyGem</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/Twitter.html">Twitter</a>, 
+
+<a rel="tag" href="/archives/Client.html">Client</a>, 
+
+<a rel="tag" href="/archives/Ruby.html">Ruby</a>, 
+
+<a rel="tag" href="/archives/Gem.html">Gem</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h2 id='install_ruby_di_lingkungan_user_tanpa_akses_root'>Install Ruby di lingkungan user (tanpa akses root)</h2>
+<div class='highlight'><pre><code class='bash'>dhanuxe@plox:~<span class='nv'>$ </span>mkdir ~/local2
+dhanuxe@plox:~<span class='nv'>$ </span><span class='nb'>cd</span> ~/local2/
+dhanuxe@plox:~/local2<span class='nv'>$ </span>wget -c http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p180.tar.bz2
+dhanuxe@plox:~/local2<span class='nv'>$ </span>tar -xf ruby-1.9.2-p180.tar.bz2 
+dhanuxe@plox:~/local2<span class='nv'>$ </span><span class='nb'>cd </span>ruby-1.9.2-p180
+dhanuxe@plox:~/local2/ruby-1.9.2-p180<span class='nv'>$ </span>./configure --prefix<span class='o'>=</span>/home/dhanuxe/local2/ruby
+dhanuxe@plox:~/local2/ruby-1.9.2-p180<span class='nv'>$ </span>make
+
+snipped
+
+No definition <span class='k'>for </span>rb_io_print
+No definition <span class='k'>for </span>rb_io_printf
+No definition <span class='k'>for </span>rb_io_puts
+100% <span class='o'>[</span>515/515<span class='o'>]</span>  doc/re.rdoc                                                     
+
+Generating RI...
+
+Files:       515
+Classes:    1087 <span class='o'>(</span>  654 undocumented<span class='o'>)</span>
+Constants:  1364 <span class='o'>(</span> 1141 undocumented<span class='o'>)</span>
+Modules:     239 <span class='o'>(</span>  137 undocumented<span class='o'>)</span>
+Methods:    7642 <span class='o'>(</span> 2876 undocumented<span class='o'>)</span>
+ 53.46% documented
+
+
+Elapsed: 199.0s
+
+dhanuxe@plox:~/local2/ruby-1.9.2-p180<span class='nv'>$ </span>make install
+./miniruby -I./lib -I.ext/common -I./- -r./ext/purelib.rb  ./tool/generic_erb.rb -c -o encdb.h ./template/encdb.h.tmpl ./enc enc
+encdb.h unchanged
+
+snipped
+
+installing <span class='nb'>command </span>scripts:   /home/dhanuxe/local2/ruby/bin
+installing library scripts:   /home/dhanuxe/local2/ruby/lib/ruby/1.9.1
+installing common headers:    /home/dhanuxe/local2/ruby/include/ruby-1.9.1
+installing manpages:          /home/dhanuxe/local2/ruby/share/man/man1
+installing default gems:      /home/dhanuxe/local2/ruby/lib/ruby/gems/1.9.1 <span class='o'>(</span>cache, doc, gems, specifications<span class='o'>)</span>
+                              rake 0.8.7
+                              rdoc 2.5.8
+                              minitest 1.6.0
+</code></pre>
+</div>
+<h2 id='setting_path_env'>setting PATH ENV</h2>
+<div class='highlight'><pre><code class='bash'>dhanuxe@plox:~/local2/ruby-1.9.2-p180<span class='nv'>$ </span>vim ~/.bashrc 
+
+<span class='nb'>export </span><span class='nv'>PATH</span><span class='o'>=</span>/home/dhanuxe/local2/ruby/bin:<span class='nv'>$PATH</span>
+
+dhanuxe@plox:~<span class='nv'>$ </span><span class='nb'>exit</span>
+<span class='nb'>logout</span>
+Connection to ssh.alinux.web.id closed.
+bash-4.1<span class='nv'>$ </span>ssh dhanuxe@ssh.alinux.web.id
+dhanuxe@ssh.alinux.web.id<span class='err'>&#39;</span>s password: 
+
+Welcome to shelltor.com
+
+No mail.
+Last login: Sat Jun 11 10:09:02 2011 from 114.79.1.57
+whooopppppppssssssssssssssssss...
+enter pass pleaseeee.. :D : 
+great !!
+        found the bug ?? submit to hax@plox.tor.hu
+dhanuxe@plox:~<span class='nv'>$ </span>ruby -v
+ruby 1.9.2p180 <span class='o'>(</span>2011-02-18 revision 30909<span class='o'>)</span> <span class='o'>[</span>x86_64-linux<span class='o'>]</span>
+</code></pre>
+</div>
+<h2 id='install_gem_ruby'>Install Gem Ruby</h2>
+<div class='highlight'><pre><code class='bash'>dhanuxe@plox:~<span class='nv'>$ </span><span class='nb'>cd</span> ~/local2
+dhanuxe@plox:~/local2<span class='nv'>$ </span>wget -c http://rubyforge.org/frs/download.php/74954/rubygems-1.8.5.tgz
+dhanuxe@plox:~/local2<span class='nv'>$ </span>tar -xf rubygems-1.8.5.tgz
+dhanuxe@plox:~/local2<span class='nv'>$ </span><span class='nb'>cd </span>rubygems-1.8.5
+dhanuxe@plox:~/local2/rubygems-1.8.5<span class='nv'>$ </span>ruby setup.rb --prefix<span class='o'>=</span>/home/dhanuxe/local2/gemrepo
+RubyGems 1.8.5 installed
+
+﻿<span class='o'>===</span> 1.8.4 / 2011-05-31
+
+* 1 minor enhancement:
+
+  * The -u option to <span class='s1'>&#39;update local source cache&#39;</span> is official deprecated.
+  * Remove has_rdoc deprecations from Specification.
+
+* 2 bug fixes:
+
+  * Handle bad specs more gracefully.
+  * Reset any Gem paths changed in the installer.
+
+
+------------------------------------------------------------------------------
+
+RubyGems installed the following executables:
+        /home/dhanuxe/local2/gemrepo/bin/gem
+
+dhanuxe@plox:~/local2/rubygems-1.8.5<span class='nv'>$ </span>gem -v
+1.3.7
+dhanuxe@plox:~<span class='nv'>$ </span>vim ~/.bashrc 
+
+
+<span class='nb'>export </span><span class='nv'>PATH</span><span class='o'>=</span>/home/dhanuxe/local2/gemrepo/bin:/home/dhanuxe/local2/ruby/bin:<span class='nv'>$PATH</span>
+
+
+dhanuxe@plox:~/local2/rubygems-1.8.5<span class='nv'>$ </span><span class='nb'>exit</span>
+<span class='nb'>logout</span>
+Connection to ssh.alinux.web.id closed.
+bash-4.1<span class='nv'>$ </span>ssh dhanuxe@ssh.alinux.web.id
+dhanuxe@ssh.alinux.web.id<span class='s1'>&#39;s password: </span>
+
+<span class='s1'>Welcome to shelltor.com</span>
+
+<span class='s1'>No mail.</span>
+<span class='s1'>Last login: Sat Jun 11 10:06:40 2011 from 114.79.1.57</span>
+<span class='s1'>whooopppppppssssssssssssssssss...</span>
+<span class='s1'>enter pass pleaseeee.. :D : </span>
+<span class='s1'>great !!</span>
+<span class='s1'>        found the bug ?? submit to hax@plox.tor.hu</span>
+<span class='s1'>dhanuxe@plox:~$ gem -v</span>
+<span class='s1'>1.3.7</span>
+<span class='s1'>dhanuxe@plox:~$ gem update --system</span>
+<span class='s1'>Updating RubyGems</span>
+<span class='s1'>Updating rubygems-update</span>
+<span class='s1'>Successfully installed rubygems-update-1.8.5</span>
+<span class='s1'>Updating RubyGems to 1.8.5</span>
+<span class='s1'>Installing RubyGems 1.8.5</span>
+<span class='s1'>RubyGems 1.8.5 installed</span>
+
+<span class='s1'>﻿=== 1.8.5 / 2011-05-31</span>
+
+<span class='s1'>* 2 minor enhancement:</span>
+
+<span class='s1'>  * The -u option to &#39;</span>update <span class='nb'>local source </span>cache<span class='err'>&#39;</span> is official deprecated.
+  * Remove has_rdoc deprecations from Specification.
+
+* 2 bug fixes:
+
+  * Handle bad specs more gracefully.
+  * Reset any Gem paths changed in the installer.
+
+
+------------------------------------------------------------------------------
+
+RubyGems installed the following executables:
+        /home/dhanuxe/local2/ruby/bin/gem
+
+dhanuxe@plox:~<span class='nv'>$ </span>gem -v
+1.8.5
+dhanuxe@plox:~<span class='nv'>$ </span>./local2/gemrepo/bin/gem -v
+1.8.5
+dhanuxe@plox:~<span class='nv'>$ </span>/home/dhanuxe/local2/ruby/bin/gem -v
+1.8.5
+dhanuxe@plox:~<span class='nv'>$ </span>
+</code></pre>
+</div>
+<h2 id='install_earthquake'>Install Earthquake</h2>
+
+<p>Earthquake = Twitter Client based terminal konsole.</p>
+<div class='highlight'><pre><code class='bash'>dhanuxe@plox:~/local2<span class='nv'>$ </span>git clone git://github.com/deanet/earthquake.git
+Cloning into earthquake...
+remote: Counting objects: 1744, <span class='k'>done</span>.
+remote: Compressing objects: 100% <span class='o'>(</span>749/749<span class='o'>)</span>, <span class='k'>done</span>.
+remote: Total 1744 <span class='o'>(</span>delta 1000<span class='o'>)</span>, reused 1666 <span class='o'>(</span>delta 936<span class='o'>)</span>
+Receiving objects: 100% <span class='o'>(</span>1744/1744<span class='o'>)</span>, 174.00 KiB | 42 KiB/s, <span class='k'>done</span>.
+Resolving deltas: 100% <span class='o'>(</span>1000/1000<span class='o'>)</span>, <span class='k'>done</span>.
+dhanuxe@plox:~/local2<span class='nv'>$ </span><span class='nb'>cd </span>earthquake/
+dhanuxe@plox:~/local2/earthquake<span class='nv'>$ </span>cat dep.txt | xargs gem install
+Fetching: eventmachine-0.12.10.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Building native extensions.  This could take a <span class='k'>while</span>...
+Successfully installed eventmachine-0.12.10
+Fetching: simple_oauth-0.1.5.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed simple_oauth-0.1.5
+Fetching: notify-0.3.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed notify-0.3.0
+Fetching: i18n-0.6.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed i18n-0.6.0
+Fetching: activesupport-3.0.8.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed activesupport-3.0.8
+Fetching: awesome_print-0.4.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed awesome_print-0.4.0
+Fetching: configuration-1.2.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed configuration-1.2.0
+Fetching: launchy-0.4.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed launchy-0.4.0
+Fetching: oauth-0.4.4.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed oauth-0.4.4
+Fetching: json-1.5.1.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Building native extensions.  This could take a <span class='k'>while</span>...
+Successfully installed json-1.5.1
+Fetching: mime-0.1.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed mime-0.1
+Fetching: twitter-stream-0.1.13.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed twitter-stream-0.1.13
+Fetching: mime-types-1.16.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Fetching: twitter_oauth-0.4.3.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed mime-types-1.16
+Successfully installed twitter_oauth-0.4.3
+Fetching: slop-1.7.0.gem <span class='o'>(</span>100%<span class='o'>)</span>
+Successfully installed slop-1.7.0
+15 gems installed
+Installing ri documentation <span class='k'>for </span>eventmachine-0.12.10...
+Installing ri documentation <span class='k'>for </span>simple_oauth-0.1.5...
+Installing ri documentation <span class='k'>for </span>notify-0.3.0...
+Installing ri documentation <span class='k'>for </span>i18n-0.6.0...
+Installing ri documentation <span class='k'>for </span>activesupport-3.0.8...
+Installing ri documentation <span class='k'>for </span>awesome_print-0.4.0...
+Installing ri documentation <span class='k'>for </span>configuration-1.2.0...
+Installing ri documentation <span class='k'>for </span>launchy-0.4.0...
+Installing ri documentation <span class='k'>for </span>oauth-0.4.4...
+Installing ri documentation <span class='k'>for </span>json-1.5.1...
+Installing ri documentation <span class='k'>for </span>mime-0.1...
+Installing ri documentation <span class='k'>for </span>twitter-stream-0.1.13...
+Installing ri documentation <span class='k'>for </span>mime-types-1.16...
+Installing ri documentation <span class='k'>for </span>twitter_oauth-0.4.3...
+Installing ri documentation <span class='k'>for </span>slop-1.7.0...
+Installing RDoc documentation <span class='k'>for </span>eventmachine-0.12.10...
+Installing RDoc documentation <span class='k'>for </span>simple_oauth-0.1.5...
+Installing RDoc documentation <span class='k'>for </span>notify-0.3.0...
+Installing RDoc documentation <span class='k'>for </span>i18n-0.6.0...
+Installing RDoc documentation <span class='k'>for </span>activesupport-3.0.8...
+Installing RDoc documentation <span class='k'>for </span>awesome_print-0.4.0...
+Installing RDoc documentation <span class='k'>for </span>configuration-1.2.0...
+Installing RDoc documentation <span class='k'>for </span>launchy-0.4.0...
+Installing RDoc documentation <span class='k'>for </span>oauth-0.4.4...
+Installing RDoc documentation <span class='k'>for </span>json-1.5.1...
+Installing RDoc documentation <span class='k'>for </span>mime-0.1...
+Installing RDoc documentation <span class='k'>for </span>twitter-stream-0.1.13...
+Installing RDoc documentation <span class='k'>for </span>mime-types-1.16...
+Installing RDoc documentation <span class='k'>for </span>twitter_oauth-0.4.3...
+Installing RDoc documentation <span class='k'>for </span>slop-1.7.0...
+</code></pre>
+</div><img src='https://github.com/deanet/earthquake/raw/master/earthquake.png' border='0' />
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/04/23/how-to-create-rhel-5.4-repository-for-installation-package.html"> How to create RHEL 5.4 Repository for installation package </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2011/07/30/make-nagios-notification-to-sms-via-twitter-update.html"> Make Nagios notification to SMS via Twitter update </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

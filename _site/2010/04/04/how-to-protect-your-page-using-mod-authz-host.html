@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>How to protect your page using mod authz host</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    How to protect your page using mod authz host
+</div>
+
+<div class="date">
+<!--    
+
+    published: 04 Apr 2010,
+    in category: <a href="/archives/modauthzapache.html">modauthzapache</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/mod.html">mod</a>, 
+
+<a rel="tag" href="/archives/authz.html">authz</a>, 
+
+<a rel="tag" href="/archives/apache.html">apache</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>Pada posting sekarang akan menjelaskan secara sederhana bagaimana menambahkan proteksi pada directory tertentu dengan module apache mod authz host. berdasarkan ip address Hanya menambahkan opsi dibawah ini pada konfigurasi apache <code>http.conf</code> atau <code>apache2.conf</code> pada bracket directory.</p>
+
+<p>opsi:</p>
+<div class='highlight'><pre><code class='apacheconf'><span class='nb'>Order</span> Deny,Allow
+<span class='nb'>Deny</span> from <span class='k'>All</span>
+<span class='nb'>Allow</span> from <span class='m'>172.16.0.0/23</span>
+</code></pre>
+</div>
+<p>ditambahkan pada directory <code>/usr/local/www/file/software</code> misalnya. Jadi konfigurasi lengkapnya:</p>
+<div class='highlight'><pre><code class='apacheconf'><span class='nt'>&lt;Directory</span> <span class='s'>/usr/local/www/file/software</span><span class='nt'>&gt;</span>
+     <span class='nb'>Order</span> Deny,Allow
+     <span class='nb'>Deny</span> from <span class='k'>All</span>
+     <span class='nb'>Allow</span> from <span class='m'>172.16.0.0/23</span>
+<span class='nt'>&lt;/Directory&gt;</span>
+</code></pre>
+</div>
+<p>Maksud dari opsi diatas adalah:</p>
+
+<p><code>Order deny,allow</code> : pengurutan opsi <code>deny</code> dan <code>allow</code> dari acl. Jadi maksudna deny dahulu baru diallow.<br /> <code>Deny from All</code> : Gagalkan semua.<br /> <code>Allow from IP</code> : Ijinkan dari IP.<br /></p>
+
+<p>kurang lebih begitu.</p>
+
+<p>Semoga bermanfaat :)</p>
+
+<p>ref:</p>
+
+<p><a href='http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html'>http://httpd.apache.org/docs/2.2/mod/mod_authz_host.html</a></p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2010/03/28/how-to-kill-suspend-and-continue-a-process-process-management-on-unix-style.html"> How to Terminate, Suspend, and Continue a process using kill </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2010/04/23/cara-membuat-system-freebsd-7-2-8-0-release-ke-stable-pasca-installasi.html"> Cara membuat system FreeBSD 7.2 / 8.0 release ke stable pasca installasi </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

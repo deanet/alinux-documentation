@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Upgrading ZPOOL and ZFS version on FreeBSD</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Upgrading ZPOOL and ZFS version on FreeBSD
+</div>
+
+<div class="date">
+<!--    
+
+    published: 31 Jul 2011,
+    in category: <a href="/archives/ZPOOLZFSFreeBSD.html">ZPOOLZFSFreeBSD</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/ZPOOL.html">ZPOOL</a>, 
+
+<a rel="tag" href="/archives/ZFS.html">ZFS</a>, 
+
+<a rel="tag" href="/archives/FreeBSD.html">FreeBSD</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>After upgrade to current FreeBSD, i&#8217;ve got warning below:</p>
+<div class='highlight'><pre><code class='bash'>mars# zpool status
+  pool: zroot
+ state: ONLINE
+status: The pool is formatted using an older on-disk format.  The pool can
+	still be used, but some features are unavailable.
+action: Upgrade the pool using <span class='s1'>&#39;zpool upgrade&#39;</span>.  Once this is <span class='k'>done</span>, the
+	pool will no longer be accessible on older software versions.
+ scan: none requested
+config:
+
+	NAME           STATE     READ WRITE CKSUM
+	zroot          ONLINE       0     0     0
+	  mirror-0     ONLINE       0     0     0
+	    gpt/disk0  ONLINE       0     0     0
+	    gpt/disk1  ONLINE       0     0     0
+
+errors: No known data errors
+</code></pre>
+</div>
+<p>so we need upgrade it.</p>
+<div class='highlight'><pre><code class='bash'>mars# zpool upgrade -a
+This system is currently running ZFS pool version 28.
+
+Successfully upgraded <span class='s1'>&#39;zroot&#39;</span>
+
+If you boot from pool <span class='s1'>&#39;zroot&#39;</span>, don<span class='err'>&#39;</span>t forget to update boot code.
+Assuming you use GPT partitioning and da0 is your boot disk
+the following <span class='nb'>command </span>will <span class='k'>do </span>it:
+
+	gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 da0
+</code></pre>
+</div>
+<p>upgrade also boot partition. make sure disk is true.</p>
+<div class='highlight'><pre><code class='bash'><span class='nv'>$ </span>sysctl -a | grep disk
+kern.disks: ada1 ada0
+kern.geom.disk.ada0.led: 
+kern.geom.disk.ada1.led: 
+2 LABEL gpt/disk1 151451851264 512 i 0 o 0
+2 LABEL gpt/disk0 151451851264 512 i 0 o 0
+z0xfffffe0002deb500 <span class='o'>[</span><span class='nv'>shape</span><span class='o'>=</span>box,label<span class='o'>=</span><span class='s2'>&quot;DEV\ngpt/disk1\nr#4&quot;</span><span class='o'>]</span>;
+z0xfffffe0002deb300 <span class='o'>[</span><span class='nv'>shape</span><span class='o'>=</span>box,label<span class='o'>=</span><span class='s2'>&quot;DEV\ngpt/disk0\nr#4&quot;</span><span class='o'>]</span>;
+z0xfffffe0002da8600 <span class='o'>[</span><span class='nv'>shape</span><span class='o'>=</span>hexagon,label<span class='o'>=</span><span class='s2'>&quot;gpt/disk1\nr1w1e1\nerr#0&quot;</span><span class='o'>]</span>;
+z0xfffffe0002ac2200 <span class='o'>[</span><span class='nv'>shape</span><span class='o'>=</span>hexagon,label<span class='o'>=</span><span class='s2'>&quot;gpt/disk0\nr1w1e1\nerr#0&quot;</span><span class='o'>]</span>;
+      &lt;name&gt;gpt/disk1&lt;/name&gt;
+      &lt;name&gt;gpt/disk0&lt;/name&gt;
+	    &lt;label&gt;disk1&lt;/label&gt;
+	    &lt;label&gt;disk0&lt;/label&gt;
+	  &lt;name&gt;gpt/disk1&lt;/name&gt;
+	  &lt;name&gt;gpt/disk0&lt;/name&gt;
+vfs.nfs.diskless_rootpath: 
+vfs.nfs.diskless_valid: 0
+<span class='s2'>&quot;ATA state lock&quot;</span>,<span class='s2'>&quot;g_disk_done&quot;</span>
+<span class='s2'>&quot;g_disk_done&quot;</span>,<span class='s2'>&quot;UMA zone&quot;</span>
+<span class='s2'>&quot;g_disk_done&quot;</span>,<span class='s2'>&quot;bio queue&quot;</span>
+<span class='nv'>$ </span>
+</code></pre>
+</div>
+<p>run once again.</p>
+<div class='highlight'><pre><code class='bash'>mars# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada0
+bootcode written to ada0
+mars# gpart bootcode -b /boot/pmbr -p /boot/gptzfsboot -i 1 ada1
+bootcode written to ada1
+</code></pre>
+</div>
+<p>run upgrade once again.</p>
+<div class='highlight'><pre><code class='bash'>mars# zfs upgrade -a
+17 filesystems upgraded
+
+mars# zpool upgrade
+This system is currently running ZFS pool version 28.
+
+All pools are formatted using this version.
+mars# zfs upgrade
+This system is currently running ZFS filesystem version 5.
+
+All filesystems are formatted with the current version.
+mars# <span class='nb'>exit</span>
+<span class='nb'>exit</span>
+
+mars# reboot 
+</code></pre>
+</div>
+<p>dont forget to reboot.</p>
+
+<p>ref:</p>
+
+<p><a href='http://tyuu.com/wordpress/?paged=3'>http://tyuu.com/wordpress/?paged=3</a></p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2011/07/31/install-php-postgresql-module-and-enable-postgresql-module-internal-cpanel-php-on-whm.html"> Install PHP PostgreSQL Module and enable PostgreSQL Module Internal cPanel PHP on WHM </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2011/07/31/install-nginx-1.0.4-and-php-fpm-patch-0.5.14.html"> Install Nginx 1.0.4 and PHP-FPM Patch 0.5.14 </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

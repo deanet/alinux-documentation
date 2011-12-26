@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Make USB installer OpenBSD 4.8</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Make USB installer OpenBSD 4.8
+</div>
+
+<div class="date">
+<!--    
+
+    published: 04 Oct 2010,
+    in category: <a href="/archives/USBinstallerOpenBSD.html">USBinstallerOpenBSD</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/USB.html">USB</a>, 
+
+<a rel="tag" href="/archives/installer.html">installer</a>, 
+
+<a rel="tag" href="/archives/OpenBSD.html">OpenBSD</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <h3 id='prelude'>Prelude:</h3>
+
+<p>Hey bro, See you again. Well, this time very hard to say. Truly i wanna turn off this site, also maintenance of site. I&#8217;m very bored at this time flying, surfing, browsing on cyber worlds. Along time i&#8217;ve graduated from high school,i&#8217;m knew very well cyber worlds. Time by time.. K, i;m just say getting back to my way.. not usually way.. the way for this documentation..</p>
+
+<p>Yesterday i was trying bootable OpenBSD using grub, but just nothing that i&#8217;ve got.. <code>unknown partition</code>. Just got an idea from <code>liveusb-openbsd.sourceforge.net</code>, i&#8217;ve successfully made <code>usb pendrive</code> boot with self of OpenBSD. So, it;s very simple and protable. <center>
+<a href='http://farm5.static.flickr.com/4133/5051351018_1704e592a9_b.jpg' target='_new'><img src='http://farm5.static.flickr.com/4133/5051351018_1704e592a9.jpg' border='0' /></a>
+</center></p>
+
+<h3 id='take_d0wn'>Take d0wn</h3>
+
+<p>So, how to make bootable OpenBSD installer on <code>usb pendrive</code> ?.</p>
+
+<p>This is simple way what i&#8217;ve did my self. To take this, you need:</p>
+
+<p>1. Create your own LiveUSB with OpenBSD. Read: <a href='http://liveusb-openbsd.sourceforge.net'>http://liveusb-openbsd.sourceforge.net</a>. <br /> 2. Boot your <code>usb pendrive</code>. then:<br /></p>
+
+<p>Identified your disk:</p>
+<div class='highlight'><pre><code class='xml'>  
+# sysctl hw.disknames
+</code></pre>
+</div>
+<p>Mount:</p>
+<div class='highlight'><pre><code class='xml'>  
+# mount wd0a /
+</code></pre>
+</div>
+<p>2. Mount of iso OpenBSD to temporary place and copy them to <code>usb pendrive</code>.</p>
+<div class='highlight'><pre><code class='xml'>  
+# mkdir /tmp/OpenBSD
+# mount /path/your/iso/install48.iso /tmp/OpenBSD/ -o loop
+# cp -a /tmp/OpenBSD/* /
+</code></pre>
+</div>
+<p>4. Reboot, done</p>
+
+<p><code>Note</code>: <code>you need ext2 fs or ufs or ffs to place iso file install48.iso</code> <code>you can do all that steps use qemu without reboot your machine</code> <code>verify your bootable installer usb by qemu -usb -hda /dev/sdd</code></p>
+
+<p>you might read nice article: <a href='http://www.azbsd.org/~marco/openbsd/flashkeyinstaller'>http://www.azbsd.org/~marco/openbsd/flashkeyinstaller</a></p>
+
+<p>Oh.. i must get some sleep now.. it&#8217;s 10:08 PM ..</p>
+
+<p>Reference: 1. <a href='http://liveusb-openbsd.sourceforge.net/'>http://liveusb-openbsd.sourceforge.net/</a></p>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2010/09/05/Clustering-Openldap-2.4-dengan-Mirror-Node-Replication-di-CentOs-5.5.html"> Clustering Openldap 2.4 dengan Mirror Node Replication di CentOs 5.5 </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2010/12/20/Install-KVM-Virtualization-on-Debian-Squeeze.html"> Install KVM Virtualization on Debian Squeeze </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+

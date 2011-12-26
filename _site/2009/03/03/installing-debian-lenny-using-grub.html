@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="Content-Language" content="en"/>
+    <title>Installing debian lenny using GRUB</title>
+    <link rel="stylesheet" href="/style.css" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="/syntax.css" type="text/css" media="screen"/>
+</head>
+
+<script type="text/javascript">
+        var disqus_awesome = ; 
+        var disqus_developer = ;
+</script>    
+
+<body>
+    <div class="outercolumn">
+        <div class="topbar">
+            <a href="/index.html">Home</a> - <a href="/archives/index.html">archive</a>
+        </div>
+
+        <div class="column">
+            <div class="content">
+                
+
+<div class="title">
+    Installing debian lenny using GRUB
+</div>
+
+<div class="date">
+<!--    
+
+    published: 03 Mar 2009,
+    in category: <a href="/archives/installDebianLennyGRUB.html">installDebianLennyGRUB</a>
+-->
+    in category: 
+<a rel="tag" href="/archives/install.html">install</a>, 
+
+<a rel="tag" href="/archives/Debian.html">Debian</a>, 
+
+<a rel="tag" href="/archives/Lenny.html">Lenny</a>, 
+
+<a rel="tag" href="/archives/GRUB.html">GRUB</a>, 
+
+
+
+</div>
+
+<div class="innercontent">
+    <p>on <a href='/2009/01/23/installing-debian-lenny-from-a-usb-memory-stick-usb-hdd.html'>previous post</a> we can install debian lenny using USB memori stick. Now, we will try install debian lenny using <code>grub</code>. So without burned on CD.</p>
+
+<p>tools needed:</p>
+
+<ol>
+<li><a href='http://freshmeat.net/projects/gnugrub/'>Grub</a></li>
+
+<li><a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media/'>vmlinuz and initrd</a>.</li>
+
+<li><a href='http://ftp.nl.debian.org/debian/dists/lenny/main/installer-i386/current/images/hd-media/'>boot.img.gz</a> (optional)</li>
+</ol>
+
+<p>okay,..</p>
+
+<p>first step, <code>grub</code> must installed on your machine. Then, copy <code>vmlinuz</code> and <code>initrd</code> to partition. example: <code>sda4</code></p>
+
+<pre><code>cp {vmlinuz,initrd} /mnt/sda4</code></pre>
+
+<p>also your lenny ISO</p>
+
+<pre><code>cp /mnt/sda3/iso/debian-sid-lenny-cd/debian-testing-i386-CD-1.iso /mnt/sda4/</code></pre>
+
+<p>Now, just adding list menu on <code>GRUB</code> like this:</p>
+
+<pre><code>title           Debian Installer
+root            (hd0,3)
+kernel          /vmlinuz vga=791
+initrd          /initrd.gz[/sourcecode]</code></pre>
+
+<p>reboot and try it &#8230; maknyuss&#8230;.. ;)</p>
+
+<h2 id='tips'>Tips:</h2>
+
+<p>same as with previous post. we can using graphical installer using <code>boot.img.gz</code> . Extract it, and <code>mount</code> with <code>loop</code>. copy all needed.</p>
+
+<pre><code>mkdir tmp
+gunzip boot.img.gz
+mount boot.img tmp/ -o loop</code></pre>
+
+<p>copy all things on tmp to <code>/mnt/sda4</code></p>
+
+<pre><code>cp tmp/* /mnt/sda4</code></pre>
+
+<p>add on list <code>grub</code></p>
+
+<pre><code>title           Debian Graphic Installer
+root            (hd0,3)
+kernel          /linux vga=791
+initrd          /initrdg.gz</code></pre>
+
+<p>done.</p>
+
+<p>Reference:</p>
+
+<ol>
+<li><a href='http://debian.org/releases/stable/installmanuall'>Debian Manual</a></li>
+</ol>
+</div>
+
+
+
+<div id="disqus_thread"></div>
+
+<script type="text/javascript" src="http://disqus.com/forums/buildsystem/embed.js">
+</script>
+
+<noscript>
+    <p> <a href="http://nebansnotebook.disqus.com/?url=ref">View the discussion thread. </a> </p>
+</noscript>
+
+
+
+<div class="prevnext">
+    
+        <div class="prev">
+            &laquo; <a href="/2009/02/23/install-apache-mysql-dan-php-di-slax.html"> Install apache, mysql dan php di slax </a>
+        </div>
+    
+
+    
+        <div class="next">
+            <a href="/2009/03/20/installing-slackware-dari-usb-memori-stick-atau-grub.html"> Installing Slackware dari USB memori Stick atau GRUB </a> &raquo;
+        </div>
+    
+</div>
+
+
+
+
+            </div>
+            
+<div class="footer">
+   <center>
+	<small>alinux.web.id, established since 2007, hosted by <a target="_new" href="http://tor.hu">tor.hu</a>, powered by <a target="_new" href="http://www.vim.org">vim</a> and <a target="_new" href="http://jekyllrb.com">jekyll</a><br/>
+<a target="_new" href="https://github.com/deanet/alinux-documentation">source</a>
+</small>
+	</center>
+</div>
+
+            <div class="pageend"></div>
+        </div>
+    </div>
+</body>
+</html>
+
