@@ -113,7 +113,7 @@ HTML
           file.puts html
         end
     end
-    puts 'Done. Files written to: ./archive/'
+    puts 'Done. Files written to: ./archives/'
     puts 'create archive page for all categories.'
 	html =<<-HTML
 ---

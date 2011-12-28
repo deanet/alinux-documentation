@@ -3,3 +3,4 @@ _drafts/*
 _gist_cache/*
 archives/*
 
+!archives
