@@ -2,12 +2,11 @@ based theme on neban.github.com
 
 ##changes
 - search archives
-- make simply files on category archives with rakefile *rake arsip*
+- make simply files on category archives with rakefile command: `rake arsip`
 
 
 
 ###command list
-
 
 - `rake draft["untitled"]`
 creating draft untitled, make sure your env $EDITOR have been set to your favourite editor.
@@ -19,10 +18,10 @@ posting untitled file.
 updating untitled file.
 
 - `rake clean`
-cleaning up dir `tags/` `_site/`
+cleaning up dir `archives/` `_site/`
 
 - `rake taggen`
-generating tag cloud
+clean `_site`, `archives/*` and build of them
 
 - `rake server`
 run webrick server
@@ -34,3 +33,5 @@ run clean, taggen, and jekyll
 - `rake sync`
 sync dir `_site/` to publish dir server
 
+- `rake git[key,branch]
+git add,commit, and push with key and current branch.

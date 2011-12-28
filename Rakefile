@@ -51,46 +51,7 @@ task :git, [:kunci, :cabang] do |t, args|
 
 end
 
-# Generate tag cloud page
-# -----------------------
-task :cloud do
-    puts 'Generating tag cloud...'
-
-    html =<<-HTML
----
-layout: cloud
-title: Tag cloud
----
-
-<p>Click on a tag to see the relevant posts.</p>
-HTML
-
-    html << '<nav id="post-archive-category-list">'
-    site.categories.sort.each do |category, posts|
-      font_size = 12 + (posts.count*1.5);
-      html << "<a href=\"javascript:filterByCategory('#{category}')\" class=\"#{category} \" style=\"font-size: #{font_size}px\">#{category}</a>\n"
-    end
-    html << '<a class="reset selected" href="javascript:filterByCategory(\'reset\')">ALL</a></nav>
-    <br/>
-      <nav id="post-archive-list">
-          <ul>
-	  	{% for post in site.posts  %}
-		<li class="{% for tag in post.categories %} {{ tag }}{% endfor %}"><a href="{{ site.pet }}{{ post.url }}">{{ post.title | xml_escape }}</a> - <span>{{ post.date | date: "%b %d %Y" }}</span></li>
-				{% endfor %}
-				    </ul>
-      </nav>
-    
-    
-    '
-
-    File.open('tags/cloud.html', 'w+') do |file|
-      file.puts html
-    end
-
-    puts 'Done. File written to: ./tags/cloud.html'
-end
-
-# Generate tags page
+# Generate tags pages for archives
 # ------------------
 task :arsip do
     puts "Generating arsip..."
@@ -134,74 +95,6 @@ HTML
 
 end
 
-# Generate seo page
-# -----------------------
-task :seo do
-    puts 'Generating seo...'
-
-    html =<<-HTML
-HTML
-
-    site.categories.sort.each do |category, posts|
-	html << "#{category}, "
-    end
-	
-    html << "linux"
-
-    File.open('_includes/seo.html', 'w+') do |file|
-      file.puts html
-    end
-
-    puts 'Done. File written to: _includes/seo.html'
-end
-
-# Generate tags page
-# ------------------
-task :tags do
-    puts "Generating tags..."
-
-    site.categories.sort.each do |category, posts|
-        html =<<-HTML
----
-layout: default_new
-title: Entries tagged "#{category}"
----
-
-        <section class="nice-link-list">
-            <header>
-                <h1>{{ page.title }}</h1>
-            </header>
-
-		<br/>
-            <ul>
-                {% for post in site.categories['#{category}'] %}
-                <li><a href="{{ site.pet }}{{ post.url }}">{{ post.title }}</a> - <time datetime="{{ post.date | date: "%Y-%m-%d" }}" pubdate>{{ post.date | date_to_string }}</time></li>
-                {% endfor %}
-            </ul>
-		<br/>
-            <p>Go to the <a href="{{ site.pet }}/tags/cloud.html">tag cloud</a> to see other tags..</p>
-HTML
-
-        File.open("tags/#{category}.html", 'w+') do |file|
-          file.puts html
-        end
-    end
-    puts 'Done. Files written to: ./tags/'
-end
-
-# Generate website
-# ----------------
-#task :generate => [:cloud, :tags] do
-#    sh 'jekyll'
-#end
-
-# Clean dir www
-#task :clean do
-#	sh 'rm -rf /var/www/techno/*'
-#end
-
-
-
 desc "Clear generated site."
 task :clean do
   rm_rf Dir.glob(File.join(SITE_DIR, '*'))
@@ -210,8 +103,8 @@ end
 
 # Generate website
 # ----------------
-task :taggen => [:cloud, :tags] do
-    puts 'Generated tag cloud and all tag pages.'
+task :taggen => [:clean, :arsip, :build] do
+    puts 'Cleaning _site, tags archives pages and build both of them....'
     sh "touch tags/index.html"
 end
 
