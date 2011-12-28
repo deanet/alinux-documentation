@@ -105,7 +105,6 @@ end
 # ----------------
 task :taggen => [:clean, :arsip, :build] do
     puts 'Cleaning _site, tags archives pages and build both of them....'
-    sh "touch tags/index.html"
 end
 
 desc "Generate site."
