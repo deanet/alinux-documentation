@@ -87,7 +87,7 @@ title: Archives for "#{category}"
 {% assign cattext = "#{category}" %}
 {% assign catiterator = site.categories['#{category}'] %}
 
-{% include archives.html %}
+{% include tags.html %}
 
 HTML
 
@@ -211,7 +211,7 @@ desc "Publish site."
 task :publish => [:vimclean, :clean, :cloud, :tags, :build] do |t|
  # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
 # sh "rm -rf /usr/local/nginx/html/*;cp -a _site/* /usr/local/nginx/html/"
- sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"
+# sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"
  # puts "Commit your posts and changes.\nThen run:\n  git push origin master"
 end
 
