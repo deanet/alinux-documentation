@@ -38,7 +38,12 @@ end
 desc "git commit..."
 task :git, [:kunci, :cabang] do |t, args|
 	unless args.kunci
-           puts "Usage: rake git keyname reponame"
+           puts "Usage: rake git keyname branch"
+            exit(-1)
+        end
+	
+	unless args.kunci
+           puts "Usage: rake git keyname branch"
             exit(-1)
         end
 
