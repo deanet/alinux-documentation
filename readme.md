@@ -2,7 +2,9 @@ based theme on neban.github.com
 
 ##changes
 - search archives
-- make simply files on category archives with rakefile
+- make simply files on category archives with rakefile *rake arsip*
+
+
 
 ###command list
 
