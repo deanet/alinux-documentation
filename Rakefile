@@ -37,10 +37,10 @@ end
 ## git commit
 desc "git commit..."
 task :git, [:kunci, :cabang] do |t, args|
-	#unless args.kunci
-         #  puts "Usage: rake git keyname reponame"
-          #  exit(-1)
-        #end
+	unless args.kunci
+           puts "Usage: rake git keyname reponame"
+            exit(-1)
+        end
 
 	sh "git add .;git commit -m 'update';git push #{args.kunci} #{args.cabang}"
 
