@@ -42,7 +42,7 @@ task :git, [:kunci, :cabang] do |t, args|
             exit(-1)
         end
 	
-	unless args.kunci
+	unless args.cabang
            puts "Usage: rake git keyname branch"
             exit(-1)
         end
