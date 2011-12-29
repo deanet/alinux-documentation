@@ -14,12 +14,12 @@ is suPHP apache trouble maker which php.ini on per user not working as well.
 
 and check now
 
-{% highlight bash %}
-root@venus [/home/rottwe/www]# php -c php.ini t.php | grep global
-auto_globals_jit => On => On
-register_globals => On => On
-root@venus [/home/rottwe/www]#
-{% endhighlight %}
+<pre class="terminal bootcamp">
+<span class="codeline">root@venus [/home/rottwe/www]# php -c php.ini t.php | grep global<span>run command</span></span>
+<span class="bash-output">auto_globals_jit => On => On</span>
+<span class="bash-output">register_globals => On => On</span>
+</pre>
+
 
 
 [reference](http://www.sant-media.co.uk/2010/02/whmcpanel-per-user-php-ini-under-apache-2-x-and-suphp/)

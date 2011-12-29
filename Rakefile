@@ -36,18 +36,25 @@ end
 
 ## git commit
 desc "git commit..."
-task :git, [:kunci, :cabang] do |t, args|
+task :git, [:pesan, :kunci, :cabang] do |t, args|
+	unless args.pesan
+           puts "Usage: rake git[message,keyname,branch]"
+            exit(-1)
+        end
+
 	unless args.kunci
-           puts "Usage: rake git keyname branch"
+           puts "Usage: rake git[message,keyname,branch]"
             exit(-1)
         end
 	
 	unless args.cabang
-           puts "Usage: rake git keyname branch"
+           puts "Usage: rake git [message,keyname,branch]"
             exit(-1)
         end
 
-	sh "git add .;git commit -m 'update';git push #{args.kunci} #{args.cabang}"
+
+
+	sh "git add .;git commit -m '#{args.pesan}';git push #{args.kunci} #{args.cabang}"
 
 end
 
