@@ -3,7 +3,7 @@ based theme on neban.github.com
 ##changes
 - search archives
 - make simply files on category archives with rakefile command: `rake arsip`
-
+- added css doc github color for terminal bash.
 
 
 ###command list
@@ -37,10 +37,10 @@ run webrick server
 run clean, taggen, and jekyll
 `please read the c0de first`
 
-- `rake sync`
+- `rake rsync`
 
 sync dir `_site/` to publish dir server
 
-- `rake git[key,branch]`
+- `rake git[message,key,branch]`
 
 git add,commit, and push with key and current branch.
