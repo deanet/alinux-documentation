@@ -31,10 +31,13 @@ Install mysql server on both server. look at <a href="/2011/08/14/compiling-mysq
 ##Setup Replication
 
 ###Setup Master 1
-
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 root@srv14 init.d# mysql -u root -p
-Enter password: 
+<span>run command</span></span>
+<span class="bash-output">
+Enter password:</span>
+<pre>
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 36
 Server version: 5.5.12-log Source distribution
@@ -46,82 +49,123 @@ affiliates. Other names may be trademarks of their respective
 owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+</pre>
 
+<span class="codeline">
 mysql> create user 'mysqlchkuser'@'localhost' identified by 'mysql321';
-
-mysql> create user 'mmm_monitor'@'%' identified by 'monitor_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.06 sec)
-
+</span>
+<span class="codeline">
+mysql> create user 'mmm_monitor'@'%' identified by 'monitor_password';
+<span>run command</span></span>
+<span class="bash-output">
+Query OK, 0 rows affected (0.06 sec)
+</span>
+<span class="codeline">
 mysql> create user 'agent_monitor'@'%' identified by 'agent_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
-
+</span>
+<span class="codeline">
 mysql> create user 'replication'@'%' identified by 'replication_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
+</span>
+<span class="codeline">
 mysql> GRANT REPLICATION CLIENT ON *.* TO 'mmm_monitor'@'%' IDENTIFIED BY 'monitor_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
+</span>
+<span class="codeline">
 mysql> GRANT SUPER, REPLICATION CLIENT, PROCESS ON *.* TO 'mmm_agent'@'%' IDENTIFIED BY 'agent_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
+</span>
+<span class="codeline">
 mysql> GRANT REPLICATION SLAVE ON *.* TO 'replication'@'%' IDENTIFIED BY 'replication_password';
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
+</span>
 
-mysql> 
-
-
+<span class="codeline">
 mysql> flush privileges;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.01 sec)
-
+</span>
+<span class="codeline">
 mysql> flush tables with read lock;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
+</span>
 
-
-
-
+<span class="codeline">
 mysql> show master status;
+<span>run command</span></span>
+<pre>
 +------------------+----------+--------------+------------------+
 | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +------------------+----------+--------------+------------------+
 | mysql-bin.000001 |     1044 |              |                  |
 +------------------+----------+--------------+------------------+
 1 row in set (0.00 sec)
-{% endhighlight %}
-
+</pre>
+</pre>
 
 ####Dont Close this session
 
 dump database to master 2.
 
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 # mysqldump -u root -p --all-databases > /tmp/database-backup.sql
+<span>run command</span></span>
+<span class="codeline">
 # scp /tmp/database-backup.sql 111.68.112.44:~/
-{% endhighlight %}
-
+<span>run command</span></span>
+</pre>
 
 
 
 ####Now, we can remove lock tables
 
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 mysql> unlock tables;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
-{% endhighlight %}
+</span>
+</pre>
 
 
 ####Go to Master 2
 
 ##Setup Master 2
 
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 root@srv15 mysql# mysql -u root -p < /root/database-backup.sql 
+<span>run command</span></span>
+<span class="bash-output">
 Enter password: 
+</span>
 
-root@srv15 mysql# 
+<span class="codeline">
 root@srv15 mysql# mysql -u root -p
-Enter password: 
+<span>run command</span></span>
+<span class="bash-output">
+Enter password:
+</span>
+<pre>
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 90
 Server version: 5.5.12-log Source distribution
@@ -133,20 +177,31 @@ affiliates. Other names may be trademarks of their respective
 owners.
 
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+</pre>
 
+<span class="codeline">
 mysql> flush privileges;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.46 sec)
-
+</span>
+<span class="codeline">
 mysql> CHANGE MASTER TO master_host='111.68.112.43', master_port=3306, master_user='replication', 
     ->               master_password='replication_password', master_log_file='mysql-bin.000001', master_log_pos=1044;
-
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (4.62 sec)
-
-mysql> 
+</span>
+<span class="codeline">
 mysql> start slave;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
+</span>
+<span class="codeline">
 mysql> show slave status \G
+<span>run command</span></span>
+<pre>
 *************************** 1. row ***************************
                Slave_IO_State: Waiting for master to send event
                   Master_Host: 111.68.112.43
@@ -189,42 +244,53 @@ Master_SSL_Verify_Server_Cert: No
   Replicate_Ignore_Server_Ids: 
              Master_Server_Id: 1
 1 row in set (0.00 sec)
-
+</pre>
+<span class="codeline">
 mysql> show master status
     -> ;
+<span>run command</span></span>
+<pre>
 +------------------+----------+--------------+------------------+
 | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +------------------+----------+--------------+------------------+
 | mysql-bin.000002 | 27957968 |              |                  |
 +------------------+----------+--------------+------------------+
 1 row in set (0.00 sec)
-
+</pre>
+<span class="codeline">
 mysql> show master status;
+<span>run command</span></span>
+<pre>
 +------------------+----------+--------------+------------------+
 | File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
 +------------------+----------+--------------+------------------+
 | mysql-bin.000002 | 27957968 |              |                  |
 +------------------+----------+--------------+------------------+
 1 row in set (0.00 sec)
-
-root@srv15 mysql# 
-
-{% endhighlight %}
-
+</pre>
+</pre>
 
 
 ##Switch Back to Master 1
 
-
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 mysql> CHANGE MASTER TO master_host='111.68.112.44', master_port=3306, master_user='replication', 
     ->               master_password='replication_password', master_log_file='mysql-bin.000002', master_log_pos=27957968;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.34 sec)
-
+</span>
+<span class="codeline">
 mysql> start slave;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 0 rows affected (0.00 sec)
-
+</span>
+<span class="codeline">
 mysql> show slave status\G
+<span>run command</span></span>
+<pre>
 *************************** 1. row ***************************
                Slave_IO_State: Waiting for master to send event
                   Master_Host: 111.68.112.44
@@ -267,8 +333,11 @@ Master_SSL_Verify_Server_Cert: No
   Replicate_Ignore_Server_Ids: 
              Master_Server_Id: 2
 1 row in set (0.00 sec)
-
+</pre>
+<span class="codeline">
 mysql> show databases;
+<span>run command</span></span>
+<pre>
 +--------------------+
 | Database           |
 +--------------------+
@@ -278,21 +347,22 @@ mysql> show databases;
 | performance_schema |
 +--------------------+
 4 rows in set (0.00 sec)
-
+</pre>
+<span class="codeline">
 mysql> create database mmreplicate;
+<span>run command</span></span>
+<span class="bash-output">
 Query OK, 1 row affected (0.03 sec)
-
-mysql> \q
-Bye
-root@srv14 init.d#
-
-{% endhighlight %}
-
+</span>
+</pre>
 
 ##Check on Master 2
 
-{% highlight bash %}
+<pre class="terminal bootcamp">
+<span class="codeline">
 mysql> show databases;
+<span>run command</span></span>
+<pre>
 +--------------------+
 | Database           |
 +--------------------+
@@ -303,11 +373,17 @@ mysql> show databases;
 | performance_schema |
 +--------------------+
 5 rows in set (0.00 sec)
-
+</pre>
+<span class="codeline">
 mysql> \q
+<span>run command</span></span>
+<span class="bash-output">
 Bye
+</span>
+<span class="codeline">
 root@srv15 mysql# 
-{% endhighlight %}
+</span>
+</pre>
 
 
 [http://mysql-mmm.org/mmm2:guide](http://mysql-mmm.org/mmm2:guide)
