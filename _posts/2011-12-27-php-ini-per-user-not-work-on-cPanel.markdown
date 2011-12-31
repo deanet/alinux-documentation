@@ -2,7 +2,7 @@
 title: php ini not working on cPanel use suPHP
 layout: post_new
 categories: 
-- php
+- PHP
 - cPanel
 - suPHP
 ---
