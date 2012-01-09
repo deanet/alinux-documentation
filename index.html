@@ -3,11 +3,38 @@ layout: base
 title: Syslog Linux - admin juga manusia
 ---
 
-{% assign post = site.posts.first %}
-{% assign content = post.content %}
-{% include post.html %}
+{% for post in paginator.posts %}
 
-<a href="{{ post.url }}#disqus_thread">View comments</a>
+<div class="title">
+    {{ post.title }}
+</div>
 
-{% include prevnext.html %}
+<div class="date">
+    {% assign cat = post.categories %}
+
+    published: {{ post.date | date_to_string }},
+
+    in category: {% for tag in post.categories %}
+<a rel="tag" href="{{ site.pet }}/archives/{{ tag }}.html">{{ tag }}</a>, 
+{% endfor %}
+
+
+</div>
+    {{ post.content | strip_html | truncatewords: 50 }} &nbsp;<a href="{{ site.pet }}{{ post.url }}" class="next">more</a>
+
+<br/><br/>
+{% endfor %}
+
+  <div class="prevnext">
+  {% if paginator.next_page %}
+    <a href="{{ site.pet }}/page{{paginator.next_page}}" class="previous">&#x25C4; Previous</a>
+  {% endif %}
+  {% if paginator.previous_page %}
+    {% if paginator.previous_page == 1 %}
+      <a href="{{ site.pet }}/" class="next">Next &#x25BA;</a>
+    {% else %}
+      <a href="{{ site.pet }}/page{{paginator.previous_page}}" class="next">Next &#x25BA;</a>
+    {% endif %}
+  {% endif %}
+  </div>
 

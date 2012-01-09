@@ -4,11 +4,10 @@
 </div>
 
 <div class="date">
-<!--    {% assign cat = post.categories %}
+    {% assign cat = post.categories %}
 
     published: {{ post.date | date_to_string }},
-    in category: <a href="/archives/{{ cat }}.html">{{ cat }}</a>
--->
+
     in category: {% for tag in post.categories %}
 <a rel="tag" href="{{ site.pet }}/archives/{{ tag }}.html">{{ tag }}</a>, 
 {% endfor %}
