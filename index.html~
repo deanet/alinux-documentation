@@ -23,7 +23,7 @@ title: Syslog Linux - admin juga manusia
 <br/>
     {{ post.content | strip_html | truncatewords: 50 }} &nbsp;<a href="{{ site.pet }}{{ post.url }}" class="next">more</a>
 
-<br/><br/><br/>
+<br/><br/>
 {% endfor %}
 
   <div class="prevnext">
