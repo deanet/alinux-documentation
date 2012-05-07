@@ -44,3 +44,4 @@ sync dir `_site/` to publish dir server
 - `rake git[message,key,branch]`
 
 git add,commit, and push with key and current branch.
+
