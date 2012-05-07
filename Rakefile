@@ -12,7 +12,7 @@ TAGS_DIR = File.join(ROOT_DIR, 'archives')
 DRAFTS_DIR = File.join(ROOT_DIR, '_drafts')
 POSTS_DIR = File.join(ROOT_DIR, '_posts')
 
-PUBLISH_HOST = "dhanuxe@store.alinux.web.id"
+PUBLISH_HOST = "dhanuxe@ssh.alinux.web.id"
 PUBLISH_PATH = "~/www/alinux/"
 
 options = Jekyll.configuration({})
@@ -125,7 +125,7 @@ task :server, [:port] do |t, args|
 end
 
 desc "Publish site."
-task :publish => [:vimclean, :clean, :cloud, :tags, :build] do |t|
+task :publish => [:vimclean, :clean, :taggen] do |t|
  # sh "rsync -avz --delete #{SITE_DIR}/ #{PUBLISH_HOST}:#{PUBLISH_PATH}"
 # sh "rm -rf /usr/local/nginx/html/*;cp -a _site/* /usr/local/nginx/html/"
 # sh "rm -rf /var/www/htdocs/alinux/*;cp -a _site/* /var/www/htdocs/alinux/"

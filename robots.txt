@@ -1,0 +1,5 @@
+user-agent: DuckDuckBot
+allow: /
+
+user-agent: *
+disallow: /
