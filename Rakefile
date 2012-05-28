@@ -12,7 +12,7 @@ TAGS_DIR = File.join(ROOT_DIR, 'archives')
 DRAFTS_DIR = File.join(ROOT_DIR, '_drafts')
 POSTS_DIR = File.join(ROOT_DIR, '_posts')
 
-PUBLISH_HOST = "dhanuxe@ssh.alinux.web.id"
+PUBLISH_HOST = "dhanuxe@ssi.alinux.web.id"
 PUBLISH_PATH = "~/www/alinux/"
 
 options = Jekyll.configuration({})
