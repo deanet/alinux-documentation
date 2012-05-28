@@ -2,4 +2,7 @@ user-agent: DuckDuckBot
 allow: /
 
 user-agent: *
-disallow: /
+allow: /
+
+User-Agent: Googlebot
+allow: /

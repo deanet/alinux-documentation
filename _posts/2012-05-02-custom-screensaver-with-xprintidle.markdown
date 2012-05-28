@@ -16,24 +16,12 @@ grab `deb package` from [here](http://packages.debian.org/sid/xprintidle). Make 
 
 ##Scripting
 
+<script src="https://gist.github.com/2626830.js?file=screen_small.bash" type="text/javascript">
+</script>
 
-{% highlight bash %}
-#!/bin/bash
 
-while [ 1 ];
-do
-if [ `xprintidle` -gt 60000 ];
-then
 
-gnome-screensaver-command -l
-
-fi
-sleep 1
-done
-
-{% endhighlight %}
-
-save as screensaver.sh, and run it. After 60 seconds idle time, gnome-screensaver will run and lock the desktop.
+save as screensaver.sh, and run it. After 300 seconds or 5 minutes idle time, gnome-screensaver will run and lock the desktop.
 
 
 reference:
