@@ -47,7 +47,6 @@ Ternate (Failover) ---- Halmahera (ldap) --|
 
 ###A.2 openldap 2.4
 
-
 ####A.2.1 Non-ssl
 
 
@@ -165,44 +164,9 @@ TERNATE/192.168.11.213:
 
 ####B.2.1 Auth
 
-{% highlight bash %}
-# /usr/share/authconfig/authconfig-tui.py
 
-      ттттттттттттттттттЄ Authentication Configuration ттттттттттттттттттт
-      т                                                                 т
-      т  User Information        Authentication                         т
-      т  [ ] Cache Information   [*] Use MD5 Passwords                  т
-      т  [ ] Use Hesiod          [*] Use Shadow Passwords               т
-      т  [*] Use LDAP            [*] Use LDAP Authentication            т
-      т  [ ] Use NIS             [ ] Use Kerberos                       т
-      т  [ ] Use Winbind         [ ] Use SMB Authentication             т
-      т                          [ ] Use Winbind Authentication         т
-      т                          [*] Local authorization is sufficient  т
-      т                                                                 т
-      т            тттттттттт                      тттттттт             т
-      т            т Cancel т                      т Next т             т
-      т            тттттттттт                      тттттттт             т
-      т                                                                 т
-      т                                                                 т
-      ттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттт
-
-
-
-
-             тттттттттттттттттттЄ LDAP Settings ттттттттттттттттттт
-             т                                                   т
-             т          [ ] Use TLS                              т
-             т  Server: /192.168.11.216/,ldap://192.168.11.215/_ т
-             т Base DN: dc=finnet-indonesia,dc=com______________ т
-             т                                                   т
-             т         тттттттт                  тттттт          т
-             т         т Back т                  т Ok т          т
-             т         тттттттт                  тттттт          т
-             т                                                   т
-             т                                                   т
-             ттттттттттттттттттттттттттттттттттттттттттттттттттттт
-{% endhighlight %}
-
+<script src="https://gist.github.com/1433829.js?file=b21.sh">
+</script>
 
 
 
@@ -276,7 +240,9 @@ HALMAHERA/192.168.11.215:
 
 #####B.3.1.1 slapd.conf
 
+
 user@halmahera ~$ sudo cat /usr/local/openldap2.4/etc/openldap/slapd.conf
+
 {% highlight bash %}
 #
 # See slapd.conf(5) for details on configuration options.
@@ -365,44 +331,8 @@ pam_password md5
 
 #####B.3.1.3 Auth
 
-{% highlight bash %}
-$ /usr/share/authconfig/authconfig-tui.py
-
-
-      ттттттттттттттттттЄ Authentication Configuration ттттттттттттттттттт
-      т                                                                 т
-      т  User Information        Authentication                         т
-      т  [ ] Cache Information   [*] Use MD5 Passwords                  т
-      т  [ ] Use Hesiod          [*] Use Shadow Passwords               т
-      т  [*] Use LDAP            [*] Use LDAP Authentication            т
-      т  [ ] Use NIS             [ ] Use Kerberos                       т
-      т  [ ] Use Winbind         [ ] Use SMB Authentication             т
-      т                          [ ] Use Winbind Authentication         т
-      т                          [*] Local authorization is sufficient  т
-      т                                                                 т
-      т            тттттттттт                      тттттттт             т
-      т            т Cancel т                      т Next т             т
-      т            тттттттттт                      тттттттт             т
-      т                                                                 т
-      т                                                                 т
-      ттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттт
-
-
-
-		тттттттттттттттЄ LDAP Settings ттттттттттттттттттт
-             т                                                   т
-             т          [ ] Use TLS                              т
-             т  Server: 127.0.0.1ldap://192.168.11.215/_________ т
-             т Base DN: dc=finnet-indonesia,dc=com______________ т
-             т                                                   т
-             т         тттттттт                  тттттт          т
-             т         т Back т                  т Ok т          т
-             т         тттттттт                  тттттт          т
-             т                                                   т
-             т                                                   т
-             ттттттттттттттттттттттттттттттттттттттттттттттттттттт
-{% endhighlight %}
-
+<script src="https://gist.github.com/1433829.js?file=b313.sh">
+</script>
 
 #####B.3.1.4 PAM
 
@@ -537,43 +467,8 @@ pam_password md5
 
 #####B.3.2.3 Auth
 
-{% highlight bash %}
-$ /usr/share/authconfig/authconfig-tui.py
-
-      ттттттттттттттттттЄ Authentication Configuration ттттттттттттттттттт
-      т                                                                 т
-      т  User Information        Authentication                         т
-      т  [ ] Cache Information   [*] Use MD5 Passwords                  т
-      т  [ ] Use Hesiod          [*] Use Shadow Passwords               т
-      т  [*] Use LDAP            [*] Use LDAP Authentication            т
-      т  [ ] Use NIS             [ ] Use Kerberos                       т
-      т  [ ] Use Winbind         [ ] Use SMB Authentication             т
-      т                          [ ] Use Winbind Authentication         т
-      т                          [*] Local authorization is sufficient  т
-      т                                                                 т
-      т            тттттттттт                      тттттттт             т
-      т            т Cancel т                      т Next т             т
-      т            тттттттттт                      тттттттт             т
-      т                                                                 т
-      т                                                                 т
-      ттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттттт
-
-
-
-             тттттттттттттттттттЄ LDAP Settings ттттттттттттттттттт
-             т                                                   т
-             т          [ ] Use TLS                              т
-             т  Server: 127.0.0.1ldap://192.168.11.216/_________ т
-             т Base DN: dc=finnet-indonesia,dc=com______________ т
-             т                                                   т
-             т         тттттттт                  тттттт          т
-             т         т Back т                  т Ok т          т
-             т         тттттттт                  тттттт          т
-             т                                                   т
-             т                                                   т
-             ттттттттттттттттттттттттттттттттттттттттттттттттттттт
-
-{% endhighlight %}
+<script src="https://gist.github.com/1433829.js?file=b323.sh">
+</script>
 
 #####B.3.2.4 PAM 
 

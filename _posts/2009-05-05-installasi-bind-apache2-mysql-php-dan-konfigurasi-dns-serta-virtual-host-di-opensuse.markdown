@@ -247,7 +247,7 @@ di open suse, file `/etc/apache2/httpd.conf` nya menginclude file `default-serve
 
 selanjutnya kita akan mengkonfigurasi langsung di file `default-server.conf`. so gak perlu repot2 buka2 file. ckup satu file aj :) . Yang perlu diperhatikan adalah ketika menmbhkan vhost utk subdomain, maka root domain juga mesti ditambahkan. oke. kira2 konfigna sperti ini:
 
-	{% highlight ApacheConf %}
+	{% highlight apacheconf %}
 	NameVirtualHost xxx.99.198.183:80
 	<virtualHost domain.com:80>
         	ServerName domain.com

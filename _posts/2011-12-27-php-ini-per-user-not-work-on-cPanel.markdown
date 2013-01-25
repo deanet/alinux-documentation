@@ -21,8 +21,8 @@ and check now
 </pre>
 
 
-
-[reference](http://www.sant-media.co.uk/2010/02/whmcpanel-per-user-php-ini-under-apache-2-x-and-suphp/)
+reference
+[whmcpanel-per-user-php-ini-under-apache-2-x-and-suphp](http://www.sant-media.co.uk/2010/02/whmcpanel-per-user-php-ini-under-apache-2-x-and-suphp/)
 
 
 

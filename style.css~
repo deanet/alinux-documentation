@@ -159,7 +159,6 @@ a:hover {
 }
 
 .archives table .postdate {
-	width: 100px;
     color: #aaa;
     text-align: right;
 }

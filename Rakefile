@@ -121,7 +121,7 @@ end
 
 desc "Run local jekyll server"
 task :server, [:port] do |t, args|
-  sh "jekyll --server #{args.port || 4000} --base-url /alinux --auto"
+  sh "jekyll --server #{args.port || 4000} --base-url / --auto"
 end
 
 desc "Publish site."

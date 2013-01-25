@@ -6,7 +6,7 @@ permalink: /:year/:month/:day/:title.html
 paginate: 10
 pygments: true
 pet:
-url:
+url: /
 exclude: 
 - readme.md
 - Rakefile

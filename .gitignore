@@ -2,5 +2,7 @@ _site/*
 _drafts/*
 _gist_cache/*
 archives/*
+_posts/*
 
+!_posts/2009-10-01-installation-and-setting-network-freebsd-virtual-box-on-slackware-host.markdown
 !archives/readme
